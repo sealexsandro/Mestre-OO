@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-enum CardObjetoAnimal {
-  // altamente genericos
+// altamente genericos
+enum CartaBaseAnimal {
   animal,
   ave,
   mamifero,
-
-  // Mais especificos
+  reptil,
+}
+// Mais especificos
+enum EnumsBaralhoAnimal {
   bem_te_vi,
   papagaio,
   gato,
@@ -25,12 +27,17 @@ enum CardObjetoVeiculo {
   hiate,
 }
 
-class CartasDoBaralhoAnimal {
-  CardObjetoAnimal cardObjetoAnimal;
+class BaralhoAnimal {
+  EnumsBaralhoAnimal cartasBaralhoAnimal;
+  CartaBaseAnimal cartaBaseAnimal;
   bool faceUp;
   bool opened;
 
-  CartasDoBaralhoAnimal({this.cardObjetoAnimal, this.faceUp, this.opened});
+  BaralhoAnimal(
+      {@required cartasBaralhoAnimal,
+      @required cartaBaseAnimal,
+      this.faceUp = false,
+      this.opened = false});
 }
 
 class CartasDoBaralhoVeiculo {
