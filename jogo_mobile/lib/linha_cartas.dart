@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/baralhos_do_jogo.dart';
-import 'package:jogo_mobile/montar_carta_animal.dart';
+import 'package:jogo_mobile/baralhoDeCartasAnimal.dart';
 
+import 'moldarCarta.dart';
 
-typedef Null CardAcceptCallback(List<BaralhoAnimal> card, int fromIndex);
+typedef Null CardAcceptCallback(List<CartaDoBaralhoAnimal> card, int fromIndex);
 
 //Esta é uma pilha de cartões sobrepostos (implementados usando uma pilha)
 class LinhaDeCartas extends StatefulWidget {
-
   // Lista de carta na pilha
-  final List<BaralhoAnimal> cards;
+  final List<CartaDoBaralhoAnimal> cartas;
 
   // Callback when card is added to the stack
   //Retorno de chamada quando o cartão é adicionado à pilha
@@ -19,7 +18,7 @@ class LinhaDeCartas extends StatefulWidget {
   final int linhaIndex;
 
   LinhaDeCartas(
-      {@required this.cards,
+      {@required this.cartas,
       @required this.onCardsAdded,
       @required this.linhaIndex});
 
@@ -31,19 +30,23 @@ class _LinhaDeCartasState extends State<LinhaDeCartas> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //alignment: Alignment.topCenter,
-      height: 13.0 * 15.0,
-      width: 70.0,
+      //  alignment: Alignment.topCenter,
+      height: 85,
+      width: 40,
       margin: EdgeInsets.all(2.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.blue),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       child: DragTarget<Map>(
         builder: (context, listOne, listTwo) {
           return Stack(
-            children: widget.cards.map((card) {
-              int index = widget.cards.indexOf(card);
+            children: widget.cartas.map((card) {
+              int index = widget.cartas.indexOf(card);
               return MontarCartasDeAnimais(
                 baralhoAnimal: card,
-                transformIndex: index,
-                cardsAnexados: widget.cards.sublist(index, widget.cards.length),
+                cardsAnexados:
+                    widget.cartas.sublist(index, widget.cartas.length),
                 columnIndex: widget.linhaIndex,
               );
             }).toList(),
@@ -51,13 +54,13 @@ class _LinhaDeCartasState extends State<LinhaDeCartas> {
         },
         onWillAccept: (value) {
           // If empty, accept
-          if (widget.cards.length == 0) {
+          if (widget.cartas.length == 0) {
             return true;
           }
 
           // Get dragged cards list
-          List<BaralhoAnimal> draggedCards = value["cards"];
-          BaralhoAnimal firstCard = draggedCards.first;
+          List<CartaDoBaralhoAnimal> draggedCards = value["cards"];
+          CartaDoBaralhoAnimal firstCard = draggedCards.first;
           // if (firstCard.cardColor == CardColor.red) {
           //   if (widget.cards.last.cardColor == CardColor.red) {
           //     return false;
