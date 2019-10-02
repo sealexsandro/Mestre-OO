@@ -31,9 +31,14 @@ class _TelaArvoreAnimal extends State<TelaArvoreAnimal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Rumo aos Objetos"),
+        title: Text(
+          "OO Jogo de Cartas",
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
         elevation: 0.0,
         backgroundColor: Colors.green,
         actions: <Widget>[
@@ -43,6 +48,7 @@ class _TelaArvoreAnimal extends State<TelaArvoreAnimal> {
               child: Icon(
                 Icons.refresh,
                 color: Colors.white,
+                size: 40,
               ),
             ),
             splashColor: Colors.white,
@@ -52,55 +58,68 @@ class _TelaArvoreAnimal extends State<TelaArvoreAnimal> {
           )
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          Text(
-            "Monte a árvore de herança com o baralho de cartas disposto, usando os conceitos de Orientação a Objetos",
-            style: TextStyle(
-              fontSize: 15,
-            ),
-          ),
-          SizedBox(
-            height: 16.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ContainerDeCartaAnimal(),
-            ],
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ContainerDeCartaAnimal(),
-              ContainerDeCartaAnimal(),
-            ],
-          ),
-          SizedBox(
-            height: 16.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ContainerDeCartaAnimal(),
-              ContainerDeCartaAnimal(),
-              ContainerDeCartaAnimal(),
-              ContainerDeCartaAnimal(),
-            ],
-          ),
-          SizedBox(
-            height: 16.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              _baralhoDeEscolha(), //Conjunto de cartas para escolher
-            ],
-          ),
-        ],
+      body: Material(
+        child: SafeArea(
+          child: OrientationBuilder(
+              builder: (BuildContext context, Orientation orientation) {
+            return ListView(
+              children: <Widget>[
+                SizedBox(
+                  height: 14.0,
+                ),
+                Text(
+                  "Monte a árvore de herança com o baralho de cartas disposto usando os conceitos de Orientação a Objetos",
+                  textAlign: TextAlign.justify,
+                  overflow: TextOverflow.clip,
+                  style: TextStyle(
+                    letterSpacing: 1,
+                    fontSize: 18,
+                  ),
+                ),
+                SizedBox(
+                  height: 18.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    ContainerDeCartaAnimal(),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    ContainerDeCartaAnimal(),
+                    ContainerDeCartaAnimal(),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    ContainerDeCartaAnimal(),
+                    ContainerDeCartaAnimal(),
+                    ContainerDeCartaAnimal(),
+                    ContainerDeCartaAnimal(),
+                  ],
+                ),
+                SizedBox(
+                  height: 30.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    _baralhoDeEscolha(), //Conjunto de cartas para escolher
+                  ],
+                ),
+              ],
+            );
+          }),
+        ),
       ),
     );
   }
@@ -141,10 +160,13 @@ class _TelaArvoreAnimal extends State<TelaArvoreAnimal> {
                       padding: const EdgeInsets.all(4.0),
                       child: MontarCartasDeAnimais(
                         baralhoAnimal: CartaDoBaralhoAnimal(
-                          classeMae: EnumsCartaBaseSuper.ave,
-                          especieAnimal: NomeDaEspecieCartasAnimal.getEspecieClasseAve(EnumsCartasAve.bem_te_vi),
-                          pathDeImagemCorrespondente: EnderecoDeImagemDaEspecie.getEnderecoImagemAve(EnumsCartasAve.bem_te_vi)
-                        ),
+                            classeMae: EnumsCartaBaseSuper.ave,
+                            especieAnimal:
+                                NomeDaEspecieCartasAnimal.getEspecieClasseAve(
+                                    EnumsCartasAve.bem_te_vi),
+                            pathDeImagemCorrespondente:
+                                EnderecoDeImagemDaEspecie.getEnderecoImagemAve(
+                                    EnumsCartasAve.bem_te_vi)),
                       ),
                     ),
                   ),
@@ -202,8 +224,11 @@ class _TelaArvoreAnimal extends State<TelaArvoreAnimal> {
         EnumsCartasMamifero.values.forEach((cartaDeUmMamifero) {
           allCards.add(CartaDoBaralhoAnimal(
             classeMae: cartaClasseMae,
-            especieAnimal: NomeDaEspecieCartasAnimal.getEspecieClasseMamifero(cartaDeUmMamifero),
-            pathDeImagemCorrespondente: EnderecoDeImagemDaEspecie.getEnderecoImagemMamifero(cartaDeUmMamifero),
+            especieAnimal: NomeDaEspecieCartasAnimal.getEspecieClasseMamifero(
+                cartaDeUmMamifero),
+            pathDeImagemCorrespondente:
+                EnderecoDeImagemDaEspecie.getEnderecoImagemMamifero(
+                    cartaDeUmMamifero),
             cardFaceVisivel: false,
           ));
         });
@@ -215,40 +240,47 @@ class _TelaArvoreAnimal extends State<TelaArvoreAnimal> {
         EnumsCartasAve.values.forEach((cartaDeUmaAve) {
           allCards.add(CartaDoBaralhoAnimal(
             classeMae: cartaClasseMae,
-            especieAnimal: NomeDaEspecieCartasAnimal.getEspecieClasseAve(cartaDeUmaAve),
-            pathDeImagemCorrespondente: EnderecoDeImagemDaEspecie.getEnderecoImagemAve(cartaDeUmaAve),
+            especieAnimal:
+                NomeDaEspecieCartasAnimal.getEspecieClasseAve(cartaDeUmaAve),
+            pathDeImagemCorrespondente:
+                EnderecoDeImagemDaEspecie.getEnderecoImagemAve(cartaDeUmaAve),
             cardFaceVisivel: false,
           ));
         });
       }
 
-       if (cartaClasseMae == EnumsCartaBaseSuper.reptil) {
+      if (cartaClasseMae == EnumsCartaBaseSuper.reptil) {
         // for para percorrer todas as cartas  Reptil
         EnumsCartasRepteis.values.forEach((cartaDeUmReptil) {
           allCards.add(CartaDoBaralhoAnimal(
             classeMae: cartaClasseMae,
-            especieAnimal: NomeDaEspecieCartasAnimal.getEspecieClasseReptil(cartaDeUmReptil),
-            pathDeImagemCorrespondente: EnderecoDeImagemDaEspecie.getEnderecoImagemReptil(cartaDeUmReptil),
+            especieAnimal: NomeDaEspecieCartasAnimal.getEspecieClasseReptil(
+                cartaDeUmReptil),
+            pathDeImagemCorrespondente:
+                EnderecoDeImagemDaEspecie.getEnderecoImagemReptil(
+                    cartaDeUmReptil),
             cardFaceVisivel: false,
           ));
         });
       }
 
-        if (cartaClasseMae == EnumsCartaBaseSuper.aracnideo) {
+      if (cartaClasseMae == EnumsCartaBaseSuper.aracnideo) {
         // for para percorrer todas as cartas  ave
         EnumsCartasAracnideo.values.forEach((cartaDeUmAracnideo) {
           allCards.add(CartaDoBaralhoAnimal(
             classeMae: cartaClasseMae,
-            especieAnimal: NomeDaEspecieCartasAnimal.getEspecieClasseAracnideo(cartaDeUmAracnideo),
-            pathDeImagemCorrespondente: EnderecoDeImagemDaEspecie.getEnderecoImagemAracnideo(cartaDeUmAracnideo),
+            especieAnimal: NomeDaEspecieCartasAnimal.getEspecieClasseAracnideo(
+                cartaDeUmAracnideo),
+            pathDeImagemCorrespondente:
+                EnderecoDeImagemDaEspecie.getEnderecoImagemAracnideo(
+                    cartaDeUmAracnideo),
             cardFaceVisivel: false,
           ));
         });
       }
-
-
     });
 
+    allCards.shuffle();
     this.cartasEscondidas = allCards;
     cartasAbertas.add(
       cartasEscondidas.removeLast()

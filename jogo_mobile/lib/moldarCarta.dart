@@ -22,11 +22,13 @@ class _State extends State<MontarCartasDeAnimais> {
   Widget _buildBaralho() {
     return !widget.baralhoAnimal.cardFaceVisivel
         ? Container(
-            height: 80.0,
-            width: 60.0,
+            height: 80,
+            width: 60,
+            alignment: Alignment.center,
             child: Text("Baralho Animal",
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 10.0,
+                  fontSize: 11.0,
                   fontWeight: FontWeight.bold,
                 )),
             decoration: BoxDecoration(
@@ -59,9 +61,9 @@ class _State extends State<MontarCartasDeAnimais> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
           color: Colors.white,
-          border: Border.all(color: Colors.black),
+          border: Border.all(color: Colors.black, width: 1),
         ),
-        height: 80.0,
+        height: 80,
         width: 60,
         child: Column(
           children: <Widget>[
@@ -76,7 +78,7 @@ class _State extends State<MontarCartasDeAnimais> {
                     Text(
                       widget.baralhoAnimal.especieAnimal,
                       style: TextStyle(
-                        fontSize: 10.0,
+                        fontSize: 8.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -90,7 +92,8 @@ class _State extends State<MontarCartasDeAnimais> {
                 children: <Widget>[
                   Container(
                     height: 40.0,
-                    child: getImagens(widget.baralhoAnimal.pathDeImagemCorrespondente),
+                    child: getImagens(
+                        widget.baralhoAnimal.pathDeImagemCorrespondente),
                   )
                 ],
               ),

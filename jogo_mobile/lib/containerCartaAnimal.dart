@@ -16,11 +16,11 @@ class _ContainerDeCartaAnimal extends State<ContainerDeCartaAnimal> {
       child: DragTarget<Map>(
         builder: (context, listOne, listTwo) {
           return Container(
-            height: 80,
-            width: 60,
+            height: 70,
+            width: 50,
             margin: EdgeInsets.all(2.0),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.blue),
+              border: Border.all(color: Colors.blue, width: 1),
               borderRadius: BorderRadius.circular(8.0),
             ),
           );
