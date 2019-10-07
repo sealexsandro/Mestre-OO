@@ -7,7 +7,7 @@ class TelaFaseDoJogo extends StatefulWidget {
   _TelaFaseDoJogoState createState() => _TelaFaseDoJogoState();
 }
 
-class _TelaFaseDoJogoState extends State<TelaFaseDoJogo > {
+class _TelaFaseDoJogoState extends State<TelaFaseDoJogo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,15 +83,20 @@ class _TelaFaseDoJogoState extends State<TelaFaseDoJogo > {
                             Radius.circular(40),
                           ),
                         ),
-                        child: Center(
-                          child: Text(
-                            "Classes".toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                        child: FlatButton(
+                          child: Center(
+                            child: Text(
+                              "Classes".toUpperCase(),
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/PageEscolhaDeProblemasFase1");
+                          },
                         ),
                       ),
 
