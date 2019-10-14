@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/baralhoDeCartasAnimal.dart';
+
+import 'baralhoDeCartasAnimal.dart';
 
 class MontarCartasDeAnimais extends StatefulWidget {
   final CartaDoBaralhoAnimal baralhoAnimal;

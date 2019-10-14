@@ -1,35 +1,23 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/pages/componentes/containerDeClasses.dart';
-import 'package:jogo_mobile/pages/componentes/iconesComponent.dart';
-import 'package:jogo_mobile/pages/componentesFase1/botaoEscolherAtributos.dart';
+import 'package:jogo_mobile/models/ClasseGenerica.dart';
+import 'package:jogo_mobile/pages/fase1_page/componentes/butao_DialogDeInformacao.dart';
+import 'package:jogo_mobile/pages/fase1_page/componentes/containerDeClasses.dart';
 
-class DiagramaDeClassesPetShop extends StatefulWidget {
+class Fase1_Classes extends StatefulWidget {
   @override
-  _DiagramaDeClassesPetShopState createState() =>
-      _DiagramaDeClassesPetShopState();
+  _Fase1_ClassesState createState() =>
+      _Fase1_ClassesState();
 }
 
-class _DiagramaDeClassesPetShopState extends State<DiagramaDeClassesPetShop> {
-  bool _isChecked = true;
-  List _myActivities;
-  String _myActivitiesResult;
-  final formKey = new GlobalKey<FormState>();
+class _Fase1_ClassesState extends State<Fase1_Classes> {
+  List<EnumsNomesDeClasses> listaNomesDeClasses;
+  Random random = Random();
 
   @override
   void initState() {
     super.initState();
-    _myActivities = [];
-    _myActivitiesResult = '';
-  }
-
-  _saveForm() {
-    var form = formKey.currentState;
-    if (form.validate()) {
-      form.save();
-      setState(() {
-        _myActivitiesResult = _myActivities.toString();
-      });
-    }
+    iniciarLista();
   }
 
   @override
@@ -44,47 +32,6 @@ class _DiagramaDeClassesPetShopState extends State<DiagramaDeClassesPetShop> {
             margin: EdgeInsets.only(bottom: 0),
             child: Column(
               children: [
-                // Container(
-                //   width: MediaQuery.of(context).size.width,
-                //   decoration: BoxDecoration(
-                //     border: Border.all(color: Colors.blue),
-                //   ),
-                //   child: Padding(
-                //     padding: const EdgeInsets.only(
-                //         top: 16, left: 8.0, right: 8, bottom: 5),
-                //     child: Row(
-                //       //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //       children: <Widget>[
-                //         Padding(
-                //           padding: const EdgeInsets.only(
-                //               top: 0, left: 6.0, right: 50),
-                //           child: Text(
-                //             "PET-SHOP",
-                //             textAlign: TextAlign.justify,
-                //             style: TextStyle(
-                //               fontSize: 15,
-                //               fontWeight: FontWeight.bold,
-                //             ),
-                //           ),
-                //         ),
-                //         Padding(
-                //           padding: const EdgeInsets.only(
-                //             top: 0,
-                //             left: 50,
-                //           ),
-                //           child: Text(
-                //             "Score:",
-                //             textAlign: TextAlign.justify,
-                //             style: TextStyle(
-                //               fontSize: 15,
-                //               fontWeight: FontWeight.bold,
-                //             ),
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   margin: EdgeInsets.only(bottom: 3),
@@ -162,10 +109,11 @@ class _DiagramaDeClassesPetShopState extends State<DiagramaDeClassesPetShop> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 8),
                   child: Text(
-                    "Classe 1 - PET SHOP".toUpperCase(),
+                    "Sistema Pet Shop",
                     textAlign: TextAlign.justify,
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -187,69 +135,20 @@ class _DiagramaDeClassesPetShopState extends State<DiagramaDeClassesPetShop> {
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        ContainerDeClasse(),
+                        //  ContainerDeClasse(),
+                        diagramaDeClasse(),
                       ],
                     ),
                     Column(
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            FlightBookButton(),
+                            _butaoDialogDeAtributos("escolha atributos"),
                           ],
                         ),
                         Row(
                           children: <Widget>[
-                            FlightBookButton(),
-                            // Container(
-                            //   margin: EdgeInsets.only(top: 15),
-                            //   width: MediaQuery.of(context).size.width / 2.5,
-                            //   height: 60,
-                            //   decoration: BoxDecoration(
-                            //     gradient: LinearGradient(
-                            //       colors: [
-                            //         Color(0xFF6078ea),
-                            //         Color(0xFF17ead9),
-                            //       ],
-                            //     ),
-                            //     borderRadius: BorderRadius.all(
-                            //       Radius.circular(20),
-                            //     ),
-                            //   ),
-                            // child: FlatButton(
-                            //   child: Padding(
-                            //     padding: EdgeInsets.only(left: 20),
-                            //     child: Text(
-                            //       "Escolher Métodos".toUpperCase(),
-                            //       style: TextStyle(
-                            //         fontSize: 15,
-                            //         color: Colors.white,
-                            //         fontWeight: FontWeight.bold,
-                            //       ),
-                            //     ),
-                            //   ),
-                            //   onPressed: () {
-                            //     // showModalBottomSheet<void>(
-                            //     //     context: context,
-                            //     //     builder: (BuildContext context) {
-                            //     //       return Center(
-                            //     //       child: Container(
-                            //     //         child: Padding(
-                            //     //           padding: const EdgeInsets.all(32.0),
-                            //     //           child: Text(
-                            //     //             'This is the modal bottom sheet. Slide down to dismiss.',
-                            //     //             textAlign: TextAlign.center,
-                            //     //             style: TextStyle(
-                            //     //               color: Theme.of(context)
-                            //     //                   .accentColor,
-                            //     //               fontSize: 24.0,
-                            //     //             ),
-                            //     //           ),
-                            //     //         ),
-                            //     //       ),);
-                            //     //     });
-                            //   },
-                            // ),
-                            // ),
+                            _butaodialogDeMetodos("escolha métodos"),
                           ],
                         ),
                         Row(
@@ -308,5 +207,29 @@ class _DiagramaDeClassesPetShopState extends State<DiagramaDeClassesPetShop> {
         ],
       ),
     );
+  }
+
+  _butaoDialogDeAtributos(String textoDoButao) {
+     return ButaoCaixaDeDialogo(textoDoButao);
+  }
+
+  _butaodialogDeMetodos(String textoDoButao) {
+    return ButaoCaixaDeDialogo(textoDoButao);
+  }
+
+  iniciarLista() {
+    listaNomesDeClasses = [];
+
+    EnumsNomesDeClasses.values.forEach((nomeDaClasse) {
+      listaNomesDeClasses.add(nomeDaClasse);
+    });
+  }
+
+  diagramaDeClasse() {
+    listaNomesDeClasses.shuffle();
+    int randomNumber = random.nextInt(listaNomesDeClasses.length);
+    EnumsNomesDeClasses nomeDaClasse = listaNomesDeClasses[randomNumber];
+    listaNomesDeClasses.remove(randomNumber);
+    return ContainerDeClasse(nomeDaClasse);
   }
 }

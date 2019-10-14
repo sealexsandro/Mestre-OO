@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/baralhoDeCartasAnimal.dart';
-import 'package:jogo_mobile/containerCartaAnimal.dart';
-
+import 'baralhoDeCartasAnimal.dart';
+import 'containerCartaAnimal.dart';
 import 'moldarCarta.dart';
 
 class TelaArvoreAnimal extends StatefulWidget {

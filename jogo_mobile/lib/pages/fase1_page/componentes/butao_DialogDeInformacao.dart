@@ -1,14 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile/pages/fase1_page/atributosBloc.dart';
+import 'package:provider/provider.dart';
 
-class FlightBookButton extends StatelessWidget {
-  List<String> listDeAtributos = ["1111", "222222", "33333333"];
-  List<String> listDeAtributosColuna1 = ["1111", "222222", "33333333"];
-  List<String> listDeAtributosColuna2 = [
+class ButaoCaixaDeDialogo extends StatefulWidget {
+  String textoDoButao;
+  ButaoCaixaDeDialogo(String textoDoButao) {
+    this.textoDoButao = textoDoButao;
+  }
+
+  @override
+  _ButaoCaixaDeDialogoState createState() =>
+      _ButaoCaixaDeDialogoState(this.textoDoButao);
+}
+
+class _ButaoCaixaDeDialogoState extends State<ButaoCaixaDeDialogo> {
+  String textoDoButao;
+//  String nomeDoAtributo;
+  Color corDoContainer = Colors.blueAccent[400];
+  final List<String> listDeAtributos = ["1111", "222222", "33333333"];
+  final List<String> listDeAtributosColuna1 = ["1111", "222222", "33333333"];
+  final List<String> listDeAtributosColuna2 = [
     "44444444",
     "55555555",
     "666666",
     "7777777"
   ];
+
+  _ButaoCaixaDeDialogoState(String textoDoButao) {
+    this.textoDoButao = textoDoButao;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,34 +37,32 @@ class FlightBookButton extends StatelessWidget {
       width: MediaQuery.of(context).size.width / 2.5,
       height: 60,
       child: RaisedButton(
-          color: Colors.deepOrange,
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(15)),
-          child: Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Text(
-              "Escolher Atributos".toUpperCase(),
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.white,
-                // fontFamily: 'Raleway',
-                fontWeight: FontWeight.bold,
-              ),
+        color: Colors.deepOrange,
+        shape:
+            RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+        child: Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Text(
+            this.textoDoButao.toUpperCase(),
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.white,
+              // fontFamily: 'Raleway',
+              fontWeight: FontWeight.bold,
             ),
           ),
-          elevation: 6,
-          onPressed: () => bookFlight(context)),
+        ),
+        elevation: 6,
+        onPressed: () => caixaDeDialog(),
+      ),
     );
   }
 
-  void bookFlight(BuildContext context) {
-    //   debugPrint("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+  caixaDeDialog() {
     final screenSize = MediaQuery.of(context).size;
 
     showDialog(
-      // title: Text("Escolha Atributos:"),
       barrierDismissible: false,
-
       context: context,
       builder: (_) => Center(
         child: Container(
@@ -83,7 +101,7 @@ class FlightBookButton extends StatelessWidget {
                   ),
                 ),
               ),
-              inseriAtributos(context),
+              inseriAtributos(),
               Container(
                 margin: EdgeInsets.only(top: 30),
                 child: Row(
@@ -137,11 +155,9 @@ class FlightBookButton extends StatelessWidget {
         ),
       ),
     );
-    // showDialog(
-    //     context: context, builder: (BuildContext context) => alertDialog);
   }
 
-  inseriAtributos(BuildContext context) {
+  inseriAtributos() {
     return Container(
       width: MediaQuery.of(context).size.width / 1.2,
       margin: EdgeInsets.only(left: 10, top: 5),
@@ -152,38 +168,30 @@ class FlightBookButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Column(
-            children: listDeAtributosColuna1.map((card) {
-              return ButaoDoAtributo(card);
+            children: listDeAtributosColuna1.map<Widget>((nomeDoButaoAtributo) {
+              return _butao(nomeDoButaoAtributo);
             }).toList(),
           ),
           Column(
-            children: listDeAtributosColuna2.map((card) {
-              return ButaoDoAtributo(card);
+            children: listDeAtributosColuna2.map<Widget>((nomeDoButaoAtributo) {
+              return _butao(nomeDoButaoAtributo);
             }).toList(),
           ),
         ],
       ),
     );
   }
-}
 
-class ButaoDoAtributo extends StatelessWidget {
-  String nomeDoAtributo;
-  ButaoDoAtributo(String nomeDoAtributo) {
-    this.nomeDoAtributo = nomeDoAtributo;
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  _butao(String nomeDoButaoAtributo) {
     return Container(
       width: MediaQuery.of(context).size.width / 2.6,
       child: FlatButton(
-        color: Colors.blueAccent[400],
+        color: corDoContainer,
         shape:
             RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10)),
         padding: EdgeInsets.only(left: 0),
         child: Text(
-          nomeDoAtributo.toUpperCase(),
+          nomeDoButaoAtributo.toUpperCase(),
           style: TextStyle(
             fontSize: 13,
             color: Colors.white,
@@ -191,8 +199,21 @@ class ButaoDoAtributo extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          _mudarCorDoButao(nomeDoButaoAtributo);
+        },
       ),
     );
+  }
+
+  _mudarCorDoButao(String nomeDoButaoAtributo) {
+    //update with a new color when the user taps button
+    // setState(() {
+    //   corDoContainer = Colors.pink;
+    // });
+    TransferirdadosDaClasseBloc tranferirAtrib =
+        Provider.of<TransferirdadosDaClasseBloc>(context, listen: false);
+
+    tranferirAtrib.tranferirAtributo(nomeDoButaoAtributo);
   }
 }

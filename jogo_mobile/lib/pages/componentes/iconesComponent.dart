@@ -8,7 +8,7 @@ class IconesComponent {
   static final String repitaASenha = "Repita a Senha";
 
 
-  static Icon escolhaDeIcone(String nomeDoCampo) {
+  static escolhaDeIcone(String nomeDoCampo) {
     if (nomeDoCampo == nomeDoUser) {
       return Icon(
         Icons.person,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/baralhoDeCartasAnimal.dart';
 
+import 'baralhoDeCartasAnimal.dart';
 import 'moldarCarta.dart';
 
 typedef Null CardAcceptCallback(List<CartaDoBaralhoAnimal> card, int fromIndex);

@@ -95,7 +95,7 @@ class _TelaFaseDoJogoState extends State<TelaFaseDoJogo> {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, "/PageEscolhaDeProblemasFase1");
+                            Navigator.pushNamed(context, "/Page_Fase1");
                           },
                         ),
                       ),
