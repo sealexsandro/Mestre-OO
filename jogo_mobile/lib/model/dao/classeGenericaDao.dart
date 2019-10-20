@@ -1,5 +1,5 @@
 
-import 'package:jogo_mobile/models/ClasseGenerica.dart';
+import 'package:jogo_mobile/model/ClasseGenerica.dart';
 
 class ClasseGenericaDao {
   

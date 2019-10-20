@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jogo_mobile/pages/cadastroDeUser_page/form_cadastro.dart';
 import 'package:jogo_mobile/pages/escolhaDeFase_page/tela_fases_do_Jogo.dart';
 import 'package:jogo_mobile/pages/fase1_page/atributosBloc.dart';
-import 'package:jogo_mobile/pages/fase1_page/telaFase1diagramaDeClasse.dart';
+import 'package:jogo_mobile/pages/fase1_page/telaFase1.dart';
 import 'package:jogo_mobile/pages/login_page/login_page.dart';
 import 'package:provider/provider.dart';
 
@@ -33,10 +33,11 @@ class MyApp extends StatelessWidget {
 
   MaterialApp buildMaterialApp() {
     return MaterialApp(
-      title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.white
       ),
       routes: rotas,
       initialRoute: "/",

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/models/ClasseGenerica.dart';
 import 'package:jogo_mobile/pages/fase1_page/atributosBloc.dart';
 import 'package:provider/provider.dart';
 
 class ContainerDeClasse extends StatefulWidget {
-  EnumsNomesDeClasses nomeDaClasse;
-  ContainerDeClasse(EnumsNomesDeClasses nomeDaClasse) {
+  String nomeDaClasse;
+  ContainerDeClasse(String nomeDaClasse) {
     this.nomeDaClasse = nomeDaClasse;
   }
 
@@ -15,17 +14,28 @@ class ContainerDeClasse extends StatefulWidget {
 }
 
 class _ContainerDeClasseState extends State<ContainerDeClasse> {
-  EnumsNomesDeClasses nomeDaClasse;
-  List<String> listaDeAtributos = [];
+  TransferirdadosDaClasseBloc bloc;
 
-  _ContainerDeClasseState(EnumsNomesDeClasses nomeDaClasse) {
+  String nomeDaClasse;
+  List<String> listaDeAtributos = [];
+  var screnSize;
+
+  _ContainerDeClasseState(String nomeDaClasse) {
     this.nomeDaClasse = nomeDaClasse;
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    this.bloc = Provider.of<TransferirdadosDaClasseBloc>(context);
+    this.listaDeAtributos = [];
+  }
+
+  @override
   Widget build(BuildContext context) {
+    this.screnSize = MediaQuery.of(context).size.width / 2.1;
     return Container(
-      width: MediaQuery.of(context).size.width / 2.1,
+      width: this.screnSize,
       height: MediaQuery.of(context).size.height / 2.5,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.blue),
@@ -33,7 +43,7 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
       child: Column(
         children: <Widget>[
           Container(
-            width: MediaQuery.of(context).size.width / 2.1,
+            width: this.screnSize,
             height: 30,
             decoration: BoxDecoration(
               border: Border(
@@ -44,11 +54,12 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
               ),
             ),
             child: Center(
-              child: Text(textNomeDaClasse(this.nomeDaClasse).toUpperCase()),
+              // child: Text(nomeDaClasse.toUpperCase()),
+              child: Text("Mamassi mamassá"),
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width / 2.1,
+            width: this.screnSize,
             height: 130,
             decoration: BoxDecoration(
               border: Border(
@@ -58,42 +69,322 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
                 ),
               ),
             ),
-            child: linhaDeAtributo(),
+            child: Container(
+              child: Scrollbar(
+                child: widgetListaDeAtributos2(),
+              ),
+            ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width / 2.1,
-            //height: 130,
-            // decoration: BoxDecoration(
-            //   border: Border(
-            //     top: BorderSide(
-            //       width: 1.0,
-            //       color: Colors.blue,
-            //     ),
-            //   ),
-            // ),
+            width: this.screnSize,
           ),
         ],
       ),
     );
   }
 
-  String textNomeDaClasse(EnumsNomesDeClasses nomeDaClasse) {
-    return NomesGenericosParaClasses.getNomesGenericoDeClasse(nomeDaClasse);
-  }
+  // widgetListaDeAtributos4() {
+  //   String atrib = this.bloc.atributo;
 
-  linhaDeAtributo() {
-    TransferirdadosDaClasseBloc nomeDoAtributo =
-        Provider.of<TransferirdadosDaClasseBloc>(context);
-    String atrib = nomeDoAtributo.atributo;
+  //   if (atrib != null) {
+  //     listaDeAtributos.add(atrib);
+  //     this.bloc.anularAtributo();
 
-    if (atrib != null) {
-      listaDeAtributos.add(atrib);
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: listaDeAtributos.map((card) {
-          return Text(card);
-        }).toList(),
+  //     return ListView(
+  //       children: ListTile.divideTiles(
+  //         context: context,
+  //         tiles: listaDeAtributos.map((atributo) {
+  //           return Stack(
+  //             children: <Widget>[
+  //               ListTile(
+  //                 title: new Row(
+  //                   children: <Widget>[
+  //                     new Container(child: new Text(atributo)),
+  //                     IconButton(
+  //                       icon: new Icon(Icons.delete),
+  //                       onPressed: () {
+  //                         //  setState(() {
+  //                         removerLinhaDeAtributo(atributo);
+  //                         // });
+  //                       },
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ],
+  //           );
+  //         }),
+  //       ).toList(),
+  //     );
+  //   }
+  // }
+
+  // widgetListaDeAtributos3() {
+  //   String atrib = this.bloc.atributo;
+
+  //   if (atrib != null) {
+  //     listaDeAtributos.add(atrib);
+  //     this.bloc.anularAtributo();
+
+  //     return ListView(
+  //       padding: EdgeInsets.all(10.0),
+  //       children: listaDeAtributos.reversed.map((data) {
+  //         return Dismissible(
+  //           background: stackBehindDismiss(),
+  //           key: Key(data),
+  //           child: Container(
+  //             //  padding: EdgeInsets.all(2),
+  //             child: new Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //               children: <Widget>[
+  //                 Container(
+  //                   width: this.screnSize - 10,
+  //                   margin: EdgeInsets.all(3),
+  //                   decoration: BoxDecoration(
+  //                     border: Border.all(color: Colors.grey),
+  //                     borderRadius: BorderRadius.all(
+  //                       Radius.circular(5),
+  //                     ),
+  //                   ),
+  //                   child: Text(
+  //                     data,
+  //                     style: TextStyle(
+  //                       fontSize: 14,
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //           onDismissed: (direction) {
+  //             //To delete
+  //             deleteItem(data);
+  //           },
+  //         );
+  //       }).toList(),
+  //     );
+  //   }
+  // }
+
+  widgetListaDeAtributos2() {
+    listaDeAtributos = this.bloc.listaDeClassesAtributos;
+
+    if (listaDeAtributos.length > 0) {
+      return ListView.builder(
+        itemCount: listaDeAtributos.length,
+        itemBuilder: (context, index) {
+          return Dismissible(
+            background: stackBehindDismiss(),
+            key: Key(listaDeAtributos[index]),
+            //           key: Key(UniqueKey().toString()),
+            onDismissed: (direction) {
+              //To delete
+
+              //    removerLinhaDeAtributo(listaDeAtributos[index]);
+              setState(() {
+                //  deleteItem(index);
+                this.listaDeAtributos.removeAt(index);
+              });
+            },
+            child: Text(listaDeAtributos[index]),
+            // Container(
+            //   //  padding: EdgeInsets.all(2),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //     children: <Widget>[
+            //       Container(
+            //         width: this.screnSize - 10,
+            //         margin: EdgeInsets.all(3),
+            //         decoration: BoxDecoration(
+            //           border: Border.all(color: Colors.grey),
+            //           borderRadius: BorderRadius.all(
+            //             Radius.circular(5),
+            //           ),
+            //         ),
+            //         child: Text(
+            //           listaDeAtributos[index],
+            //           style: TextStyle(
+            //             fontSize: 14,
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+          );
+        },
       );
     }
   }
+
+  void deleteItem(index) {
+    /*
+  Ao implementar esse método, ele garante que, ao ser dispensado da nossa árvore de widgets,
+  o item é removido da nossa lista de itens e nossa lista é atualizada, portanto
+  impedindo o erro "Widget dispensado ainda na árvore de widgets" quando recarregamos.
+  */
+    //   setState(() {
+    if (index > 0) {
+      listaDeAtributos.removeAt(index);
+    }
+//    });
+    // listaDeAtributos.removeAt(index);
+  }
+
+  Widget stackBehindDismiss() {
+    return Container(
+      alignment: Alignment.centerRight,
+      padding: EdgeInsets.only(right: 20.0),
+      color: Colors.red,
+      child: Icon(
+        Icons.delete,
+        color: Colors.white,
+      ),
+    );
+  }
+
+  // widgetListaDeAtributos() {
+  //   String atrib = this.bloc.atributo;
+
+  //   if (atrib != null) {
+  //     listaDeAtributos.add(atrib);
+  //     this.bloc.anularAtributo();
+
+  //     return ListView.builder(
+  //       itemCount: 1,
+  //       itemBuilder: (BuildContext context, int index) {
+  //         debugPrint("Printando ............");
+  //         return Column(
+  //           children: listaDeAtributos.map(
+  //             (atributo) {
+  //               debugPrint("Printando 222 ............");
+  //               return Row(
+  //                 children: <Widget>[
+  //                   Container(
+  //                     width: this.screnSize - 10,
+  //                     margin: EdgeInsets.all(3),
+  //                     decoration: BoxDecoration(
+  //                       border: Border.all(color: Colors.grey),
+  //                       borderRadius: BorderRadius.all(
+  //                         Radius.circular(7),
+  //                       ),
+  //                     ),
+  //                     child: Row(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                       children: <Widget>[
+  //                         Container(
+  //                           margin: EdgeInsets.only(left: 3),
+  //                           width: MediaQuery.of(context).size.width / 3.1,
+  //                           child: Text(
+  //                             atributo,
+  //                             style: TextStyle(
+  //                               fontSize: 14,
+  //                             ),
+  //                           ),
+  //                         ),
+  //                         Container(
+  //                           margin: EdgeInsets.only(left: 2),
+  //                           child: GestureDetector(
+  //                             onTap: () {
+  //                               removerLinhaDeAtributo(atributo);
+  //                               // setState(() {
+  //                               //    removerLinhaDeAtributo(atributo);
+  //                               // });
+  //                             },
+  //                             child: Align(
+  //                               alignment: Alignment.topRight,
+  //                               child: CircleAvatar(
+  //                                 radius: 14.0,
+  //                                 backgroundColor: Colors.white,
+  //                                 child: Icon(Icons.close, color: Colors.red),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ],
+  //               );
+  //             },
+  //           ).toList(),
+  //         );
+  //       },
+  //     );
+  //   }
+  // }
+
+//   linhaDeAtributo() {
+//     String atrib = this.bloc.atributo;
+
+//     if (atrib != null) {
+//       listaDeAtributos.add(atrib);
+//       this.bloc.anularAtributo();
+//       return ListView(
+//         // crossAxisAlignment: CrossAxisAlignment.stretch,
+//         children: listaDeAtributos.map(
+//           (atributo) {
+//             //return Text(card);
+//             return Row(
+//               children: <Widget>[
+//                 Container(
+//                   width: this.screnSize - 10,
+//                   margin: EdgeInsets.all(3),
+//                   decoration: BoxDecoration(
+//                     border: Border.all(color: Colors.grey),
+//                     borderRadius: BorderRadius.all(
+//                       Radius.circular(7),
+//                     ),
+//                   ),
+//                   child: Row(
+//                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                     children: <Widget>[
+//                       Container(
+//                         margin: EdgeInsets.only(left: 3),
+//                         width: MediaQuery.of(context).size.width / 3.1,
+//                         child: Text(
+//                           atributo,
+//                           style: TextStyle(
+//                             fontSize: 14,
+//                           ),
+//                         ),
+//                       ),
+//                       Container(
+//                         margin: EdgeInsets.only(left: 2),
+//                         child: GestureDetector(
+//                           onTap: () {
+//                             setState(() {
+//                               removerLinhaDeAtributo(atributo);
+//                             });
+//                           },
+//                           child: Align(
+//                             alignment: Alignment.topRight,
+//                             child: CircleAvatar(
+//                               radius: 14.0,
+//                               backgroundColor: Colors.white,
+//                               child: Icon(Icons.close, color: Colors.red),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ],
+//             );
+//           },
+//         ).toList(),
+//       );
+//     }
+//   }
+
+//   removerLinhaDeAtributo(String atributo) {
+//     if (atributo != null) {
+//       if (listaDeAtributos.length > 0) {
+//         //    setState(() {
+//         listaDeAtributos.removeWhere((item) => item == atributo);
+//         //  });
+//       }
+//     }
+//   }
 }
