@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/pages/componentes/ClipperContainerSuperior.dart';
-import 'package:jogo_mobile/pages/componentes/iconesComponent.dart';
+import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
+import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
 
-class TelaFaseDoJogo extends StatefulWidget {
+
+class SignUp extends StatefulWidget {
   @override
-  _TelaFaseDoJogoState createState() => _TelaFaseDoJogoState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _TelaFaseDoJogoState extends State<TelaFaseDoJogo> {
+class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +69,10 @@ class _TelaFaseDoJogoState extends State<TelaFaseDoJogo> {
                   padding: EdgeInsets.only(top: 0),
                   child: Column(
                     children: <Widget>[
+                      containerCamposTextFild(IconesComponent.nomeDoUser),
+                      containerCamposTextFild(IconesComponent.email),
+                      containerCamposTextFild(IconesComponent.senha),
+                      containerCamposTextFild(IconesComponent.repitaASenha),
                       Container(
                         margin: EdgeInsets.only(top: 15),
                         width: MediaQuery.of(context).size.width / 1.2,
@@ -83,106 +88,69 @@ class _TelaFaseDoJogoState extends State<TelaFaseDoJogo> {
                             Radius.circular(40),
                           ),
                         ),
-                        child: FlatButton(
-                          child: Center(
-                            child: Text(
-                              "Classes".toUpperCase(),
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                        child: Center(
+                          child: Text(
+                            "Salvar".toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                  gradient: new LinearGradient(
+                                      colors: [
+                                        Colors.black12,
+                                        Colors.black,
+                                      ],
+                                      begin: const FractionalOffset(0.0, 0.0),
+                                      end: const FractionalOffset(1.0, 1.0),
+                                      stops: [0.0, 1.0],
+                                      tileMode: TileMode.clamp),
+                                ),
+                                width: 100.0,
+                                height: 1.0,
                               ),
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(context, "/Page_Fase1");
-                          },
-                        ),
-                      ),
-
-                      //////////////////Botão de segunda Fase logo abaixo///////////////
-                      Container(
-                        margin: EdgeInsets.only(top: 15),
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF6078ea),
-                              Color(0xFF17ead9),
+                              Container(
+                                decoration: BoxDecoration(
+                                  gradient: new LinearGradient(
+                                      colors: [
+                                        Colors.black,
+                                        Colors.black12,
+                                      ],
+                                      begin: const FractionalOffset(0.0, 0.0),
+                                      end: const FractionalOffset(1.0, 1.0),
+                                      stops: [0.0, 1.0],
+                                      tileMode: TileMode.clamp),
+                                ),
+                                width: 100.0,
+                                height: 1.0,
+                              ),
                             ],
                           ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(40),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Objetos".toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
                         ),
                       ),
-
-                      //////////////////Botão da terceria Fase logo abaixo///////////////
                       Container(
-                        margin: EdgeInsets.only(top: 15),
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF6078ea),
-                              Color(0xFF17ead9),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(40),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Encapsulamento".toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      //////////////////Botão da Quarta Fase logo abaixo///////////////
-                      Container(
-                        margin: EdgeInsets.only(top: 15),
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF6078ea),
-                              Color(0xFF17ead9),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(40),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Herança".toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
+                        child: FlatButton(
+                            onPressed: () { Navigator.pushNamed(context, "/");},
+                            child: Text(
+                              "Já sou cadastrado",
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18.0,
+                                  fontFamily: "WorkSansMedium"),
+                            )),
+                      )
                     ],
                   ),
                 ),

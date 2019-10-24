@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/pages/fase1_page/atributosBloc.dart';
+import 'package:jogo_mobile/src/controller/controle_nivel_1.dart';
 import 'package:provider/provider.dart';
 
 class ContainerDeClasse extends StatefulWidget {
@@ -14,7 +14,7 @@ class ContainerDeClasse extends StatefulWidget {
 }
 
 class _ContainerDeClasseState extends State<ContainerDeClasse> {
-  TransferirdadosDaClasseBloc bloc;
+  ControleNivel01 controleNivel01;
 
   String nomeDaClasse;
   List<String> listaDeAtributos = [];
@@ -27,7 +27,7 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    this.bloc = Provider.of<TransferirdadosDaClasseBloc>(context);
+    this.controleNivel01 = Provider.of<ControleNivel01>(context);
     this.listaDeAtributos = [];
   }
 
@@ -84,11 +84,11 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   }
 
   // widgetListaDeAtributos4() {
-  //   String atrib = this.bloc.atributo;
+  //   String atrib = this.controleNivel01.atributo;
 
   //   if (atrib != null) {
   //     listaDeAtributos.add(atrib);
-  //     this.bloc.anularAtributo();
+  //     this.controleNivel01.anularAtributo();
 
   //     return ListView(
   //       children: ListTile.divideTiles(
@@ -120,11 +120,11 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   // }
 
   // widgetListaDeAtributos3() {
-  //   String atrib = this.bloc.atributo;
+  //   String atrib = this.controleNivel01.atributo;
 
   //   if (atrib != null) {
   //     listaDeAtributos.add(atrib);
-  //     this.bloc.anularAtributo();
+  //     this.controleNivel01.anularAtributo();
 
   //     return ListView(
   //       padding: EdgeInsets.all(10.0),
@@ -167,7 +167,7 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   // }
 
   widgetListaDeAtributos2() {
-    listaDeAtributos = this.bloc.listaDeClassesAtributos;
+    listaDeAtributos = this.controleNivel01.listaDeClassesAtributos;
 
     if (listaDeAtributos.length > 0) {
       return ListView.builder(
@@ -244,11 +244,11 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   }
 
   // widgetListaDeAtributos() {
-  //   String atrib = this.bloc.atributo;
+  //   String atrib = this.controleNivel01.atributo;
 
   //   if (atrib != null) {
   //     listaDeAtributos.add(atrib);
-  //     this.bloc.anularAtributo();
+  //     this.controleNivel01.anularAtributo();
 
   //     return ListView.builder(
   //       itemCount: 1,
@@ -315,11 +315,11 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   // }
 
 //   linhaDeAtributo() {
-//     String atrib = this.bloc.atributo;
+//     String atrib = this.controleNivel01.atributo;
 
 //     if (atrib != null) {
 //       listaDeAtributos.add(atrib);
-//       this.bloc.anularAtributo();
+//       this.controleNivel01.anularAtributo();
 //       return ListView(
 //         // crossAxisAlignment: CrossAxisAlignment.stretch,
 //         children: listaDeAtributos.map(

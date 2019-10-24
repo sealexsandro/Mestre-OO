@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/model/ClasseGenerica.dart';
-import 'package:jogo_mobile/model/atributosDasClasses.dart';
-import 'package:jogo_mobile/pages/fase1_page/atributosBloc.dart';
+import 'package:jogo_mobile/src/controller/controle_nivel_1.dart';
+import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
+import 'package:jogo_mobile/src/pages/Nivel_1/componentes/enums_da_fase1.dart';
 import 'package:provider/provider.dart';
 
-class CustomDialog extends StatelessWidget {
+class CaixaDialog extends StatelessWidget {
   ClasseGenerica classeGenerica;
+  String tituloDoContainer;
+  String textoQntDePontos;
+  EnumsFase1CaixaDeDialog enumsFase1CaixaDeDialog;
   Color corDoContainer = Colors.blueAccent[400];
 
-  List<String> listDeAtributosColuna1 = [];
-  List<String> listDeAtributosColuna2 = [];
-  List<String> listDeAtributosMisturados = [];
+  List<String> listaDeButoesColuna1 = []; // Atributos  ou metodos da coluna 1
+  List<String> listaDeButoesColuna2 = []; // Atributos  ou metodos da coluna 2
+  List<String> listaDeButoesMisturados = []; // Atributos ou metodos misturados
 
-  TransferirdadosDaClasseBloc bloc;
+  ControleNivel01 controleNivel01;
 
-  CustomDialog(ClasseGenerica classeGenerica) {
-    this.classeGenerica = classeGenerica;
-    _iniciarListas();
+  CaixaDialog(
+      {@required this.classeGenerica,
+      @required this.tituloDoContainer,
+      @required this.textoQntDePontos,
+      @required this.enumsFase1CaixaDeDialog}) {
+    _iniciarListas(this.enumsFase1CaixaDeDialog);
   }
 
   @override
   Widget build(BuildContext context) {
+    this.controleNivel01 = Provider.of<ControleNivel01>(context, listen: false);
     return WillPopScope(
       onWillPop: () async => false,
       child: Dialog(
@@ -57,13 +64,12 @@ class CustomDialog extends StatelessWidget {
                   ),
                 ]),
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(left: 10, top: 10),
                   child: Text(
-                    "Escolha Atributos".toUpperCase(),
+                    tituloDoContainer.toUpperCase(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -73,18 +79,17 @@ class CustomDialog extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 10, top: 20),
                   child: Text(
-                    "Pontos por Atributo correto: 05 pontos",
+                    textoQntDePontos,
                     style: TextStyle(
                       fontSize: 13,
                     ),
                   ),
                 ),
-                inseriAtributos(context),
+                inserirButoes(context),  //Inserindo butoes na  caixa de dialogo
                 SizedBox(
                   height: 10,
                 ),
                 Center(
-                  // margin: EdgeInsets.only(top: 20),
                   child: RaisedButton(
                     color: Colors.deepOrange,
                     shape: RoundedRectangleBorder(
@@ -95,7 +100,6 @@ class CustomDialog extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
-                        // fontFamily: 'Raleway',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -104,55 +108,6 @@ class CustomDialog extends StatelessWidget {
                       enviarAtributos(context);
                     },
                   ),
-                  // child: Row(
-                  //   mainAxisAlignment: MainAxisAlignment.end,
-                  //   children: <Widget>[
-                  // Container(
-                  //   padding: EdgeInsets.all(10),
-                  //   child: RaisedButton(
-                  //     color: Colors.deepOrange,
-                  //     shape: RoundedRectangleBorder(
-                  //         borderRadius: new BorderRadius.circular(10)),
-                  //     padding: EdgeInsets.only(left: 0),
-                  //     child: Text(
-                  //       "Cancelar".toUpperCase(),
-                  //       style: TextStyle(
-                  //         fontSize: 15,
-                  //         color: Colors.white,
-                  //         // fontFamily: 'Raleway',
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //     ),
-                  //     onPressed: () {
-                  //       Navigator.pop(context);
-                  //     },
-                  //   ),
-                  // ),
-                  //     Container(
-                  //       // padding: EdgeInsets.only(right: 20),
-                  //       margin: EdgeInsets.only(left: 30),
-                  //       child: RaisedButton(
-                  //         color: Colors.deepOrange,
-                  //         shape: RoundedRectangleBorder(
-                  //             borderRadius: new BorderRadius.circular(10)),
-                  //         padding: EdgeInsets.only(left: 0),
-                  //         child: Text(
-                  //           "Ok".toUpperCase(),
-                  //           style: TextStyle(
-                  //             fontSize: 15,
-                  //             color: Colors.white,
-                  //             // fontFamily: 'Raleway',
-                  //             fontWeight: FontWeight.bold,
-                  //           ),
-                  //         ),
-                  //         onPressed: () {
-                  //           Navigator.pop(context);
-                  //           enviarAtributos(context);
-                  //         },
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                 ),
               ],
             ),
@@ -178,8 +133,8 @@ class CustomDialog extends StatelessWidget {
     );
   }
 
-  inseriAtributos(BuildContext context) {
-    debugPrint("Tamanho da lista: " + listDeAtributosColuna1.length.toString());
+  inserirButoes(BuildContext context) {
+    debugPrint("Tamanho da lista: " + listaDeButoesColuna1.length.toString());
     return Container(
       width: MediaQuery.of(context).size.width / 1.4,
       margin: EdgeInsets.only(left: 10, top: 5),
@@ -191,12 +146,12 @@ class CustomDialog extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Column(
-            children: listDeAtributosColuna1.map<Widget>((atributoClass) {
+            children: listaDeButoesColuna1.map<Widget>((atributoClass) {
               return _butao(atributoClass, context);
             }).toList(),
           ),
           Column(
-            children: listDeAtributosColuna2.map<Widget>((atributoClass) {
+            children: listaDeButoesColuna2.map<Widget>((atributoClass) {
               return _butao(atributoClass, context);
             }).toList(),
           ),
@@ -205,7 +160,9 @@ class CustomDialog extends StatelessWidget {
     );
   }
 
+ 
   _butao(String nomeDoButao, BuildContext context) {
+    debugPrint("Inserindo butoes!!");
     return Container(
       width: MediaQuery.of(context).size.width / 3,
       margin: EdgeInsets.all(1),
@@ -230,26 +187,26 @@ class CustomDialog extends StatelessWidget {
     );
   }
 
-  void _iniciarListas() {
-    listDeAtributosColuna1 = [];
-    listDeAtributosColuna2 = [];
-    List<String> listDeAtributosVariados =
-        this.classeGenerica.listaDeAtributosVariados;
-
-    if (listDeAtributosVariados.length > 0) {
-      // listDeAtributosVariados.shuffle();
-      for (var i = 0; i < listDeAtributosVariados.length; i++) {
+  void _iniciarListas(EnumsFase1CaixaDeDialog enumsFase1CaixaDeDialog) {
+    if (enumsFase1CaixaDeDialog == EnumsFase1CaixaDeDialog.caixaAtributos) {
+      this.listaDeButoesMisturados =
+          this.classeGenerica.listaDeAtributosVariados;
+    } else {
+      this.listaDeButoesMisturados = this.classeGenerica.listaDeMetodosVariados;
+    }
+    this.listaDeButoesMisturados.shuffle();
+    if (this.listaDeButoesMisturados.length > 0) {
+      for (var i = 0; i < this.listaDeButoesMisturados.length; i++) {
         if (i < 4) {
-          //      debugPrint("Valor do atributo: " + listDeAtributosVariados[i]);
-          //Preenchendo com atributos Corretos da classe escolhida
-          listDeAtributosColuna1.add(listDeAtributosVariados[i]);
+          //Preenchendo com atributos ou métodos
+          this.listaDeButoesColuna1.add(this.listaDeButoesMisturados[i]);
         } else {
-          //Preenchendo com atributos Incorretos para classe escolhida
-          listDeAtributosColuna2.add(listDeAtributosVariados[i]);
+          //Preenchendo com atributos ou metodos
+          this.listaDeButoesColuna2.add(this.listaDeButoesMisturados[i]);
         }
       }
     } else {
-      debugPrint("Valore Nulos");
+      debugPrint("Valores não Inseridos");
     }
   }
 
@@ -258,31 +215,37 @@ class CustomDialog extends StatelessWidget {
     // setState(() {
     //   corDoContainer = Colors.pink;
     // });
-    // TransferirdadosDaClasseBloc tranferirAtrib =
-    //     Provider.of<TransferirdadosDaClasseBloc>(context, listen: false);
+    // ControllerFase1 tranferirAtrib =
+    //     Provider.of<ControllerFase1>(context, listen: false);
 
     // tranferirAtrib.tranferirAtributo(nomeDoButaoAtributo);
 
-    if (AtributoClass() != null) {
+    if (atributo != null) {
       var existe;
-      for (var i = 0; i < this.listDeAtributosMisturados.length; i++) {
-        if (atributo == this.listDeAtributosMisturados[i]) {
+      for (var i = 0; i < this.listaDeButoesMisturados.length; i++) {
+        if (atributo == this.listaDeButoesMisturados[i]) {
           existe = true;
         }
       }
       if (existe != true) {
-        debugPrint("Inseriu-------------------");
-        this.listDeAtributosMisturados.add(atributo);
+        this.listaDeButoesMisturados.add(atributo);
       }
     }
   }
 
   enviarAtributos(BuildContext context) {
-    if (this.listDeAtributosMisturados.length > 0) {
-      TransferirdadosDaClasseBloc tranferirAtrib =
-          Provider.of<TransferirdadosDaClasseBloc>(context, listen: false);
+    if (this.listaDeButoesMisturados.length > 0) {
+      ControleNivel01 tranferirAtrib =
+          Provider.of<ControleNivel01>(context, listen: false);
 
-      tranferirAtrib.tranferirAtributos(this.listDeAtributosMisturados);
+      tranferirAtrib.tranferirAtributos(this.listaDeButoesMisturados);
     }
   }
+
+  // enviarMetodos() {
+  //   if (this.listaDeButoesMisturados.length > 0) {
+  //     ControleNivel01 tranferirAtrib = controleNivel01
+  //         .tranferirAtributos(this.listaDeButoesMisturados);
+  //   }
+  // }
 }

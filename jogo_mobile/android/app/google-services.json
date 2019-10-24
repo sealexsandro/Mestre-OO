@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "806370419098",
+    "firebase_url": "https://mestre-oo.firebaseio.com",
+    "project_id": "mestre-oo",
+    "storage_bucket": "mestre-oo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806370419098:android:0ac4fedb801e158e4e5a23",
+        "android_client_info": {
+          "package_name": "com.sa_projects.jogo_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806370419098-oigl32bfab99chivng6uknlcmdhmu607.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sa_projects.jogo_mobile",
+            "certificate_hash": "57a245a5bb0140b35a7bd705a8fdf0b7c49e8c95"
+          }
+        },
+        {
+          "client_id": "806370419098-rl0i756qruujibinc3a5kk7rsl3nh04k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCWdomRQ12DVrn2ybEAPq5rDqLNPL2XH4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806370419098-rl0i756qruujibinc3a5kk7rsl3nh04k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

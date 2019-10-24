@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/pages/cadastroDeUser_page/form_cadastro.dart';
-import 'package:jogo_mobile/pages/escolhaDeFase_page/tela_fases_do_Jogo.dart';
-import 'package:jogo_mobile/pages/fase1_page/atributosBloc.dart';
-import 'package:jogo_mobile/pages/fase1_page/telaFase1.dart';
-import 'package:jogo_mobile/pages/login_page/login_page.dart';
+import 'package:jogo_mobile/src/controller/controle_nivel_1.dart';
+import 'package:jogo_mobile/src/pages/EscolhaDeNivel/escolha_nivel.dart';
+import 'package:jogo_mobile/src/pages/Login/login.dart';
+import 'package:jogo_mobile/src/pages/Nivel_1/nivel_1.dart';
+import 'package:jogo_mobile/src/pages/SignUP/sign_up.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   var rotas = <String, WidgetBuilder>{
-    "/": (BuildContext context) => new LoginPage(),
-    "/PageformCadastro": (BuildContext context) => new FormCadastro(),
-    "/PageFaseDoJogo": (BuildContext context) => new TelaFaseDoJogo(),
-    // "/PageEscolhaDeProblemasFase1": (BuildContext context) =>
-    //     new EscolhaDeProblemasFase1(),
-    "/Page_Fase1": (BuildContext context) =>
-        new Fase1_Classes(),
+    "/": (BuildContext context) => new Login(),
+    "/SignUp": (BuildContext context) => new SignUp(),
+    "/EscolhaDeNivel": (BuildContext context) => new EscolhaDeNivel(),
+    "/Nivel01": (BuildContext context) => new Nivel01(),
   };
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<TransferirdadosDaClasseBloc>(
-          builder: (context) => TransferirdadosDaClasseBloc(),
+        ChangeNotifierProvider<ControleNivel01>(
+          builder: (context) => ControleNivel01(),
         ),
       ],
       child: buildMaterialApp(),
@@ -35,10 +32,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: Colors.white
-      ),
+          primarySwatch: Colors.blue,
+          brightness: Brightness.light,
+          scaffoldBackgroundColor: Colors.white),
       routes: rotas,
       initialRoute: "/",
     );

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jogo_mobile/pages/componentes/ClipperContainerSuperior.dart';
-import 'package:jogo_mobile/pages/componentes/iconesComponent.dart';
+import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
+import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
 
-class LoginPage extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginState createState() => _LoginState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginState extends State<Login> {
   final _tLogin = TextEditingController();
   final _tSenha = TextEditingController();
 
@@ -74,8 +74,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 1.45,
-                padding: EdgeInsets.only(top: 25),
                 child: Column(
                   children: <Widget>[
                     containerCamposTextFild(IconesComponent.email,
@@ -113,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: FlatButton(
                         child: Center(
                           child: Text(
-                            "Entrar".toUpperCase(),
+                            "Entre".toUpperCase(),
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -124,6 +122,16 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: onPressedFunction,
                       ),
                     ),
+                    // Container(
+                    //   margin: EdgeInsets.only(top: 15),
+                    //   width: MediaQuery.of(context).size.width / 1.2,
+                    //   height: 60,
+                    //   child: GoogleSignInButton(
+                    //     borderRadius: 40,
+                    //     text: "Entrar com conta Google",
+                    //     onPressed: onPressedGoogleLogin,
+                    //   ),
+                    // ),
                     Container(
                       width: MediaQuery.of(context).size.width / 1.2,
                       child: Padding(
@@ -180,10 +188,10 @@ class _LoginPageState extends State<LoginPage> {
                         padding: EdgeInsets.only(top: 5),
                         child: FlatButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, "/PageformCadastro");
+                              Navigator.pushNamed(context, "/SignUp");
                             },
                             child: Text(
-                              "Cadastrar-se",
+                              "Cadastre-se",
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 18.0,
@@ -237,6 +245,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   onPressedFunction() {
-    Navigator.pushNamed(context, "/PageFaseDoJogo");
+    Navigator.pushNamed(context, "/EscolhaDeNivel");
+  }
+
+  onPressedGoogleLogin() {
+    Navigator.pushNamed(context, "/EscolhaDeNivel");
   }
 }

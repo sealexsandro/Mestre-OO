@@ -1,4 +1,5 @@
-import 'package:jogo_mobile/model/ClasseGenerica.dart';
+
+import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
 
 enum EnumsClasseCachorro {
   racaCachorro,
@@ -12,19 +13,25 @@ class AtributosDeClasseCorretos {
   static List<String> listaTrueAtributosCachorro = [
     "racaDoCachorro: String",
     "altura: float",
-    "CorDoPelo: String"
+    "corDoPelo: String",
+    "vacinado: boolean",
+    "nome: String",
   ];
 
-   static List<String> listaTrueAtributosPessoa = [
+  static List<String> listaTrueAtributosPessoa = [
     "nome: String",
     "altura: float",
-    "cpf: String"
+    "cpf: String",
+    "nomeMae: String",
+    "corDoCabelo: String",
   ];
 
-   static List<String> listaTrueAtributosCarro = [
+  static List<String> listaTrueAtributosCarro = [
     "modelo: String",
     "qtdDeRodas: int",
-    "qtdDePortas: int"
+    "qtdDePortas: int",
+    "corDoCarro: String",
+    "anoDoCarro: int",
   ];
 
   static List<String> getAtributosCorretos(
@@ -45,19 +52,25 @@ class AtributosDeClasseCorretos {
 
 class AtributosDeClasseIncorretos {
   static List<String> listaFalseAtributosCachorro = [
-    "racaDo: Pink",
+    "racaDoCao: Pink",
     ": float",
-    "CorDoPelo:"
+    "CorDoPelo:",
+    "Rex: String",
+    "idade: boolean",
   ];
   static List<String> listaFalseAtributosPessoa = [
     "AnaLuiza",
     ": String",
-    "Cor olho:"
+    "Cor olho:",
+    "float: altura",
+    "funcao: true",
   ];
- static List<String> listaFalseAtributosCarro = [
+  static List<String> listaFalseAtributosCarro = [
     "Parachoque",
     "String: String",
-    "booleano:"
+    "booleano:",
+    "String: pneu",
+    "A venda?: String",
   ];
   static List<String> getAtributosIncorretos(
       EnumsNomesDeClasses enumsNomesDeClasses) {
@@ -74,7 +87,7 @@ class AtributosDeClasseIncorretos {
   }
 }
 
-class AtributoClass{
+class AtributoClass {
   int id;
   String atributoDeClasse;
 

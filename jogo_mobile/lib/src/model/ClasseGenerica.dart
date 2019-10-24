@@ -42,11 +42,16 @@ class ClasseGenerica {
   List<String> listaDeAtributosVerdadeiros;
   List<String> listaDeAtributosVariados;
 
+  List<String> listaDeMetodosVerdadeiros;
+  List<String> listaDeMetodosVariados;
+
   ClasseGenerica({
     @required this.enumNomeDaClasse,
     @required this.nomeDaClasse,
     @required this.nomeDoProblema,
     @required this.listaDeAtributosVerdadeiros,
     @required this.listaDeAtributosVariados,
+    @required this.listaDeMetodosVerdadeiros,
+    @required this.listaDeMetodosVariados,
   });
 }
