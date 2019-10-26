@@ -1,10 +1,30 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile/src/controller/controle_nivel_1.dart';
 import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/enums_da_fase1.dart';
 import 'package:provider/provider.dart';
 
-class CaixaDialog extends StatelessWidget {
+class CaixaDialog extends StatefulWidget {
+  ClasseGenerica classeGenerica;
+  String tituloDoContainer;
+  String textoQntDePontos;
+  EnumsFase1CaixaDeDialog enumsFase1CaixaDeDialog;
+
+  ControleNivel01 controleNivel01;
+  CaixaDialog(
+      {@required this.classeGenerica,
+      @required this.tituloDoContainer,
+      @required this.textoQntDePontos,
+      @required this.enumsFase1CaixaDeDialog,
+      @required this.controleNivel01});
+
+  @override
+  _ShowDialogState createState() => _ShowDialogState();
+}
+
+class _ShowDialogState extends State<CaixaDialog> {
   ClasseGenerica classeGenerica;
   String tituloDoContainer;
   String textoQntDePontos;
@@ -13,21 +33,23 @@ class CaixaDialog extends StatelessWidget {
 
   List<String> listaDeButoesColuna1 = []; // Atributos  ou metodos da coluna 1
   List<String> listaDeButoesColuna2 = []; // Atributos  ou metodos da coluna 2
-  List<String> listaDeButoesMisturados = []; // Atributos ou metodos misturados
+  HashMap<String, Color> mapIsActiveDeButao;
 
   ControleNivel01 controleNivel01;
 
-  CaixaDialog(
-      {@required this.classeGenerica,
-      @required this.tituloDoContainer,
-      @required this.textoQntDePontos,
-      @required this.enumsFase1CaixaDeDialog}) {
-    _iniciarListas(this.enumsFase1CaixaDeDialog);
+  @override
+  void initState() {
+    super.initState();
+    this.classeGenerica = widget.classeGenerica;
+    this.tituloDoContainer = widget.tituloDoContainer;
+    this.textoQntDePontos = widget.textoQntDePontos;
+    this.enumsFase1CaixaDeDialog = widget.enumsFase1CaixaDeDialog;
+    this.controleNivel01 = widget.controleNivel01;
+    _iniciarListas();
   }
 
   @override
   Widget build(BuildContext context) {
-    this.controleNivel01 = Provider.of<ControleNivel01>(context, listen: false);
     return WillPopScope(
       onWillPop: () async => false,
       child: Dialog(
@@ -85,7 +107,7 @@ class CaixaDialog extends StatelessWidget {
                     ),
                   ),
                 ),
-                inserirButoes(context),  //Inserindo butoes na  caixa de dialogo
+                inserirButoes(context), //Inserindo butoes na  caixa de dialogo
                 SizedBox(
                   height: 10,
                 ),
@@ -105,7 +127,7 @@ class CaixaDialog extends StatelessWidget {
                     ),
                     onPressed: () {
                       Navigator.pop(context);
-                      enviarAtributos(context);
+                      //  enviarAtributos(context);
                     },
                   ),
                 ),
@@ -134,7 +156,7 @@ class CaixaDialog extends StatelessWidget {
   }
 
   inserirButoes(BuildContext context) {
-    debugPrint("Tamanho da lista: " + listaDeButoesColuna1.length.toString());
+    //  debugPrint("Tamanho da lista: " + listaDeButoesColuna1.length.toString());
     return Container(
       width: MediaQuery.of(context).size.width / 1.4,
       margin: EdgeInsets.only(left: 10, top: 5),
@@ -160,14 +182,14 @@ class CaixaDialog extends StatelessWidget {
     );
   }
 
- 
   _butao(String nomeDoButao, BuildContext context) {
-    debugPrint("Inserindo butoes!!");
     return Container(
       width: MediaQuery.of(context).size.width / 3,
       margin: EdgeInsets.all(1),
       child: FlatButton(
-        color: corDoContainer,
+        color: isButaoJaEscolhido(nomeDoButao) == false
+            ? corDoContainer
+            : Colors.grey,
         shape:
             RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10)),
         padding: EdgeInsets.only(left: 0),
@@ -181,71 +203,63 @@ class CaixaDialog extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          _mudarCorDoButao(nomeDoButao);
+          enviarButaoEscolhido(nomeDoButao, corDoContainer) == true
+              ? mudarCorDoButaoDesativacao(nomeDoButao)
+              : mudarCorDoButaoDesativacao(nomeDoButao);
         },
       ),
     );
   }
 
-  void _iniciarListas(EnumsFase1CaixaDeDialog enumsFase1CaixaDeDialog) {
-    if (enumsFase1CaixaDeDialog == EnumsFase1CaixaDeDialog.caixaAtributos) {
-      this.listaDeButoesMisturados =
-          this.classeGenerica.listaDeAtributosVariados;
+  enviarButaoEscolhido(String conteudoDoButao, Color corDoButao) {
+    if (this.enumsFase1CaixaDeDialog ==
+        EnumsFase1CaixaDeDialog.caixaAtributos) {
+      return enviarAtributos(conteudoDoButao);
     } else {
-      this.listaDeButoesMisturados = this.classeGenerica.listaDeMetodosVariados;
+      return enviarMetodo(conteudoDoButao);
     }
-    this.listaDeButoesMisturados.shuffle();
-    if (this.listaDeButoesMisturados.length > 0) {
-      for (var i = 0; i < this.listaDeButoesMisturados.length; i++) {
-        if (i < 4) {
-          //Preenchendo com atributos ou métodos
-          this.listaDeButoesColuna1.add(this.listaDeButoesMisturados[i]);
-        } else {
-          //Preenchendo com atributos ou metodos
-          this.listaDeButoesColuna2.add(this.listaDeButoesMisturados[i]);
-        }
-      }
+  }
+
+  enviarAtributos(String atributo) {
+    ControleNivel01 c = Provider.of<ControleNivel01>(context);
+    return c.addAtributoEscolhido(atributo);
+  }
+
+  enviarMetodo(String stringNomeMetodo) {
+    ControleNivel01 c = Provider.of<ControleNivel01>(context);
+
+    return c.addMetodoEscolhidoPorJogador(stringNomeMetodo);
+  }
+
+  _iniciarListas() {
+    this.mapIsActiveDeButao = new HashMap();
+
+    if (this.enumsFase1CaixaDeDialog ==
+        EnumsFase1CaixaDeDialog.caixaAtributos) {
+      this.listaDeButoesColuna1 = this.controleNivel01.listaAtributosColuna01();
+      this.listaDeButoesColuna2 = this.controleNivel01.listaAtributosColuna02();
+      debugPrint("Tamanho da lista: ${this.listaDeButoesColuna1.length}");
     } else {
-      debugPrint("Valores não Inseridos");
+      this.listaDeButoesColuna1 = this.controleNivel01.listaMetodosColuna01();
+      this.listaDeButoesColuna2 = this.controleNivel01.listaMetodosColuna02();
     }
   }
 
-  _mudarCorDoButao(String atributo) {
-    //update with a new color when the user taps button
-    // setState(() {
-    //   corDoContainer = Colors.pink;
-    // });
-    // ControllerFase1 tranferirAtrib =
-    //     Provider.of<ControllerFase1>(context, listen: false);
-
-    // tranferirAtrib.tranferirAtributo(nomeDoButaoAtributo);
-
-    if (atributo != null) {
-      var existe;
-      for (var i = 0; i < this.listaDeButoesMisturados.length; i++) {
-        if (atributo == this.listaDeButoesMisturados[i]) {
-          existe = true;
-        }
-      }
-      if (existe != true) {
-        this.listaDeButoesMisturados.add(atributo);
-      }
-    }
+  mudarCorDoButaoDesativacao(String nomeDoButao) {
+    // var corDesativacao = Colors.grey;
+    setState(() {
+      // this
+      //     .mapIsActiveDeButao
+      //     .update(nomeDoButao, (valorAntigo) => corDesativacao);
+    });
   }
 
-  enviarAtributos(BuildContext context) {
-    if (this.listaDeButoesMisturados.length > 0) {
-      ControleNivel01 tranferirAtrib =
-          Provider.of<ControleNivel01>(context, listen: false);
-
-      tranferirAtrib.tranferirAtributos(this.listaDeButoesMisturados);
+  isButaoJaEscolhido(String nomeDoButao) {
+    if (this.enumsFase1CaixaDeDialog ==
+        EnumsFase1CaixaDeDialog.caixaAtributos) {
+      return this.controleNivel01.getIsAtributoJaEscolhido(nomeDoButao);
+    } else {
+      return this.controleNivel01.getIsMetodoJaEscolhido(nomeDoButao);
     }
   }
-
-  // enviarMetodos() {
-  //   if (this.listaDeButoesMisturados.length > 0) {
-  //     ControleNivel01 tranferirAtrib = controleNivel01
-  //         .tranferirAtributos(this.listaDeButoesMisturados);
-  //   }
-  // }
 }

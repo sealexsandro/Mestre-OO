@@ -6,14 +6,14 @@ class ButtonWidget extends StatelessWidget {
   double alturaDoButao;
   double comprimentoDoButao;
   Color corDoButao;
-  var decoration;
 
-  ButtonWidget(this.textoDoButao,
-      {@required this.onPressedFunction,
-      this.alturaDoButao,
-      this.comprimentoDoButao,
-      this.corDoButao,
-      this.decoration});
+  ButtonWidget(
+    this.textoDoButao, {
+    @required this.onPressedFunction,
+    this.alturaDoButao,
+    this.comprimentoDoButao,
+    this.corDoButao,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +26,12 @@ class ButtonWidget extends StatelessWidget {
         shape:
             RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
         child: Padding(
-          padding: EdgeInsets.only(left: 20),
+          padding: EdgeInsets.only(left: 7),
           child: Text(
             this.textoDoButao.toUpperCase(),
             style: TextStyle(
               fontSize: 15,
               color: Colors.white,
-              // fontFamily: 'Raleway',
               fontWeight: FontWeight.bold,
             ),
           ),

@@ -26,8 +26,7 @@ class _Nivel01State extends State<Nivel01> {
   void initState() {
     super.initState();
     this.textosDeComponentesFase1 = new TextosDeComponentesFase1();
-    this.controleNivel01 =
-        Provider.of<ControleNivel01>(context, listen: false);
+    this.controleNivel01 = Provider.of<ControleNivel01>(context, listen: false);
     this._classeGenerica = controleNivel01.retornaClasseDaRodada();
   }
 
@@ -35,7 +34,7 @@ class _Nivel01State extends State<Nivel01> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("   NOME DO JOGO "),
+        title: Text("   Objects "),
       ),
       body: ListView(
         children: <Widget>[
@@ -49,69 +48,28 @@ class _Nivel01State extends State<Nivel01> {
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.blue),
                   ),
-                  child: Column(
+                  child: Row(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 16, left: 8.0, right: 8, bottom: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          // children: <Widget>[
-                          //   Padding(
-                          //     padding: const EdgeInsets.only(
-                          //         top: 0, left: 8.0, right: 8),
-                          //     child: Text(
-                          //       "Pontos Por Atributo Certo:",
-                          //       textAlign: TextAlign.justify,
-                          //       style: TextStyle(
-                          //         fontSize: 15,
-                          //         fontWeight: FontWeight.bold,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ],
+                      Container(
+                        width: MediaQuery.of(context).size.width / 2,
+                        margin: EdgeInsets.only(top: 10, bottom: 10, left: 16),
+                        child: Text(
+                          "Problema    01",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(
-                      //       left: 8.0, right: 8, bottom: 5),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.start,
-                      //     children: <Widget>[
-                      //       Padding(
-                      //         padding: const EdgeInsets.only(
-                      //             top: 0, left: 8.0, right: 8),
-                      //         child: Text(
-                      //           "Pontos Por Método Certo:",
-                      //           textAlign: TextAlign.justify,
-                      //           style: TextStyle(
-                      //             fontSize: 15,
-                      //             fontWeight: FontWeight.bold,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 8.0, right: 8, bottom: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 0, left: 8.0, right: 8),
-                              child: Text(
-                                "SCORE:",
-                                textAlign: TextAlign.justify,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
+                      Container(
+                        //  width: MediaQuery.of(context).size.width / 2,
+                        margin: EdgeInsets.only(top: 10, bottom: 10, left: 16),
+                        child: Text(
+                          "Score: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
                     ],
@@ -133,7 +91,8 @@ class _Nivel01State extends State<Nivel01> {
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        ContainerDeClasse("nomeDaClasse"),
+                        ContainerDeClasse(
+                            this._classeGenerica.nomeDaClasse, controleNivel01),
                       ],
                     ),
                     Column(
@@ -145,7 +104,7 @@ class _Nivel01State extends State<Nivel01> {
                               onPressedFunction: escolhaDeAtributos,
                               alturaDoButao: 60,
                               comprimentoDoButao:
-                                  MediaQuery.of(context).size.width / 2.5,
+                                  MediaQuery.of(context).size.width / 3,
                               corDoButao: Colors.deepOrange,
                             ),
                           ],
@@ -157,7 +116,7 @@ class _Nivel01State extends State<Nivel01> {
                               onPressedFunction: escolhaDeMetodos,
                               alturaDoButao: 60,
                               comprimentoDoButao:
-                                  MediaQuery.of(context).size.width / 2.5,
+                                  MediaQuery.of(context).size.width / 3,
                               corDoButao: Colors.deepOrange,
                             ),
                           ],
@@ -166,12 +125,12 @@ class _Nivel01State extends State<Nivel01> {
                           children: <Widget>[
                             Container(
                               margin: EdgeInsets.only(top: 20),
-                              width: MediaQuery.of(context).size.width / 2.5,
+                              width: MediaQuery.of(context).size.width / 3,
                               height: 60,
                               child: Text(
-                                "Total de Pontos da rodada:".toUpperCase(),
+                                "Total de Pontos da rodada:",
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 15,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -199,32 +158,36 @@ class _Nivel01State extends State<Nivel01> {
   }
 
   _nomeDoSistema() {
-    Text(
+    return Text(
       this._classeGenerica.nomeDoProblema,
       textAlign: TextAlign.justify,
       style: TextStyle(
-        fontSize: 15,
+        fontSize: 16,
         fontWeight: FontWeight.bold,
       ),
     );
   }
 
   _escolherTextoProblema() {
-    return RichText(
-      textAlign: TextAlign.justify,
-      text: new TextSpan(
-        style: new TextStyle(
-          fontSize: 14.0,
-          color: Colors.black,
-        ),
-        children: <TextSpan>[
-          new TextSpan(
-              text:
-                  "Crie uma classe abaixo escolhendo os atributos e métodos que melhor representam as características e compotamentos da classe "),
-          new TextSpan(
+    return Container(
+      padding: EdgeInsets.only(right: 10),
+      child: RichText(
+        textAlign: TextAlign.justify,
+        text: new TextSpan(
+          style: new TextStyle(
+            fontSize: 16,
+            color: Colors.black87,
+          ),
+          children: <TextSpan>[
+            new TextSpan(
+                text:
+                    "Construa a classe a seguir escolhendo os atributos e métodos que melhor representam as características e comportamentos da classe "),
+            new TextSpan(
               text: this._classeGenerica.nomeDaClasse + " :",
-              style: new TextStyle(fontWeight: FontWeight.bold)),
-        ],
+              style: new TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -239,6 +202,7 @@ class _Nivel01State extends State<Nivel01> {
         textoQntDePontos:
             this.textosDeComponentesFase1.QntDePontosCaixaDialogoAtributos,
         enumsFase1CaixaDeDialog: EnumsFase1CaixaDeDialog.caixaAtributos,
+        controleNivel01: this.controleNivel01,
       ),
     );
   }
@@ -253,6 +217,7 @@ class _Nivel01State extends State<Nivel01> {
         textoQntDePontos:
             this.textosDeComponentesFase1.textoQntDePontosCaixaDialogoMetodos,
         enumsFase1CaixaDeDialog: EnumsFase1CaixaDeDialog.caixaMetodos,
+        controleNivel01: this.controleNivel01,
       ),
     );
   }

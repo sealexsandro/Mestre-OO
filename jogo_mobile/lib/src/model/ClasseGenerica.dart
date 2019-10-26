@@ -24,11 +24,11 @@ class NomesGenericosParaClasses {
   static String getNomesDoSistema(EnumsNomesDeClasses enumsNomesDeClasses) {
     switch (enumsNomesDeClasses) {
       case EnumsNomesDeClasses.Cachorro:
-        return "Pet Shop";
+        return "Sistema Para um Pet Shop";
       case EnumsNomesDeClasses.carro:
-        return "Concessionária";
+        return "Sistema Para Uma Concessionária";
       case EnumsNomesDeClasses.pessoa:
-        return "Clínica";
+        return "Sistema Para Uma Clínica";
       default:
         return "Não encontrou Nenhuma Espécie de Mamifero";
     }
