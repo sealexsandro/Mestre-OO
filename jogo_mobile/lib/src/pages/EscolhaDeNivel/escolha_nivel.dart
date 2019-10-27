@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile/src/pages/Nivel_1/tutorialNivel01.dart';
 import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
-import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
 
-class EscolhaDeNivel extends StatefulWidget {
-  @override
-  _EscolhaDeNivelState createState() => _EscolhaDeNivelState();
-}
-
-class _EscolhaDeNivelState extends State<EscolhaDeNivel> {
+class EscolhaDeNivel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +90,13 @@ class _EscolhaDeNivelState extends State<EscolhaDeNivel> {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, "/Nivel01");
+                             Navigator.pushNamed(context, "/Nivel01");
+
+                            // return showDialog(
+                            //   context: context,
+                            //   builder: (BuildContext context) =>
+                            //       TutorialNivel01(),
+                            // );
                           },
                         ),
                       ),
@@ -193,36 +194,8 @@ class _EscolhaDeNivelState extends State<EscolhaDeNivel> {
       ),
     );
   }
-
-  Container containerCamposTextFild(String nomeDoCampo) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 1.2,
-      height: 55,
-      margin: EdgeInsets.only(top: 10),
-      padding: EdgeInsets.only(
-        top: 4,
-        left: 16,
-        right: 16,
-        bottom: 4,
-      ),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(40),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 4,
-            )
-          ]),
-      child: TextField(
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          icon: IconesComponent.escolhaDeIcone(nomeDoCampo),
-          hintText: nomeDoCampo,
-        ),
-      ),
-    );
-  }
 }
+
+// class _EscolhaDeNivelState extends State<EscolhaDeNivel> {
+
+// }

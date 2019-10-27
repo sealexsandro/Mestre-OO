@@ -41,7 +41,7 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
     this.screnSize = MediaQuery.of(context).size.width / 1.7;
     return Container(
       width: this.screnSize,
-      height: MediaQuery.of(context).size.height / 2.3,
+      height: MediaQuery.of(context).size.height / 2.2,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.blue, width: 2),
         
@@ -64,6 +64,7 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
                 widget.nomeDaClasse,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
               ),
             ),
@@ -74,7 +75,7 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                  width: 3,
+                  width: 2,
                   color: Colors.blue,
                 ),
               ),

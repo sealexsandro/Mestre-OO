@@ -7,6 +7,7 @@ import 'package:jogo_mobile/src/pages/Nivel_1/componentes/caixa_dialog.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/containerDeClasses.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/enums_da_fase1.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/textos_da_fase1.dart';
+import 'package:jogo_mobile/src/pages/Nivel_1/tutorialNivel01.dart';
 import 'package:provider/provider.dart';
 
 class Nivel01 extends StatefulWidget {
@@ -180,11 +181,14 @@ class _Nivel01State extends State<Nivel01> {
           ),
           children: <TextSpan>[
             new TextSpan(
-                text:
-                    "Construa a classe a seguir escolhendo os atributos e métodos que melhor representam as características e comportamentos da classe "),
+                text: "Monte escolhendo atributos e métodos a classe "),
+                   // "Construa a classe a seguir escolhendo os atributos e métodos que melhor representam as características e comportamentos da classe "),
             new TextSpan(
-              text: this._classeGenerica.nomeDaClasse + " :",
+              text: this._classeGenerica.nomeDaClasse,
               style: new TextStyle(fontWeight: FontWeight.bold),
+            ),
+            new TextSpan(
+              text: "  abaixo: ",
             ),
           ],
         ),
@@ -222,5 +226,7 @@ class _Nivel01State extends State<Nivel01> {
     );
   }
 
-  validarClasse() {}
+  validarClasse() {
+    this.controleNivel01.validarClasse();
+  }
 }

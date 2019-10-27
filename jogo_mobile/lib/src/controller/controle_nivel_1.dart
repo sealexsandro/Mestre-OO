@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
 import 'package:jogo_mobile/src/model/servicesFase1.dart';
+import 'package:jogo_mobile/src/pages/Nivel_1/alertaVerificarAtributos.dart';
 
 class ControleNivel01 extends ChangeNotifier {
   List<String> listaDeClassesAtributos = [];
@@ -111,5 +112,24 @@ class ControleNivel01 extends ChangeNotifier {
   getIsMetodoJaEscolhido(String nomeMetodo) {
     var lista = this._servicesNivel01.listaDeMetodosEscolhidos;
     return lista.contains(nomeMetodo);
+  }
+
+  //validar atributos e métodos
+  validarClasse() {
+    bool verificacaoAtributos =
+        this._servicesNivel01.validarAtributosEscolhidos();
+    bool verificacaoMetodos = this._servicesNivel01.validarMetodosEscolhidos();
+
+    if (verificacaoAtributos == false && verificacaoMetodos == false) {
+      AlertaVerificaoConteudoDaClasse();
+      debugPrint("Vericacao de atributos e metodos");
+    } else if (!verificacaoAtributos) {
+      AlertaVerificaoConteudoDaClasse();
+      debugPrint("Vericacao de atributos ");
+    } else if (!verificacaoMetodos) {
+      debugPrint("Vericacao de  metodos");
+
+      return AlertaVerificaoConteudoDaClasse();
+    }
   }
 }

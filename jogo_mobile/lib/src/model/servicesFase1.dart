@@ -225,4 +225,30 @@ class ServiceNivel01 {
       debugPrint("Valores não Inseridos");
     }
   }
+
+  //Validar atributos escolhidos
+  validarAtributosEscolhidos() {
+    for (var i = 0; i < this.listaDeAtributosEscolhidos.length; i++) {
+      if (this
+              .listaDeAtributosVerdadeiros
+              .contains(this.listaDeAtributosEscolhidos[i]) ==
+          false) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  //Validar metodos escolhidos
+  validarMetodosEscolhidos() {
+    for (var i = 0; i < this.listaDeMetodosEscolhidos.length; i++) {
+      if (this
+              .listaDeMetodosVerdadeiros
+              .contains(this.listaDeMetodosEscolhidos[i]) ==
+          false) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
