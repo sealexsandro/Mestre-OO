@@ -5,9 +5,8 @@ import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/button_widget.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/caixa_dialog.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/containerDeClasses.dart';
-import 'package:jogo_mobile/src/pages/Nivel_1/componentes/enums_da_fase1.dart';
+import 'package:jogo_mobile/src/pages/Nivel_1/componentes/mixedLabels.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/textos_da_fase1.dart';
-import 'package:jogo_mobile/src/pages/Nivel_1/tutorialNivel01.dart';
 import 'package:provider/provider.dart';
 
 class Nivel01 extends StatefulWidget {
@@ -20,6 +19,7 @@ class _Nivel01State extends State<Nivel01> {
   ClasseGenerica _classeGenerica;
   ControleNivel01 controleNivel01;
   TextosDeComponentesFase1 textosDeComponentesFase1;
+  ContainerDeClasse _containerDeClasse;
 
   Random random = Random();
 
@@ -35,7 +35,8 @@ class _Nivel01State extends State<Nivel01> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("   Objects "),
+        title: Text("Construindo Classes"),
+        centerTitle: true,
       ),
       body: ListView(
         children: <Widget>[
@@ -92,8 +93,9 @@ class _Nivel01State extends State<Nivel01> {
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        ContainerDeClasse(
-                            this._classeGenerica.nomeDaClasse, controleNivel01),
+                        this._container(),
+                        // ContainerDeClasse(
+                        //     this._classeGenerica.nomeDaClasse, controleNivel01),
                       ],
                     ),
                     Column(
@@ -158,6 +160,11 @@ class _Nivel01State extends State<Nivel01> {
     );
   }
 
+  _container() {
+    return this._containerDeClasse = ContainerDeClasse(
+        this._classeGenerica.nomeDaClasse, this.controleNivel01);
+  }
+
   _nomeDoSistema() {
     return Text(
       this._classeGenerica.nomeDoProblema,
@@ -180,9 +187,8 @@ class _Nivel01State extends State<Nivel01> {
             color: Colors.black87,
           ),
           children: <TextSpan>[
-            new TextSpan(
-                text: "Monte escolhendo atributos e métodos a classe "),
-                   // "Construa a classe a seguir escolhendo os atributos e métodos que melhor representam as características e comportamentos da classe "),
+            new TextSpan(text: "Escolha atributos e métodos para a classe "),
+            // "Construa a classe a seguir escolhendo os atributos e métodos que melhor representam as características e comportamentos da classe "),
             new TextSpan(
               text: this._classeGenerica.nomeDaClasse,
               style: new TextStyle(fontWeight: FontWeight.bold),
@@ -201,11 +207,7 @@ class _Nivel01State extends State<Nivel01> {
       context: context,
       builder: (BuildContext context) => CaixaDialog(
         classeGenerica: this._classeGenerica,
-        tituloDoContainer:
-            this.textosDeComponentesFase1.tituloCaixaDialogoAtributos,
-        textoQntDePontos:
-            this.textosDeComponentesFase1.QntDePontosCaixaDialogoAtributos,
-        enumsFase1CaixaDeDialog: EnumsFase1CaixaDeDialog.caixaAtributos,
+        enumsCaixaDialogNivel01: EnumsCaixaDialogNivel01.caixaAtributos,
         controleNivel01: this.controleNivel01,
       ),
     );
@@ -216,17 +218,23 @@ class _Nivel01State extends State<Nivel01> {
       context: context,
       builder: (BuildContext context) => CaixaDialog(
         classeGenerica: this._classeGenerica,
-        tituloDoContainer:
-            this.textosDeComponentesFase1.tituloCaixaDialogoMetodos,
-        textoQntDePontos:
-            this.textosDeComponentesFase1.textoQntDePontosCaixaDialogoMetodos,
-        enumsFase1CaixaDeDialog: EnumsFase1CaixaDeDialog.caixaMetodos,
+        enumsCaixaDialogNivel01: EnumsCaixaDialogNivel01.caixaMetodos,
         controleNivel01: this.controleNivel01,
       ),
     );
   }
 
   validarClasse() {
-    this.controleNivel01.validarClasse();
+    if (this.controleNivel01.validarClasse(context) == true) {
+      debugPrint("É pra repintar a tela!");
+      this._classeGenerica = controleNivel01.retornaClasseDaRodada();
+      //    if (this._classeGenerica != null) {
+      setState(() {
+        this.textosDeComponentesFase1 = new TextosDeComponentesFase1();
+        this._containerDeClasse.listaDeAtributos.clear();
+        this._containerDeClasse.listaDeMetodos.clear();
+      });
+      //   }
+    }
   }
 }

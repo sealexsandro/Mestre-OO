@@ -1,13 +1,18 @@
-
 import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
 
 class MetodosDeClasseCorretos {
   static List<String> listaMetodosTrueCachorro = [
-    "late: void",
-    "getPeso: float",
-    "corre: String",
+    "late(): void",
+    "getPeso(): float",
+    "corre(): String",
     "setPeso(peso: float): float",
-    "cachorro: void",
+    "cachorro(): void",
+  ];
+  static List<String> listaMetodosTrueAves = [
+    "voar(): void",
+    "getEspecie(): String",
+    "setEspecie(): void",
+    "ave(): Ave",
   ];
 
   static List<String> listaMetodosTruePessoa = [
@@ -31,6 +36,8 @@ class MetodosDeClasseCorretos {
         return listaMetodosTrueCarro;
       case EnumsNomesDeClasses.pessoa:
         return listaMetodosTruePessoa;
+      case EnumsNomesDeClasses.aves:
+        return listaMetodosTrueAves;
       default:
         List<String> lista = [];
         return lista;
@@ -40,6 +47,12 @@ class MetodosDeClasseCorretos {
 
 class MetodosDeClasseIncorretos {
   static List<String> listaMetodosFalseCao = [
+    "111111111111",
+    "222222222222",
+    "33333333333333",
+    "44444444444444",
+  ];
+  static List<String> listaMetodosFalseAves = [
     "111111111111",
     "222222222222",
     "33333333333333",
@@ -66,6 +79,8 @@ class MetodosDeClasseIncorretos {
         return listaMetodosFalseCarro;
       case EnumsNomesDeClasses.pessoa:
         return listaMetodosFalsePessoa;
+      case EnumsNomesDeClasses.aves:
+        return listaMetodosFalseAves;
       default:
         return null;
     }

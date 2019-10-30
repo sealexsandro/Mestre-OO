@@ -1,4 +1,3 @@
-
 import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
 
 enum EnumsClasseCachorro {
@@ -16,6 +15,13 @@ class AtributosDeClasseCorretos {
     "corDoPelo: String",
     "vacinado: boolean",
     "nome: String",
+  ];
+
+  static List<String> listaTrueAtributosAve = [
+    "especie: String",
+    "ameacadoDeExtincao: boolean",
+    "corDaPlumagem: String",
+    "habitate: String",
   ];
 
   static List<String> listaTrueAtributosPessoa = [
@@ -43,6 +49,8 @@ class AtributosDeClasseCorretos {
         return listaTrueAtributosCarro;
       case EnumsNomesDeClasses.pessoa:
         return listaTrueAtributosPessoa;
+      case EnumsNomesDeClasses.aves:
+        return listaTrueAtributosAve;
       default:
         List<String> lista = [];
         return lista;
@@ -57,6 +65,13 @@ class AtributosDeClasseIncorretos {
     "CorDoPelo:",
     "Rex: String",
     "idade: boolean",
+  ];
+  static List<String> listaFalseAtributosAve = [
+    "especie: irracional",
+    ": float",
+    "CorDaPlumagem:",
+    ": String",
+    "tamanhoDaAsa: Grande",
   ];
   static List<String> listaFalseAtributosPessoa = [
     "AnaLuiza",
@@ -81,6 +96,8 @@ class AtributosDeClasseIncorretos {
         return listaFalseAtributosCarro;
       case EnumsNomesDeClasses.pessoa:
         return listaFalseAtributosPessoa;
+      case EnumsNomesDeClasses.aves:
+        return listaFalseAtributosAve;
       default:
         return null;
     }

@@ -34,8 +34,17 @@ class ServiceNivel01 {
   //Enum com o nome da classe escolhida para a rodada;
   EnumsNomesDeClasses enumsNomesDeClasses;
 
-  ServiceNivel01() {
+  ServiceNivel01._() {
     iniciarLista();
+    debugPrint("Instanciado lllllllllllllllllllllllllllllllllllllllllll");
+  }
+
+  static ServiceNivel01 unicaInstanciaServiceNivel01;
+
+  static ServiceNivel01 getUnicaInstanciaServiceNivel01() {
+    if (unicaInstanciaServiceNivel01 == null)
+      unicaInstanciaServiceNivel01 = new ServiceNivel01._();
+    return unicaInstanciaServiceNivel01;
   }
 
   iniciarLista() {
@@ -43,6 +52,7 @@ class ServiceNivel01 {
     EnumsNomesDeClasses.values.forEach((nomeDaClasse) {
       listaNomesDeClasses.add(nomeDaClasse);
     });
+    debugPrint("Instanciado 222222222222222222222222222");
   }
 
   addAtributoNaListaDaRodada(String atributo) {
@@ -109,41 +119,51 @@ class ServiceNivel01 {
 
   retornaClasseDaRodada() {
     //Iniciar toda as listas para necessárias para a classe escolhida
-    this.listaDeMetodosEscolhidos = [];
-    this.listaDeAtributosEscolhidos = [];
-    this.listaDeButoesAtributosColuna1 = [];
-    this.listaDeButoesAtributosColuna2 = [];
-    this.listaDeButoesMetodosColuna1 = [];
-    this.listaDeButoesMetodosColuna2 = [];
-    this.listaDeAtributosVerdadeiros = [];
-    this.listaDeMetodosVerdadeiros = [];
+    this.listaDeMetodosEscolhidos.clear();
+    this.listaDeAtributosEscolhidos.clear();
+    this.listaDeButoesAtributosColuna1.clear();
+    this.listaDeButoesAtributosColuna2.clear();
+    this.listaDeButoesMetodosColuna1.clear();
+    this.listaDeButoesMetodosColuna2.clear();
+    this.listaDeAtributosVerdadeiros.clear();
+    this.listaDeMetodosVerdadeiros.clear();
     //////////////////////////////////////////////////////////////////////
-    //Pegando o enum nome da classe
-    this.listaNomesDeClasses.shuffle();
-    int randomNumber = random.nextInt(listaNomesDeClasses.length);
-    EnumsNomesDeClasses enumNomeDaClasse = listaNomesDeClasses[randomNumber];
-    this.listaNomesDeClasses.remove(randomNumber);
-    //Pegando o nome da classe abaixo
-    var nomeDaClasse =
-        NomesGenericosParaClasses.getNomesGenericoDeClasse(enumNomeDaClasse);
-    //Pegando o nome do Sistema abaixo
-    var nomeDoSistema =
-        NomesGenericosParaClasses.getNomesDoSistema(enumNomeDaClasse);
+    if (this.listaNomesDeClasses.length > 0) {
+      //Pegando o enum nome da classe
+      this.listaNomesDeClasses.shuffle();
+      int randomNumber = random.nextInt(listaNomesDeClasses.length);
+      debugPrint(
+          "Tamnaho  da lista antes de remover 1: ${listaNomesDeClasses.length.toString()}");
 
-    buscarAtributosMetodosDaClasse(enumNomeDaClasse);
+      EnumsNomesDeClasses enumNomeDaClasse = listaNomesDeClasses[randomNumber];
+      this.listaNomesDeClasses.remove(enumNomeDaClasse);
+      debugPrint(
+          "Tamnaho da lista depois de remover 2: ${listaNomesDeClasses.length.toString()}");
 
-    //////////////////////////////////////////////////////////////////////////////
-    ClasseGenerica classeGenerica = new ClasseGenerica(
-      enumNomeDaClasse: enumNomeDaClasse,
-      nomeDaClasse: nomeDaClasse,
-      nomeDoProblema: nomeDoSistema,
-      // listaDeAtributosVerdadeiros: listaDeAtributosVerdadeiros,
-      // listaDeAtributosVariados: listaDeAtributosMisturados,
-      // listaDeMetodosVerdadeiros: listaDeMetodosVerdadeiros,
-      // listaDeMetodosVariados: listaDeMetodosMisturados,
-    );
+      //Pegando o nome da classe abaixo
+      var nomeDaClasse =
+          NomesGenericosParaClasses.getNomesGenericoDeClasse(enumNomeDaClasse);
+      //Pegando o nome do Sistema abaixo
+      var nomeDoSistema =
+          NomesGenericosParaClasses.getNomesDoSistema(enumNomeDaClasse);
 
-    return classeGenerica;
+      buscarAtributosMetodosDaClasse(enumNomeDaClasse);
+
+      //////////////////////////////////////////////////////////////////////////////
+      ClasseGenerica classeGenerica = new ClasseGenerica(
+        enumNomeDaClasse: enumNomeDaClasse,
+        nomeDaClasse: nomeDaClasse,
+        nomeDoProblema: nomeDoSistema,
+        // listaDeAtributosVerdadeiros: listaDeAtributosVerdadeiros,
+        // listaDeAtributosVariados: listaDeAtributosMisturados,
+        // listaDeMetodosVerdadeiros: listaDeMetodosVerdadeiros,
+        // listaDeMetodosVariados: listaDeMetodosMisturados,
+      );
+
+      return classeGenerica;
+    }else{
+      return null;
+    }
   }
 
   buscarAtributosMetodosDaClasse(EnumsNomesDeClasses enumNomeDaClasse) {
@@ -228,27 +248,45 @@ class ServiceNivel01 {
 
   //Validar atributos escolhidos
   validarAtributosEscolhidos() {
-    for (var i = 0; i < this.listaDeAtributosEscolhidos.length; i++) {
-      if (this
-              .listaDeAtributosVerdadeiros
-              .contains(this.listaDeAtributosEscolhidos[i]) ==
-          false) {
-        return false;
+    if (this.listaDeAtributosEscolhidos.length > 0) {
+      for (var i = 0; i < this.listaDeAtributosEscolhidos.length; i++) {
+        if (this
+                .listaDeAtributosVerdadeiros
+                .contains(this.listaDeAtributosEscolhidos[i]) ==
+            false) {
+          return false;
+        }
       }
+      return true;
+    } else {
+      return false;
     }
-    return true;
   }
 
   //Validar metodos escolhidos
   validarMetodosEscolhidos() {
-    for (var i = 0; i < this.listaDeMetodosEscolhidos.length; i++) {
-      if (this
-              .listaDeMetodosVerdadeiros
-              .contains(this.listaDeMetodosEscolhidos[i]) ==
-          false) {
-        return false;
+    if (this.listaDeMetodosEscolhidos.length > 0) {
+      for (var i = 0; i < this.listaDeMetodosEscolhidos.length; i++) {
+        if (this
+                .listaDeMetodosVerdadeiros
+                .contains(this.listaDeMetodosEscolhidos[i]) ==
+            false) {
+          return false;
+        }
       }
+      return true;
+    } else {
+      return false;
     }
-    return true;
+  }
+
+//Usuario acertou todos os atributos e metdos
+  limparListaDeAtributosMetodos() {
+    this.listaDeAtributosEscolhidos.clear();
+    this.listaDeMetodosEscolhidos.clear();
+    this.listaDeAtributosVerdadeiros.clear();
+    this.listaDeMetodosVerdadeiros.clear();
+
+    debugPrint("Lista limpadas: ${this.listaDeAtributosEscolhidos.length}");
   }
 }

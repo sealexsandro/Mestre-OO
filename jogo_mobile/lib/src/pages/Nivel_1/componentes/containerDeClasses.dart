@@ -5,10 +5,12 @@ import 'package:provider/provider.dart';
 class ContainerDeClasse extends StatefulWidget {
   String nomeDaClasse;
   ControleNivel01 controleNivel01;
+  List<String> listaDeAtributos = [];
+  List<String> listaDeMetodos = [];
 
   ContainerDeClasse(String nomeDaClasse, ControleNivel01 controleNivel01) {
     this.nomeDaClasse = nomeDaClasse;
-    //  this.controleNivel01 = controleNivel01;
+    this.controleNivel01 = controleNivel01;
   }
 
   @override
@@ -22,18 +24,21 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   String nomeDaClasse;
   List<String> listaDeAtributos;
   List<String> listaDeMetodos;
+  
+
   var screnSize;
 
   _ContainerDeClasseState(String nomeDaClasse) {
     this.nomeDaClasse = nomeDaClasse;
+    debugPrint("Container Instanciado tttttttttttttttttttttttttt");
   }
 
   @override
   void initState() {
     super.initState();
-    this.listaDeAtributos = [];
-    this.listaDeMetodos = [];
-    this.controleNivel01 = Provider.of<ControleNivel01>(context, listen: false);
+    this.listaDeAtributos = widget.listaDeAtributos;
+    this.listaDeMetodos = widget.listaDeMetodos;
+    this.controleNivel01 = widget.controleNivel01;
   }
 
   @override
@@ -44,7 +49,6 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
       height: MediaQuery.of(context).size.height / 2.2,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.blue, width: 2),
-        
       ),
       child: Column(
         children: <Widget>[
@@ -70,7 +74,7 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
             ),
           ),
           Container(
-            width: this.screnSize-2,
+            width: this.screnSize - 2,
             height: 150,
             decoration: BoxDecoration(
               border: Border(
@@ -143,7 +147,6 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.black87,
-
                       ),
                     ),
                   ),
@@ -161,6 +164,8 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
           );
         },
       );
+    } else {
+      setState(() {});
     }
   }
 

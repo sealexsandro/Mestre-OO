@@ -4,6 +4,7 @@ enum EnumsNomesDeClasses {
   Cachorro,
   carro,
   pessoa,
+  aves,
 }
 
 class NomesGenericosParaClasses {
@@ -16,6 +17,8 @@ class NomesGenericosParaClasses {
         return "Carro";
       case EnumsNomesDeClasses.pessoa:
         return "Pessoa";
+      case EnumsNomesDeClasses.aves:
+        return "Ave";
       default:
         return "Não encontrou Nenhuma Espécie de Mamifero";
     }
@@ -29,6 +32,8 @@ class NomesGenericosParaClasses {
         return "Sistema Para Uma Concessionária";
       case EnumsNomesDeClasses.pessoa:
         return "Sistema Para Uma Clínica";
+      case EnumsNomesDeClasses.aves:
+        return "Sistema Para Uma Zoológico";
       default:
         return "Não encontrou Nenhuma Espécie de Mamifero";
     }

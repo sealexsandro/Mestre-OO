@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class IconesComponent {
+class NomeIconeComponent {
 
   static final String email = "E-mail";
   static final String nomeDoUser = "Nome do Usuário";

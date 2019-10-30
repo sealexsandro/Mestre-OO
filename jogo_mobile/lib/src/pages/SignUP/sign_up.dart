@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
+import 'package:jogo_mobile/src/pages/Widgets/appButton.dart';
+import 'package:jogo_mobile/src/pages/Widgets/appTextFormatFild.dart';
 import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
-
 
 class SignUp extends StatefulWidget {
   @override
@@ -9,152 +10,171 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final _formKey = GlobalKey<FormState>();
+  final _tNomeUser = TextEditingController();
+  final _tEmail = TextEditingController();
+  final _tSenha = TextEditingController();
+  final _tRepitaSenha = TextEditingController();
+
+  final _focusEmail = FocusNode();
+  final _focusSenha = FocusNode();
+  final _focusRepitaSenha = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Voltar"),
-      ),
       body: ListView(
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(bottom: 0),
-            child: Column(
-              children: [
-                ClipPath(
-                  clipper: ClipContainerSuperior(),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 2.7,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xFF6078ea),
-                            Color(0xFF17ead9),
-                          ]),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Spacer(),
-                        Align(
-                          child: Icon(
-                            Icons.person,
-                            size: 80,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Spacer(),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 0, left: 32, bottom: 50),
-                            child: Text(
-                              "Nome do Jogo",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 24),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 1.45,
-                  padding: EdgeInsets.only(top: 0),
-                  child: Column(
-                    children: <Widget>[
-                      containerCamposTextFild(IconesComponent.nomeDoUser),
-                      containerCamposTextFild(IconesComponent.email),
-                      containerCamposTextFild(IconesComponent.senha),
-                      containerCamposTextFild(IconesComponent.repitaASenha),
-                      Container(
-                        margin: EdgeInsets.only(top: 15),
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
+          Form(
+            key: _formKey,
+            child: Container(
+              margin: EdgeInsets.only(bottom: 0),
+              child: Column(
+                children: [
+                  ClipPath(
+                    clipper: ClipContainerSuperior(),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height / 3.3,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
                             colors: [
                               Color(0xFF6078ea),
                               Color(0xFF17ead9),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(40),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Salvar".toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 16,
+                            ]),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Spacer(),
+                          Align(
+                            child: Icon(
+                              Icons.person,
+                              size: 80,
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Spacer(),
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 0, left: 32, bottom: 50),
+                              child: Text(
+                                "Nome do Jogo",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 24),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    //  height: MediaQuery.of(context).size.height / 1.45,
+                    padding: EdgeInsets.only(top: 0),
+                    child: Column(
+                      children: <Widget>[
+                        AppTextFormatField(
+                          nomeDoCampo: NomeIconeComponent.nomeDoUser,
+                          controller: _tNomeUser,
+                          larguraDoContainer: 55,
+                          validator: _validateNomeUser,
+                          textInputAction: TextInputAction.next,
+                          nextFocus: _focusEmail,
+                        ),
+                        AppTextFormatField(
+                          nomeDoCampo: NomeIconeComponent.email,
+                          controller: _tEmail,
+                          larguraDoContainer: 55,
+                          validator: _validateEmail,
+                          textInputAction: TextInputAction.next,
+                          nextFocus: _focusSenha,
+                        ),
+                        AppTextFormatField(
+                          nomeDoCampo: NomeIconeComponent.senha,
+                          controller: _tSenha,
+                          larguraDoContainer: 55,
+                          validator: _validateSenha,
+                          textInputAction: TextInputAction.next,
+                          nextFocus: _focusRepitaSenha,
+                        ),
+                        AppTextFormatField(
+                          nomeDoCampo: NomeIconeComponent.repitaASenha,
+                          controller: _tRepitaSenha,
+                          larguraDoContainer: 55,
+                          validator: _validateSenhaRepitida,
+                          textInputAction: TextInputAction.next,
+                          nextFocus: _focusRepitaSenha,
+                        ),
+                        AppButton(
+                          textoDoButao: "salvar",
+                          funcaoDoButao: _onpressedFunction,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                    gradient: new LinearGradient(
+                                        colors: [
+                                          Colors.black12,
+                                          Colors.black,
+                                        ],
+                                        begin: const FractionalOffset(0.0, 0.0),
+                                        end: const FractionalOffset(1.0, 1.0),
+                                        stops: [0.0, 1.0],
+                                        tileMode: TileMode.clamp),
+                                  ),
+                                  width: 100.0,
+                                  height: 1.0,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    gradient: new LinearGradient(
+                                        colors: [
+                                          Colors.black,
+                                          Colors.black12,
+                                        ],
+                                        begin: const FractionalOffset(0.0, 0.0),
+                                        end: const FractionalOffset(1.0, 1.0),
+                                        stops: [0.0, 1.0],
+                                        tileMode: TileMode.clamp),
+                                  ),
+                                  width: 100.0,
+                                  height: 1.0,
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                  gradient: new LinearGradient(
-                                      colors: [
-                                        Colors.black12,
-                                        Colors.black,
-                                      ],
-                                      begin: const FractionalOffset(0.0, 0.0),
-                                      end: const FractionalOffset(1.0, 1.0),
-                                      stops: [0.0, 1.0],
-                                      tileMode: TileMode.clamp),
-                                ),
-                                width: 100.0,
-                                height: 1.0,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  gradient: new LinearGradient(
-                                      colors: [
-                                        Colors.black,
-                                        Colors.black12,
-                                      ],
-                                      begin: const FractionalOffset(0.0, 0.0),
-                                      end: const FractionalOffset(1.0, 1.0),
-                                      stops: [0.0, 1.0],
-                                      tileMode: TileMode.clamp),
-                                ),
-                                width: 100.0,
-                                height: 1.0,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: FlatButton(
-                            onPressed: () { Navigator.pushNamed(context, "/");},
+                        Container(
+                          child: FlatButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, "/");
+                            },
                             child: Text(
                               "Já sou cadastrado",
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 18.0,
                                   fontFamily: "WorkSansMedium"),
-                            )),
-                      )
-                    ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
@@ -162,35 +182,38 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Container containerCamposTextFild(String nomeDoCampo) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 1.2,
-      height: 55,
-      margin: EdgeInsets.only(top: 10),
-      padding: EdgeInsets.only(
-        top: 4,
-        left: 16,
-        right: 16,
-        bottom: 4,
-      ),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(40),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 4,
-            )
-          ]),
-      child: TextField(
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          icon: IconesComponent.escolhaDeIcone(nomeDoCampo),
-          hintText: nomeDoCampo,
-        ),
-      ),
-    );
+  _onpressedFunction() {
+    bool formKey = _formKey.currentState.validate();
+    if (!formKey) {
+      return;
+    }
+  }
+
+  String _validateNomeUser(String text) {
+    if (text.isEmpty) {
+      return "Digite seu Nome de Usuário";
+    }
+    return null;
+  }
+
+  String _validateEmail(String text) {
+    if (text.isEmpty) {
+      return "Digite seu E-mail";
+    }
+    return null;
+  }
+
+  String _validateSenha(String text) {
+    if (text.isEmpty) {
+      return "Digite sua Senha";
+    }
+    return null;
+  }
+
+  String _validateSenhaRepitida(String text) {
+    if (text.isEmpty) {
+      return "Digite Novamente sua Senha";
+    }
+    return null;
   }
 }

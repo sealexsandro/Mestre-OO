@@ -1,23 +1,19 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile/src/controller/controle_nivel_1.dart';
 import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
-import 'package:jogo_mobile/src/pages/Nivel_1/componentes/enums_da_fase1.dart';
+import 'package:jogo_mobile/src/pages/Nivel_1/componentes/mixedLabels.dart';
 import 'package:provider/provider.dart';
 
 class CaixaDialog extends StatefulWidget {
-  ClasseGenerica classeGenerica;
-  String tituloDoContainer;
-  String textoQntDePontos;
-  EnumsFase1CaixaDeDialog enumsFase1CaixaDeDialog;
 
+  ClasseGenerica classeGenerica;
+  EnumsCaixaDialogNivel01 enumsCaixaDialogNivel01;
   ControleNivel01 controleNivel01;
+  
   CaixaDialog(
       {@required this.classeGenerica,
-      @required this.tituloDoContainer,
-      @required this.textoQntDePontos,
-      @required this.enumsFase1CaixaDeDialog,
+      @required this.enumsCaixaDialogNivel01,
       @required this.controleNivel01});
 
   @override
@@ -26,14 +22,14 @@ class CaixaDialog extends StatefulWidget {
 
 class _ShowDialogState extends State<CaixaDialog> {
   ClasseGenerica classeGenerica;
-  String tituloDoContainer;
-  String textoQntDePontos;
-  EnumsFase1CaixaDeDialog enumsFase1CaixaDeDialog;
+  EnumsCaixaDialogNivel01 enumsCaixaDialogNivel01;
   Color corDoContainer = Colors.blueAccent[400];
 
   List<String> listaDeButoesColuna1 = []; // Atributos  ou metodos da coluna 1
   List<String> listaDeButoesColuna2 = []; // Atributos  ou metodos da coluna 2
   HashMap<String, Color> mapIsActiveDeButao;
+  final String titulo = "titulo";
+  final String textoQntDePontos = "textoQntDePontos";
 
   ControleNivel01 controleNivel01;
 
@@ -41,9 +37,7 @@ class _ShowDialogState extends State<CaixaDialog> {
   void initState() {
     super.initState();
     this.classeGenerica = widget.classeGenerica;
-    this.tituloDoContainer = widget.tituloDoContainer;
-    this.textoQntDePontos = widget.textoQntDePontos;
-    this.enumsFase1CaixaDeDialog = widget.enumsFase1CaixaDeDialog;
+    this.enumsCaixaDialogNivel01 = widget.enumsCaixaDialogNivel01;
     this.controleNivel01 = widget.controleNivel01;
     _iniciarListas();
   }
@@ -91,7 +85,7 @@ class _ShowDialogState extends State<CaixaDialog> {
                 Padding(
                   padding: EdgeInsets.only(left: 10, top: 10),
                   child: Text(
-                    tituloDoContainer.toUpperCase(),
+                    solicitarTexto(titulo),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -101,7 +95,7 @@ class _ShowDialogState extends State<CaixaDialog> {
                 Padding(
                   padding: EdgeInsets.only(left: 10, top: 20),
                   child: Text(
-                    textoQntDePontos,
+                    solicitarTexto(textoQntDePontos),
                     style: TextStyle(
                       fontSize: 13,
                     ),
@@ -212,8 +206,8 @@ class _ShowDialogState extends State<CaixaDialog> {
   }
 
   enviarButaoEscolhido(String conteudoDoButao, Color corDoButao) {
-    if (this.enumsFase1CaixaDeDialog ==
-        EnumsFase1CaixaDeDialog.caixaAtributos) {
+    if (this.enumsCaixaDialogNivel01 ==
+        EnumsCaixaDialogNivel01.caixaAtributos) {
       return enviarAtributos(conteudoDoButao);
     } else {
       return enviarMetodo(conteudoDoButao);
@@ -234,11 +228,10 @@ class _ShowDialogState extends State<CaixaDialog> {
   _iniciarListas() {
     this.mapIsActiveDeButao = new HashMap();
 
-    if (this.enumsFase1CaixaDeDialog ==
-        EnumsFase1CaixaDeDialog.caixaAtributos) {
+    if (this.enumsCaixaDialogNivel01==
+        EnumsCaixaDialogNivel01.caixaAtributos) {
       this.listaDeButoesColuna1 = this.controleNivel01.listaAtributosColuna01();
       this.listaDeButoesColuna2 = this.controleNivel01.listaAtributosColuna02();
-      debugPrint("Tamanho da lista: ${this.listaDeButoesColuna1.length}");
     } else {
       this.listaDeButoesColuna1 = this.controleNivel01.listaMetodosColuna01();
       this.listaDeButoesColuna2 = this.controleNivel01.listaMetodosColuna02();
@@ -255,11 +248,19 @@ class _ShowDialogState extends State<CaixaDialog> {
   }
 
   isButaoJaEscolhido(String nomeDoButao) {
-    if (this.enumsFase1CaixaDeDialog ==
-        EnumsFase1CaixaDeDialog.caixaAtributos) {
+    if (this.enumsCaixaDialogNivel01 ==
+        EnumsCaixaDialogNivel01.caixaAtributos) {
       return this.controleNivel01.getIsAtributoJaEscolhido(nomeDoButao);
     } else {
       return this.controleNivel01.getIsMetodoJaEscolhido(nomeDoButao);
+    }
+  }
+
+  solicitarTexto(String tipoDeTexto) {
+    if(tipoDeTexto == titulo){
+     return TextosDeComponentesNivel01.tituloCaixaDialogoAtributos;
+    }else if(tipoDeTexto == textoQntDePontos){
+     return TextosDeComponentesNivel01.tituloCaixaDialogoAtributos;
     }
   }
 }

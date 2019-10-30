@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-alertVerificarClasse(BuildContext context, String mensagem,
-    String tituloDaMensagem, Icon icone) {
+alertNotificacao(BuildContext context, String mensagem, {Function callback}) {
   showDialog(
     context: context,
     builder: (_) => Dialog(
@@ -20,28 +19,21 @@ alertVerificarClasse(BuildContext context, String mensagem,
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Center(
-              child: Text(
-                "Mestre OO",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
+            SizedBox(
+              height: 10,
             ),
             Container(
               margin: EdgeInsets.only(left: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  icone,
-                  // (
-                  //   Icons.report,
-                  //   color: Colors.red,
-                  //   size: 30,
-                  // ),
+                  Icon(
+                    Icons.report,
+                    color: Colors.red,
+                    size: 30,
+                  ),
                   Text(
-                    tituloDaMensagem,
+                    "Opa...",
                     style: TextStyle(
                         fontSize: 25,
                         color: Colors.blueAccent[400],

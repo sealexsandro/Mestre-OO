@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:jogo_mobile/src/controller/controle_Login.dart';
 import 'package:jogo_mobile/src/model/ApiResponse.dart';
 import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
+import 'package:jogo_mobile/src/pages/Widgets/appButton.dart';
+import 'package:jogo_mobile/src/pages/Widgets/appTextFormatFild.dart';
 import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
-import 'package:jogo_mobile/src/pages/utilsPages/alerts.dart';
+import 'package:jogo_mobile/src/pages/utilsPages/alertNotificacao.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -15,6 +17,8 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final _tLogin = TextEditingController();
   final _tSenha = TextEditingController();
+  final _focusSenha = FocusNode();
+  bool _showProgress = false;
 
   final _controleLogin = ControleLogin();
 
@@ -71,7 +75,7 @@ class _LoginState extends State<Login> {
                             padding: const EdgeInsets.only(
                                 top: 0, left: 32, bottom: 50),
                             child: Text(
-                              "Nome do Jogo",
+                              "Mestre OO",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 24),
                             ),
@@ -101,16 +105,21 @@ class _LoginState extends State<Login> {
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: <Widget>[
-                      containerCamposTextFild(
-                        IconesComponent.email,
+                      AppTextFormatField(
+                        nomeDoCampo: NomeIconeComponent.nomeDoUser,
                         controller: _tLogin,
                         validator: _validateLogin,
                         keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        nextFocus: _focusSenha,
                       ),
-                      containerCamposTextFild(IconesComponent.senha,
-                          password: true,
-                          controller: _tSenha,
-                          validator: _validateSenha),
+                      AppTextFormatField(
+                        nomeDoCampo: NomeIconeComponent.senha,
+                        password: true,
+                        controller: _tSenha,
+                        validator: _validateSenha,
+                        focusNode: _focusSenha,
+                      ),
                       // Align(
                       //   alignment: Alignment.centerRight,
                       //   child: Padding(
@@ -124,35 +133,12 @@ class _LoginState extends State<Login> {
                       //     ),
                       //   ),
                       // ),
-                      Container(
-                        //   margin: EdgeInsets.only(top: 15),
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF6078ea),
-                              Color(0xFF17ead9),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
-                        ),
-                        child: FlatButton(
-                          child: Center(
-                            child: Text(
-                              "Entre".toUpperCase(),
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          onPressed: onPressedFunction,
-                        ),
+                      AppButton(
+                        textoDoButao: "Entre",
+                        funcaoDoButao: onPressedFunction,
+                        showProgress: _showProgress,
                       ),
+                      //  AppButton("Entre", onPressedFunction),
                       // Container(
                       //   margin: EdgeInsets.only(top: 15),
                       //   width: MediaQuery.of(context).size.width / 1.2,
@@ -242,74 +228,35 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Container containerCamposTextFild(
-    String nomeDoCampo, {
-    bool password = false,
-    TextEditingController controller,
-    FormFieldValidator<String> validator,
-    TextInputType keyboardType,
-  }) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 1.2,
-      height: 60,
-      margin: EdgeInsets.only(bottom: 20),
-      padding: EdgeInsets.only(
-        top: 8,
-        left: 16,
-        right: 16,
-        // bottom: 4,
-      ),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(30),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 4,
-            )
-          ]),
-      child: TextFormField(
-        controller: controller,
-        obscureText: password,
-        validator: validator,
-        keyboardType: keyboardType,
-        style: TextStyle(
-          fontSize: 18,
-        ),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          icon: IconesComponent.escolhaDeIcone(nomeDoCampo),
-          hintText: nomeDoCampo,
-          hintStyle: TextStyle(
-            fontSize: 18,
-          ),
-          errorStyle: TextStyle(fontSize: 14),
-        ),
-      ),
-    );
-  }
-
   onPressedFunction() async {
-    bool formKey = _formKey.currentState.validate();
-    if (!formKey) {
-      return;
-    }
-    String login = _tLogin.text;
-    String senha = _tSenha.text;
+    Navigator.pushNamed(context, "/EscolhaDeNivel");
 
-    debugPrint("Login: ${login}");
-    debugPrint("Senha: ${senha.toString()}");
+    // bool formKey = _formKey.currentState.validate();
+    // if (!formKey) {
+    //   return;
+    // }
+    // String login = _tLogin.text;
+    // String senha = _tSenha.text;
 
-    ApiResponse response = await _controleLogin.login(login, senha);
+    // debugPrint("Login: ${login}");
+    // debugPrint("Senha: ${senha.toString()}");
 
-    if (response.ok) {
-      Navigator.pushNamed(context, "/EscolhaDeNivel");
-    } else {
-      alert(context, response.msg);
-      debugPrint("Acesso negado");
-    }
+    // setState(() {
+    //   _showProgress = true;
+    // });
+
+    // ApiResponse response = await _controleLogin.login(login, senha);
+
+    // if (response.ok) {
+    //   Navigator.pushNamed(context, "/EscolhaDeNivel");
+    // } else {
+    //   alertNotificacao(context, response.msg);
+    //   debugPrint("Acesso negado");
+    // }
+
+    // setState(() {
+    //   _showProgress = false;
+    // });
   }
 
   onPressedGoogleLogin() {
