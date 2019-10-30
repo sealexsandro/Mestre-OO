@@ -4,13 +4,11 @@ import 'package:provider/provider.dart';
 
 class ContainerDeClasse extends StatefulWidget {
   String nomeDaClasse;
-  ControleNivel01 controleNivel01;
   List<String> listaDeAtributos = [];
   List<String> listaDeMetodos = [];
 
-  ContainerDeClasse(String nomeDaClasse, ControleNivel01 controleNivel01) {
+  ContainerDeClasse(String nomeDaClasse) {
     this.nomeDaClasse = nomeDaClasse;
-    this.controleNivel01 = controleNivel01;
   }
 
   @override
@@ -24,13 +22,11 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   String nomeDaClasse;
   List<String> listaDeAtributos;
   List<String> listaDeMetodos;
-  
-
   var screnSize;
+  var alturaContainer;
 
   _ContainerDeClasseState(String nomeDaClasse) {
     this.nomeDaClasse = nomeDaClasse;
-    debugPrint("Container Instanciado tttttttttttttttttttttttttt");
   }
 
   @override
@@ -38,79 +34,83 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
     super.initState();
     this.listaDeAtributos = widget.listaDeAtributos;
     this.listaDeMetodos = widget.listaDeMetodos;
-    this.controleNivel01 = widget.controleNivel01;
   }
 
   @override
   Widget build(BuildContext context) {
     this.screnSize = MediaQuery.of(context).size.width / 1.7;
+    this.alturaContainer = MediaQuery.of(context).size.height / 2.2;
     return Container(
       width: this.screnSize,
-      height: MediaQuery.of(context).size.height / 2.2,
+      height: alturaContainer,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.blue, width: 2),
       ),
-      child: Column(
-        children: <Widget>[
-          Container(
-            width: this.screnSize,
-            height: 30,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  width: 2,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-            child: Center(
-              child: Text(
-                widget.nomeDaClasse,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
-          Container(
-            width: this.screnSize - 2,
-            height: 150,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  width: 2,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-            child: Container(
-              child: Scrollbar(
-                child: widgetListaDeAtributos(),
-              ),
-            ),
-          ),
-          Container(
-            width: this.screnSize,
-            height: 90,
-            child: Container(
-              child: Scrollbar(
-                child: widgetListaDeMetodos(),
-              ),
-            ),
-          ),
-        ],
+      child: Consumer<ControleNivel01>(
+        builder: (context, controleNivel01, widget) {
+          return colunaDeContainer();
+        },
       ),
     );
   }
 
-  widgetListaDeAtributos() {
-    String atributo = Provider.of<ControleNivel01>(context).atributoEscolhido;
-    if ((atributo != null) && (atributo != "")) {
-      this.listaDeAtributos.add(atributo);
-      debugPrint("Lista recebida: ${listaDeAtributos.length}");
-      this.controleNivel01.limparStringAtributo();
-    }
+  colunaDeContainer() {
+    return Column(
+      children: <Widget>[
+        Container(
+          width: this.screnSize,
+          height: this.alturaContainer / 9,
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                width: 2,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+          child: Center(
+            child: Text(
+              widget.nomeDaClasse,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          width: this.screnSize - 2,
+          height: this.alturaContainer / 1.9,
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                width: 2,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+          child: Container(
+            child: Scrollbar(
+              child: listaDinamica(),
+            ),
+          ),
+        ),
+        Container(
+          width: this.screnSize,
+          height: this.alturaContainer / 3,
+          child: Container(
+            child: Scrollbar(
+              child: widgetListaDeMetodos(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  listaDinamica() {
+    listaDeAtributos =
+        Provider.of<ControleNivel01>(context).listaDeAtributosEscolhidos;
 
     if (this.listaDeAtributos.length > 0) {
       return ListView.builder(
@@ -164,36 +164,26 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
           );
         },
       );
-    } else {
-      setState(() {});
     }
   }
 
   void deleteItemAtributo(index) {
-    /*
-  Ao implementar esse método, ele garante que, ao ser dispensado da nossa árvore de widgets,
-  o item é removido da nossa lista de itens e a lista é atualizada, portanto
-  impedindo o erro "Widget dispensado ainda na árvore de widgets" quando recarregamos.
-  */
-    String atributo = this.listaDeAtributos[index];
-    this.controleNivel01.removerAtributoEscolhido(atributo);
     setState(() {
-      this.listaDeAtributos.removeAt(index);
-      debugPrint("Removendo item");
+      // this.listaDeAtributos.removeAt(index);
+      // debugPrint("Removendo item");
+      String atributo = this.listaDeAtributos[index];
+      Provider.of<ControleNivel01>(context).removerAtributoEscolhido(atributo);
     });
   }
 
   widgetListaDeMetodos() {
-    String metodo = Provider.of<ControleNivel01>(context).metodoEscolhido;
-    if ((metodo != null) && (metodo != "")) {
-      this.listaDeMetodos.add(metodo);
-      debugPrint("Lista recebida: ${listaDeMetodos.length}");
-      this.controleNivel01.limparStringMetodo();
-    }
-
+    this.listaDeMetodos =
+        Provider.of<ControleNivel01>(context).listaDeMetodosEscolhidos;
     if (this.listaDeMetodos.length > 0) {
       return ListView.builder(
-        itemCount: listaDeMetodos.length,
+        itemCount: Provider.of<ControleNivel01>(context)
+            .listaDeMetodosEscolhidos
+            .length,
         itemBuilder: (context, index) {
           return Dismissible(
             background: stackBehindDismiss(),
@@ -246,11 +236,12 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   }
 
   void deleteItemMetodo(index) {
-    String metodo = this.listaDeMetodos[index];
-    this.controleNivel01.removerMetodoEscolhidoPorJogador(metodo);
     setState(() {
-      this.listaDeMetodos.removeAt(index);
-      debugPrint("Removendo Metodo");
+      //   this.listaDeMetodos.removeAt(index);
+      // debugPrint("Removendo Metodo");
+      String metodo = this.listaDeMetodos[index];
+      Provider.of<ControleNivel01>(context)
+          .removerMetodoEscolhidoPorJogador(metodo);
     });
   }
 

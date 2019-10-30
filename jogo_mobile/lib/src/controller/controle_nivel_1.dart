@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile/src/business/nivel01Business.dart';
 import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
 import 'package:jogo_mobile/src/model/servicesFase1.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/alertaVerificarAtributos.dart';
@@ -6,16 +7,16 @@ import 'package:jogo_mobile/src/pages/Nivel_1/alertaVerificarAtributos.dart';
 class ControleNivel01 extends ChangeNotifier {
   List<String> listaDeClassesAtributos = [];
   List<String> listaDeAtributos = [];
-  // Metodo que vai ser transmitido entre views;
-  String metodoEscolhido;
-  String atributoEscolhido;
-  String atributoRemovido;
+  List<String> listaDeAtributosEscolhidos = [];
+  List<String> listaDeMetodosEscolhidos = [];
 
   ServiceNivel01 _servicesNivel01;
+  Nivel01Business nivel01business;
   ClasseGenerica classeGenerica;
 
   ControleNivel01() {
     this._servicesNivel01 = ServiceNivel01.getUnicaInstanciaServiceNivel01();
+    this.nivel01business = Nivel01Business();
   }
 
   ClasseGenerica retornaClasseDaRodada() {
@@ -23,67 +24,31 @@ class ControleNivel01 extends ChangeNotifier {
     return this.classeGenerica;
   }
 
-  tranferirAtributos(List<String> listaDeClassesAtributos) {
-    this.listaDeClassesAtributos = listaDeClassesAtributos;
-    notifyListeners();
-  }
-
-  // transferirMetodo(String metodo) {
-  //   this.metodoEscolhido = metodo;
-  //   notifyListeners();
-  // }
-
   addAtributoEscolhido(String atributo) {
-    bool retorno = this._servicesNivel01.addAtributoNaListaDaRodada(atributo);
+    bool retorno = this.nivel01business.addAtributoNaListaDaRodada(atributo);
     if (retorno) {
-      debugPrint("Atribuindo valor: ${atributo}");
-      this.atributoEscolhido = atributo;
+      this.listaDeAtributosEscolhidos =
+          this._servicesNivel01.listaDeAtributosEscolhidos;
       notifyListeners();
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  removerAtributoEscolhido(String atributo) {
-    bool retorno =
-        this._servicesNivel01.removerAtributoNaListaDaRodada(atributo);
-    if (retorno) {
-      this.atributoRemovido = atributo;
-      notifyListeners();
-      return true;
-    } else {
-      return false;
     }
   }
 
   // Metodo que vai ser transmitido entre views;
   addMetodoEscolhidoPorJogador(String metodo) {
-    bool retorno = this._servicesNivel01.addMetodoNaListaDaRodada(metodo);
+    bool retorno = this.nivel01business.addMetodoNaListaDaRodada(metodo);
     if (retorno) {
-      this.metodoEscolhido = metodo;
+      this.listaDeMetodosEscolhidos =
+          this._servicesNivel01.listaDeMetodosEscolhidos;
       notifyListeners();
-      return true;
-    } else {
-      return false;
     }
+  }
+
+  removerAtributoEscolhido(String atributo2) {
+    this._servicesNivel01.removerAtributoNaListaDaRodada(atributo2);
   }
 
   removerMetodoEscolhidoPorJogador(String metodo) {
     this._servicesNivel01.removerMetodoNaListaDaRodada(metodo);
-  }
-
-  esvaziarLista() {
-    this.listaDeClassesAtributos.clear();
-  }
-
-  limparStringAtributo() {
-    this.atributoEscolhido = "";
-    this.atributoRemovido = "";
-  }
-
-  limparStringMetodo() {
-    this.metodoEscolhido = "";
   }
 
   listaAtributosColuna01() {
@@ -100,18 +65,6 @@ class ControleNivel01 extends ChangeNotifier {
 
   listaMetodosColuna02() {
     return this._servicesNivel01.listaDeButoesMetodosColuna2;
-  }
-
-  //verificar se atributo ja foi inserido
-  getIsAtributoJaEscolhido(String nomeAtributo) {
-    var lista = this._servicesNivel01.listaDeAtributosEscolhidos;
-    return lista.contains(nomeAtributo);
-  }
-
-  //verificar se metodo ja foi inserido
-  getIsMetodoJaEscolhido(String nomeMetodo) {
-    var lista = this._servicesNivel01.listaDeMetodosEscolhidos;
-    return lista.contains(nomeMetodo);
   }
 
   //validar atributos e métodos

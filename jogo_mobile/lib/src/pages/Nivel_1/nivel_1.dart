@@ -161,8 +161,8 @@ class _Nivel01State extends State<Nivel01> {
   }
 
   _container() {
-    return this._containerDeClasse = ContainerDeClasse(
-        this._classeGenerica.nomeDaClasse, this.controleNivel01);
+    return this._containerDeClasse =
+        ContainerDeClasse(this._classeGenerica.nomeDaClasse);
   }
 
   _nomeDoSistema() {
@@ -205,10 +205,10 @@ class _Nivel01State extends State<Nivel01> {
   escolhaDeAtributos() {
     return showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) => CaixaDialog(
         classeGenerica: this._classeGenerica,
         enumsCaixaDialogNivel01: EnumsCaixaDialogNivel01.caixaAtributos,
-        controleNivel01: this.controleNivel01,
       ),
     );
   }
@@ -216,10 +216,10 @@ class _Nivel01State extends State<Nivel01> {
   escolhaDeMetodos() {
     return showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) => CaixaDialog(
         classeGenerica: this._classeGenerica,
         enumsCaixaDialogNivel01: EnumsCaixaDialogNivel01.caixaMetodos,
-        controleNivel01: this.controleNivel01,
       ),
     );
   }

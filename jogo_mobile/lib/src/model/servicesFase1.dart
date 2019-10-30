@@ -55,24 +55,15 @@ class ServiceNivel01 {
     debugPrint("Instanciado 222222222222222222222222222");
   }
 
+  // Adicionar Atributo na lista de atributos escolhidos na rodada do jogo
   addAtributoNaListaDaRodada(String atributo) {
-    if (this.listaDeAtributosEscolhidos.length > 0) {
-      bool atributoRepetido = false;
-      for (var i = 0; i < this.listaDeAtributosEscolhidos.length; i++) {
-        if (this.listaDeAtributosEscolhidos[i] == atributo) {
-          atributoRepetido = true;
-        }
-      }
-      if (atributoRepetido == false) {
-        this.listaDeAtributosEscolhidos.add(atributo);
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      this.listaDeAtributosEscolhidos.add(atributo);
-      return true;
-    }
+    debugPrint("Atributo adicionado: ${atributo.toString()}");
+    this.listaDeAtributosEscolhidos.add(atributo);
+  }
+
+  // Adicionar Metodo na lista de atributos escolhidos na rodada do jogo
+  addMetodoNaListaDaRodada(String metodo) {
+    this.listaDeMetodosEscolhidos.add(metodo);
   }
 
   removerAtributoNaListaDaRodada(String atributo) {
@@ -86,33 +77,13 @@ class ServiceNivel01 {
     }
   }
 
-  ////////////////////////////////////////////////
-  addMetodoNaListaDaRodada(String metodo) {
-    if (this.listaDeMetodosEscolhidos.length > 0) {
-      bool metodoRepetido = false;
-      for (var i = 0; i < this.listaDeMetodosEscolhidos.length; i++) {
-        if (this.listaDeMetodosEscolhidos[i] == metodo) {
-          metodoRepetido = true;
-        }
-      }
-      if (metodoRepetido == false) {
-        this.listaDeMetodosEscolhidos.add(metodo);
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      this.listaDeMetodosEscolhidos.add(metodo);
-      return true;
-    }
-  }
-
   removerMetodoNaListaDaRodada(String metodo) {
     if (metodo != null) {
       if (this.listaDeMetodosEscolhidos.length > 0) {
         this.listaDeMetodosEscolhidos.removeWhere((item) => item == metodo);
+        return true;
       } else {
-        //tratar essa excessão
+        return false;
       }
     }
   }
@@ -161,7 +132,7 @@ class ServiceNivel01 {
       );
 
       return classeGenerica;
-    }else{
+    } else {
       return null;
     }
   }
