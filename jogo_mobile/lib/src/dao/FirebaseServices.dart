@@ -24,13 +24,13 @@ class FirebaseService {
         email: fuser.email,
         //   urlFoto: fuser.photoUrl,
       );
-      //    user.save();
+      user.save();
 
       // Resposta genérica
       return ApiResponse.ok();
     } catch (error) {
       print("Firebase error $error");
-        return ApiResponse.error(msg: "Não foi possível conectar");
+      return ApiResponse.error(msg: "Não foi possível conectar");
     }
   }
 

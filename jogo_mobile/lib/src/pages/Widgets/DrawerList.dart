@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile/src/model/usuario.dart';
 
 class DrawerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Future<Usuario> futureUser = Usuario.get();
     return SafeArea(
       child: Container(
         width: 280,
         color: Colors.white,
         child: ListView(
           children: <Widget>[
-            UserAccountsDrawerHeader(
-              // accountName: FutureBuilder(
-              //  future: Prefs.getString("nome"),
-              //   builder: (context, snapshot) {
-              //     return Text(snapshot.hasData ? snapshot.data : "");
-              //   },
-              // ),
-              accountName: Text("sebas@gmail.com"),
-              accountEmail: Text("sebas@gmail.com"),
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://cdn.iconscout.com/icon/free/png-256/avatar-372-456324.png"),
-              ),
+            FutureBuilder<Usuario>(
+              future: futureUser,
+              builder: (context, snapshot) {
+                Usuario user = snapshot.data;
+                return user !=null? contaDoUsuario(user) : Container();
+              },
             ),
             ListTile(
               onTap: () {
@@ -57,6 +52,22 @@ class DrawerList extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  UserAccountsDrawerHeader contaDoUsuario(Usuario user) {
+    return UserAccountsDrawerHeader(
+      // accountName: FutureBuilder(
+      //  future: Prefs.getString("nome"),
+      //   builder: (context, snapshot) {
+      //     return Text(snapshot.hasData ? snapshot.data : "");
+      //   },
+      // ),
+    //  accountName: Text(user.nome),
+      accountEmail: Text(user.email),
+      currentAccountPicture: CircleAvatar(
+       // backgroundImage: NetworkImage(user.urlFoto),
       ),
     );
   }

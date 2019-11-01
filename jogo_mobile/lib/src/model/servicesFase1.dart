@@ -7,6 +7,12 @@ import 'package:jogo_mobile/src/model/metodosDasClasses.dart';
 class ServiceNivel01 {
   List<EnumsNomesDeClasses> listaNomesDeClasses = [];
   Random random = Random();
+
+  // numero do problema que o jogador está respondendo
+  int numeroDoProblema;
+
+  int pontuacaoAtualDoJogador;
+
   // Metodos que serão escolhidos pelo jogador
   List<String> listaDeMetodosEscolhidos = [];
 
@@ -36,7 +42,6 @@ class ServiceNivel01 {
 
   ServiceNivel01._() {
     iniciarLista();
-    debugPrint("Instanciado lllllllllllllllllllllllllllllllllllllllllll");
   }
 
   static ServiceNivel01 unicaInstanciaServiceNivel01;
@@ -52,7 +57,6 @@ class ServiceNivel01 {
     EnumsNomesDeClasses.values.forEach((nomeDaClasse) {
       listaNomesDeClasses.add(nomeDaClasse);
     });
-    debugPrint("Instanciado 222222222222222222222222222");
   }
 
   // Adicionar Atributo na lista de atributos escolhidos na rodada do jogo
@@ -214,40 +218,6 @@ class ServiceNivel01 {
       }
     } else {
       debugPrint("Valores não Inseridos");
-    }
-  }
-
-  //Validar atributos escolhidos
-  validarAtributosEscolhidos() {
-    if (this.listaDeAtributosEscolhidos.length > 0) {
-      for (var i = 0; i < this.listaDeAtributosEscolhidos.length; i++) {
-        if (this
-                .listaDeAtributosVerdadeiros
-                .contains(this.listaDeAtributosEscolhidos[i]) ==
-            false) {
-          return false;
-        }
-      }
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  //Validar metodos escolhidos
-  validarMetodosEscolhidos() {
-    if (this.listaDeMetodosEscolhidos.length > 0) {
-      for (var i = 0; i < this.listaDeMetodosEscolhidos.length; i++) {
-        if (this
-                .listaDeMetodosVerdadeiros
-                .contains(this.listaDeMetodosEscolhidos[i]) ==
-            false) {
-          return false;
-        }
-      }
-      return true;
-    } else {
-      return false;
     }
   }
 

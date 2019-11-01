@@ -209,9 +209,9 @@ class _ShowDialogState extends State<CaixaDialog> {
   enviarButaoEscolhido(String conteudoDoButao, Color corDoButao) {
     if (this.enumsCaixaDialogNivel01 ==
         EnumsCaixaDialogNivel01.caixaAtributos) {
-      return enviarAtributos(conteudoDoButao);
+      enviarAtributos(conteudoDoButao);
     } else {
-      return enviarMetodo(conteudoDoButao);
+      enviarMetodo(conteudoDoButao);
     }
   }
 

@@ -229,34 +229,35 @@ class _LoginState extends State<Login> {
   }
 
   onPressedFunction() async {
-    Navigator.pushNamed(context, "/EscolhaDeNivel");
+  //  Navigator.pushNamed(context, "/EscolhaDeNivel");
 
-    // bool formKey = _formKey.currentState.validate();
-    // if (!formKey) {
-    //   return;
-    // }
-    // String login = _tLogin.text;
-    // String senha = _tSenha.text;
+    bool formKey = _formKey.currentState.validate();
+    if (!formKey) {
+      return;
+    }
+    String login = _tLogin.text;
+    String senha = _tSenha.text;
 
     // debugPrint("Login: ${login}");
     // debugPrint("Senha: ${senha.toString()}");
 
-    // setState(() {
-    //   _showProgress = true;
-    // });
+    setState(() {
+      _showProgress = true;
+    });
 
-    // ApiResponse response = await _controleLogin.login(login, senha);
+    ApiResponse response = await _controleLogin.login(login, senha);
 
-    // if (response.ok) {
-    //   Navigator.pushNamed(context, "/EscolhaDeNivel");
-    // } else {
-    //   alertNotificacao(context, response.msg);
-    //   debugPrint("Acesso negado");
-    // }
+    if (response.ok) {
+      
+      Navigator.pushNamed(context, "/EscolhaDeNivel");
+    } else {
+      alertNotificacao(context, response.msg);
+      debugPrint("Acesso negado");
+    }
 
-    // setState(() {
-    //   _showProgress = false;
-    // });
+    setState(() {
+      _showProgress = false;
+    });
   }
 
   onPressedGoogleLogin() {

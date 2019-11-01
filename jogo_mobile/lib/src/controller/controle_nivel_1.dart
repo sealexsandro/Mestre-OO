@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile/src/business/nivel01Business.dart';
+import 'package:jogo_mobile/src/enums/enumsBusinessNivel01.dart';
 import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
 import 'package:jogo_mobile/src/model/servicesFase1.dart';
-import 'package:jogo_mobile/src/pages/Nivel_1/alertaVerificarAtributos.dart';
+import 'package:jogo_mobile/src/pages/Nivel_1/alertaValidarClasse.dart';
 
 class ControleNivel01 extends ChangeNotifier {
   List<String> listaDeClassesAtributos = [];
@@ -13,14 +14,23 @@ class ControleNivel01 extends ChangeNotifier {
   ServiceNivel01 _servicesNivel01;
   Nivel01Business nivel01business;
   ClasseGenerica classeGenerica;
+  // numero do problema que o jogador está respondendo
+  int numeroDoProblema;
+  int pontuacaoAtualDoJogador;
+  int pontoPorPartida;
+  int scoreTotal;
 
   ControleNivel01() {
     this._servicesNivel01 = ServiceNivel01.getUnicaInstanciaServiceNivel01();
     this.nivel01business = Nivel01Business();
+    this.pontoPorPartida = 0;
+    this.numeroDoProblema = 1;
+    this.scoreTotal =0;
   }
 
   ClasseGenerica retornaClasseDaRodada() {
     this.classeGenerica = _servicesNivel01.retornaClasseDaRodada();
+    this.pontoPorPartida = 0;
     return this.classeGenerica;
   }
 
@@ -29,6 +39,7 @@ class ControleNivel01 extends ChangeNotifier {
     if (retorno) {
       this.listaDeAtributosEscolhidos =
           this._servicesNivel01.listaDeAtributosEscolhidos;
+      incrementarPontosDaRodada();
       notifyListeners();
     }
   }
@@ -39,6 +50,7 @@ class ControleNivel01 extends ChangeNotifier {
     if (retorno) {
       this.listaDeMetodosEscolhidos =
           this._servicesNivel01.listaDeMetodosEscolhidos;
+      incrementarPontosDaRodada();
       notifyListeners();
     }
   }
@@ -68,58 +80,27 @@ class ControleNivel01 extends ChangeNotifier {
   }
 
   //validar atributos e métodos
-  validarClasse(BuildContext context) {
-    bool verificacaoAtributos =
-        this._servicesNivel01.validarAtributosEscolhidos();
-    bool verificacaoMetodos = this._servicesNivel01.validarMetodosEscolhidos();
-    String mensagem;
-    String tituloMsgIsInCorreto = "  Opa... ";
-    String tituloMsgIsCorreto = "  Parabéns ";
+  validarClasse(BuildContext context, Function funcao) {
+    EnumsValidacaoDeClasse enumsValidacaoDeClasse =
+        this.nivel01business.validarClasse();
 
-    if (verificacaoAtributos == false && verificacaoMetodos == false) {
-      mensagem =
-          "Você errou alguma coisa, verifique os atributos e métodos escolhidos";
-      var icone = Icon(
-        Icons.report,
-        color: Colors.red,
-        size: 30,
-      );
-
-      alertVerificarClasse(context, mensagem, tituloMsgIsInCorreto, icone);
-      debugPrint("Vericacao de atributos e metodos");
-      return false;
-    } else if (!verificacaoAtributos) {
-      mensagem = "Você errou alguma coisa, verifique os atributos escolhidos";
-      var icone = Icon(
-        Icons.report,
-        color: Colors.red,
-        size: 30,
-      );
-      alertVerificarClasse(context, mensagem, tituloMsgIsInCorreto, icone);
-      debugPrint("Vericacao de atributos ");
-      return false;
-    } else if (!verificacaoMetodos) {
-      mensagem = "Você errou alguma coisa, verifique os métodos escolhidos";
-      var icone = Icon(
-        Icons.report,
-        color: Colors.red,
-        size: 30,
-      );
-
-      alertVerificarClasse(context, mensagem, tituloMsgIsInCorreto, icone);
-      debugPrint("Vericacao de  metodos");
-      return false;
+    if (enumsValidacaoDeClasse ==
+        EnumsValidacaoDeClasse.atributoEmetodoCorreto) {
+      String msg = enumMsgDeValidacaoDeClasse(enumsValidacaoDeClasse);
+      String tituloMsg = "  Parabéns";
+      String pontos= this.pontoPorPartida.toString();
+      alertClasseCorreta(context, msg, tituloMsg, pontos, funcao);
+      this.numeroDoProblema++;
+      this.scoreTotal += this.pontoPorPartida;
     } else {
-      mensagem = "Muito bem, vamos para próxima classe";
-      this._servicesNivel01.limparListaDeAtributosMetodos();
-
-      var icone = Icon(
-        Icons.mood,
-        color: Colors.blueAccent[400],
-        size: 30,
-      );
-      alertVerificarClasse(context, mensagem, tituloMsgIsCorreto, icone);
-      return true;
+      String msg = enumMsgDeValidacaoDeClasse(enumsValidacaoDeClasse);
+      String tituloMsg = "  Ops...";
+      alertClasseIncorreta(context, msg, tituloMsg);
     }
+  }
+
+  incrementarPontosDaRodada() {
+    this.pontoPorPartida = this.nivel01business.incrementarPontos();
+    //  notifyListeners();
   }
 }

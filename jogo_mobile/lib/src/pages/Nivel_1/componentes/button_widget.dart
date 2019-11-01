@@ -25,8 +25,9 @@ class ButtonWidget extends StatelessWidget {
         color: this.corDoButao,
         shape:
             RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
-        child: Padding(
-          padding: EdgeInsets.only(left: 7),
+
+        //   padding: EdgeInsets.all(2),
+        child: Center(
           child: Text(
             this.textoDoButao.toUpperCase(),
             style: TextStyle(
@@ -34,8 +35,10 @@ class ButtonWidget extends StatelessWidget {
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
+
         elevation: 6,
         onPressed: onPressedFunction,
       ),

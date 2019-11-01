@@ -20,6 +20,9 @@ class _Nivel01State extends State<Nivel01> {
   ControleNivel01 controleNivel01;
   TextosDeComponentesFase1 textosDeComponentesFase1;
   ContainerDeClasse _containerDeClasse;
+  String pontuacaoDaRodada;
+  String pontuacaoTotal;
+  String numeroDoProblema;
 
   Random random = Random();
 
@@ -54,24 +57,33 @@ class _Nivel01State extends State<Nivel01> {
                     children: <Widget>[
                       Container(
                         width: MediaQuery.of(context).size.width / 2,
-                        margin: EdgeInsets.only(top: 10, bottom: 10, left: 16),
+                        margin: EdgeInsets.only(
+                            top: 10, bottom: 10, left: 16, right: 0),
                         child: Text(
-                          "Problema    01",
+                          "Problema:  ${numeroProblema().toUpperCase()}",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 15,
+                            fontSize: 17,
                           ),
                         ),
                       ),
                       Container(
-                        //  width: MediaQuery.of(context).size.width / 2,
-                        margin: EdgeInsets.only(top: 10, bottom: 10, left: 16),
+                        margin: EdgeInsets.only(
+                            top: 10, bottom: 10, left: 16, right: 10),
                         child: Text(
                           "Score: ",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 15,
+                            fontSize: 17,
                           ),
+                        ),
+                      ),
+                      Text(
+                        pontosDoJogador().toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
@@ -90,6 +102,7 @@ class _Nivel01State extends State<Nivel01> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Column(
                       children: <Widget>[
@@ -102,42 +115,68 @@ class _Nivel01State extends State<Nivel01> {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
+                            Consumer<ControleNivel01>(
+                              builder: (context, controleNivel01, widget) {
+                                return Column(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(right: 0),
+                                      width: MediaQuery.of(context).size.width /
+                                          3.2,
+                                      //   height: 60,
+                                      child: Text(
+                                        "Pontos Por esta Classe: ",
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      pontosDaRodada().toUpperCase(),
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 65,
+                        ),
+                        Row(
+                          children: <Widget>[
                             ButtonWidget(
                               "escolha atributos",
                               onPressedFunction: escolhaDeAtributos,
-                              alturaDoButao: 60,
+                              alturaDoButao: 70,
                               comprimentoDoButao:
-                                  MediaQuery.of(context).size.width / 3,
+                                  MediaQuery.of(context).size.width / 3.2,
                               corDoButao: Colors.deepOrange,
                             ),
                           ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 30,
                         ),
                         Row(
                           children: <Widget>[
                             ButtonWidget(
                               "escolha métodos",
                               onPressedFunction: escolhaDeMetodos,
-                              alturaDoButao: 60,
+                              alturaDoButao: 70,
                               comprimentoDoButao:
-                                  MediaQuery.of(context).size.width / 3,
+                                  MediaQuery.of(context).size.width / 3.2,
                               corDoButao: Colors.deepOrange,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: MediaQuery.of(context).size.width / 3,
-                              height: 60,
-                              child: Text(
-                                "Total de Pontos da rodada:",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
                             ),
                           ],
                         ),
@@ -170,7 +209,7 @@ class _Nivel01State extends State<Nivel01> {
       this._classeGenerica.nomeDoProblema,
       textAlign: TextAlign.justify,
       style: TextStyle(
-        fontSize: 16,
+        fontSize: 17,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -183,7 +222,7 @@ class _Nivel01State extends State<Nivel01> {
         textAlign: TextAlign.justify,
         text: new TextSpan(
           style: new TextStyle(
-            fontSize: 16,
+            fontSize: 17,
             color: Colors.black87,
           ),
           children: <TextSpan>[
@@ -225,16 +264,36 @@ class _Nivel01State extends State<Nivel01> {
   }
 
   validarClasse() {
-    if (this.controleNivel01.validarClasse(context) == true) {
-      debugPrint("É pra repintar a tela!");
-      this._classeGenerica = controleNivel01.retornaClasseDaRodada();
-      //    if (this._classeGenerica != null) {
+    this.controleNivel01.validarClasse(context, _proximaClasse);
+  }
+
+  _proximaClasse() {
+    debugPrint("É pra repintar a tela!");
+    this._classeGenerica = controleNivel01.retornaClasseDaRodada();
+    if (this._classeGenerica != null) {
       setState(() {
         this.textosDeComponentesFase1 = new TextosDeComponentesFase1();
         this._containerDeClasse.listaDeAtributos.clear();
         this._containerDeClasse.listaDeMetodos.clear();
       });
-      //   }
     }
+  }
+
+  String pontosDaRodada() {
+    int pontos = Provider.of<ControleNivel01>(context).pontoPorPartida;
+    this.pontuacaoDaRodada = pontos.toString();
+    return this.pontuacaoDaRodada;
+  }
+
+  pontosDoJogador() {
+    int pontos = Provider.of<ControleNivel01>(context).scoreTotal;
+    this.pontuacaoTotal = pontos.toString();
+    return this.pontuacaoTotal;
+  }
+
+  numeroProblema() {
+    int numero = Provider.of<ControleNivel01>(context).numeroDoProblema;
+    this.numeroDoProblema = numero.toString();
+    return this.numeroDoProblema;
   }
 }

@@ -40,12 +40,14 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   Widget build(BuildContext context) {
     this.screnSize = MediaQuery.of(context).size.width / 1.7;
     this.alturaContainer = MediaQuery.of(context).size.height / 2.2;
+
     return Container(
       width: this.screnSize,
       height: alturaContainer,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.blue, width: 2),
       ),
+      margin: EdgeInsets.only(right: 5, left: 10),
       child: Consumer<ControleNivel01>(
         builder: (context, controleNivel01, widget) {
           return colunaDeContainer();
@@ -112,59 +114,57 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
     listaDeAtributos =
         Provider.of<ControleNivel01>(context).listaDeAtributosEscolhidos;
 
-    if (this.listaDeAtributos.length > 0) {
-      return ListView.builder(
-        itemCount: listaDeAtributos.length,
-        itemBuilder: (context, index) {
-          return Dismissible(
-            background: stackBehindDismiss(),
-            key: Key(listaDeAtributos[index]),
-            onDismissed: (direction) {
-              deleteItemAtributo(index);
-            },
-            child: Container(
-              padding: EdgeInsets.only(
-                left: 8,
-              ),
-              margin: EdgeInsets.symmetric(vertical: 1),
-              width: this.screnSize,
-              height: 35,
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    width: 0.5,
-                    color: Colors.grey,
-                  ),
+    return ListView.builder(
+      itemCount: listaDeAtributos.length > 0 ? listaDeAtributos.length : 0,
+      itemBuilder: (context, index) {
+        return Dismissible(
+          background: stackBehindDismiss(),
+          key: Key(listaDeAtributos[index]),
+          onDismissed: (direction) {
+            deleteItemAtributo(index);
+          },
+          child: Container(
+            padding: EdgeInsets.only(
+              left: 8,
+            ),
+            margin: EdgeInsets.symmetric(vertical: 1),
+            width: this.screnSize,
+            height: 35,
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  width: 0.5,
+                  color: Colors.grey,
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    width: this.screnSize - 60,
-                    child: Text(
-                      this.listaDeAtributos[index],
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.delete_sweep,
-                      size: 28,
-                    ),
-                    onPressed: () => {},
-                    padding: EdgeInsets.only(bottom: 2),
-                  ),
-                ],
-              ),
             ),
-          );
-        },
-      );
-    }
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  width: this.screnSize - 60,
+                  child: Text(
+                    this.listaDeAtributos[index],
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.delete_sweep,
+                    size: 28,
+                  ),
+                  onPressed: () => {},
+                  padding: EdgeInsets.only(bottom: 2),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void deleteItemAtributo(index) {
