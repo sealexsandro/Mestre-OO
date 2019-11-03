@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/src/pages/Nivel_1/nivel_1.dart';
 import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
 import 'package:jogo_mobile/src/pages/Widgets/DrawerList.dart';
 

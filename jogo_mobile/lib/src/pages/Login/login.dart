@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:jogo_mobile/src/controller/controle_Login.dart';
 import 'package:jogo_mobile/src/model/ApiResponse.dart';
+import 'package:jogo_mobile/src/model/usuario.dart';
 import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appButton.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appTextFormatFild.dart';
@@ -26,6 +28,13 @@ class _LoginState extends State<Login> {
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
     super.initState();
+
+    Future<Usuario> userFuture = Usuario.get();
+    userFuture.then((Usuario user) {
+      if (user != null) {
+        Navigator.pushNamed(context, "/EscolhaDeNivel");
+      }
+    });
   }
 
   @override
@@ -138,17 +147,17 @@ class _LoginState extends State<Login> {
                         funcaoDoButao: onPressedFunction,
                         showProgress: _showProgress,
                       ),
-                      //  AppButton("Entre", onPressedFunction),
-                      // Container(
-                      //   margin: EdgeInsets.only(top: 15),
-                      //   width: MediaQuery.of(context).size.width / 1.2,
-                      //   height: 60,
-                      //   child: GoogleSignInButton(
-                      //     borderRadius: 40,
-                      //     text: "Entrar com conta Google",
-                      //     onPressed: onPressedGoogleLogin,
-                      //   ),
-                      // ),
+                   //    AppButton("Entre", onPressedFunction),
+                      Container(
+                        margin: EdgeInsets.only(top: 15),
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        height: 60,
+                        child: GoogleSignInButton(
+                          borderRadius: 40,
+                          text: "Entrar com conta Google",
+                          onPressed: onPressedGoogleLogin,
+                        ),
+                      ),
                       Container(
                         width: MediaQuery.of(context).size.width / 1.2,
                         child: Padding(
@@ -229,8 +238,7 @@ class _LoginState extends State<Login> {
   }
 
   onPressedFunction() async {
-  //  Navigator.pushNamed(context, "/EscolhaDeNivel");
-
+    //  Navigator.pushNamed(context, "/EscolhaDeNivel");
     bool formKey = _formKey.currentState.validate();
     if (!formKey) {
       return;
@@ -245,15 +253,7 @@ class _LoginState extends State<Login> {
       _showProgress = true;
     });
 
-    ApiResponse response = await _controleLogin.login(login, senha);
-
-    if (response.ok) {
-      
-      Navigator.pushNamed(context, "/EscolhaDeNivel");
-    } else {
-      alertNotificacao(context, response.msg);
-      debugPrint("Acesso negado");
-    }
+    _controleLogin.login(context, login, senha);
 
     setState(() {
       _showProgress = false;
@@ -261,7 +261,7 @@ class _LoginState extends State<Login> {
   }
 
   onPressedGoogleLogin() {
-    Navigator.pushNamed(context, "/EscolhaDeNivel");
+    this._controleLogin.loginComFirebase(context);
   }
 
   String _validateLogin(String text) {

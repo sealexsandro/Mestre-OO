@@ -1,21 +1,37 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile/src/controller/controleDrawerList.dart';
 import 'package:jogo_mobile/src/model/usuario.dart';
 
-class DrawerList extends StatelessWidget {
+class DrawerList extends StatefulWidget {
+  @override
+  _DrawerListState createState() => _DrawerListState();
+}
+
+class _DrawerListState extends State<DrawerList> {
+  ControleDrawerList controleDrawerList;
+
+  @override
+  void initState() {
+    super.initState();
+    controleDrawerList = new ControleDrawerList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Future<Usuario> futureUser = Usuario.get();
+    // Future<Usuario> futureUser = Usuario.get();
+    Future<FirebaseUser> futureUser = FirebaseAuth.instance.currentUser();
     return SafeArea(
       child: Container(
         width: 280,
         color: Colors.white,
         child: ListView(
           children: <Widget>[
-            FutureBuilder<Usuario>(
+            FutureBuilder<FirebaseUser>(
               future: futureUser,
               builder: (context, snapshot) {
-                Usuario user = snapshot.data;
-                return user !=null? contaDoUsuario(user) : Container();
+                FirebaseUser user = snapshot.data;
+                return user != null ? contaDoUsuario(user) : Container();
               },
             ),
             ListTile(
@@ -45,9 +61,7 @@ class DrawerList extends StatelessWidget {
               title: Text("Logout"),
               trailing: Icon(Icons.arrow_forward),
               onTap: () {
-                print("Item 3");
-                Navigator.pop(context);
-                Navigator.popAndPushNamed(context, "/");
+                this.controleDrawerList.onclickLogout(context);
               },
             )
           ],
@@ -56,7 +70,7 @@ class DrawerList extends StatelessWidget {
     );
   }
 
-  UserAccountsDrawerHeader contaDoUsuario(Usuario user) {
+  UserAccountsDrawerHeader contaDoUsuario(FirebaseUser user) {
     return UserAccountsDrawerHeader(
       // accountName: FutureBuilder(
       //  future: Prefs.getString("nome"),
@@ -64,11 +78,15 @@ class DrawerList extends StatelessWidget {
       //     return Text(snapshot.hasData ? snapshot.data : "");
       //   },
       // ),
-    //  accountName: Text(user.nome),
+       accountName: Text(user.displayName ?? "" ),
       accountEmail: Text(user.email),
-      currentAccountPicture: CircleAvatar(
-       // backgroundImage: NetworkImage(user.urlFoto),
-      ),
+      currentAccountPicture: user.photoUrl != null
+          ? CircleAvatar(
+              backgroundImage: NetworkImage(user.photoUrl),
+            )
+          : CircleAvatar(
+              child: Image.asset("assets/images/avatar.png"),
+            ),
     );
   }
 }

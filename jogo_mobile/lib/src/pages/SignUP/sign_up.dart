@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile/src/dao/FirebaseServices.dart';
+import 'package:jogo_mobile/src/model/ApiResponse.dart';
 import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appButton.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appTextFormatFild.dart';
 import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
+import 'package:jogo_mobile/src/pages/utilsPages/alertNotificacao.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -19,6 +22,7 @@ class _SignUpState extends State<SignUp> {
   final _focusEmail = FocusNode();
   final _focusSenha = FocusNode();
   final _focusRepitaSenha = FocusNode();
+  bool _showProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +118,7 @@ class _SignUpState extends State<SignUp> {
                         AppButton(
                           textoDoButao: "salvar",
                           funcaoDoButao: _onpressedFunction,
+                          showProgress: _showProgress,
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width / 1.2,
@@ -182,11 +187,37 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  _onpressedFunction() {
+  _onpressedFunction() async {
     bool formKey = _formKey.currentState.validate();
     if (!formKey) {
       return;
     }
+    String nome = _tNomeUser.text;
+    String email = _tEmail.text;
+    String senha = _tSenha.text;
+    String senhaRepetida = _tRepitaSenha.text;
+
+    print("Nome : ${nome.toString()}");
+    print("Email : ${email.toString()}");
+    print("senha: ${senha.toString()}");
+    print("Senha repitida : ${senhaRepetida.toString()}");
+
+    setState(() {
+      _showProgress = true;
+    });
+
+    final service = FirebaseService();
+    final response = await service.cadastrarUser(nome, email, senha);
+
+    if (response.ok) {
+      Navigator.pushNamed(context, "/EscolhaDeNivel");
+    } else {
+      alertNotificacao(context, response.msg);
+    }
+
+    setState(() {
+      _showProgress = false;
+    });
   }
 
   String _validateNomeUser(String text) {
