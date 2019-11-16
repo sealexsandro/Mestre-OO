@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jogo_mobile/src/controller/controle_nivel_1.dart';
 import 'package:provider/provider.dart';
 
+@immutable
 class ContainerDeClasse extends StatefulWidget {
   String nomeDaClasse;
   List<String> listaDeAtributos = [];
@@ -111,6 +112,7 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   }
 
   listaDinamica() {
+    print("Repintou o container!");
     listaDeAtributos =
         Provider.of<ControleNivel01>(context).listaDeAtributosEscolhidos;
 
@@ -156,7 +158,10 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
                     Icons.delete_sweep,
                     size: 28,
                   ),
-                  onPressed: () => {},
+                  onPressed: () => {
+                    mensagemDeConfirmacao(
+                        "atributo", "Deletar Atributo ?", index),
+                  },
                   padding: EdgeInsets.only(bottom: 2),
                 ),
               ],
@@ -169,10 +174,11 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
 
   void deleteItemAtributo(index) {
     setState(() {
-      // this.listaDeAtributos.removeAt(index);
-      // debugPrint("Removendo item");
       String atributo = this.listaDeAtributos[index];
-      Provider.of<ControleNivel01>(context).removerAtributoEscolhido(atributo);
+      Provider.of<ControleNivel01>(context)
+          .removerAtributoOuMetodoEscolhido("atributo", atributo);
+      Provider.of<ControleNivel01>(context)
+          .decrementarPontosDaRodada("atributo");
     });
   }
 
@@ -223,7 +229,10 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
                       Icons.delete_sweep,
                       size: 28,
                     ),
-                    onPressed: () => {},
+                    onPressed: () => {
+                      mensagemDeConfirmacao(
+                          "metodo", "Deletar Método ?", index),
+                    },
                     padding: EdgeInsets.only(bottom: 2),
                   ),
                 ],
@@ -241,7 +250,8 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
       // debugPrint("Removendo Metodo");
       String metodo = this.listaDeMetodos[index];
       Provider.of<ControleNivel01>(context)
-          .removerMetodoEscolhidoPorJogador(metodo);
+          .removerAtributoOuMetodoEscolhido("metodo", metodo);
+      Provider.of<ControleNivel01>(context).decrementarPontosDaRodada("metodo");
     });
   }
 
@@ -255,5 +265,105 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
         color: Colors.white,
       ),
     );
+  }
+
+  mensagemDeConfirmacao(String tipoDeItemDeletar, String texto, int index) {
+    var showmodalBottomSheet = showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+        ),
+        builder: (context) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                  size: 35,
+                ),
+                // trailing: Icon(Icons.delete, color: Colors.red, size: 30),
+                title: Text(
+                  texto,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: "Roboto",
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(top: 5, bottom: 30),
+                    width: MediaQuery.of(context).size.width / 2.5,
+                    height: 60,
+                    child: RaisedButton(
+                      color: Colors.green,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(15)),
+                      child: Text(
+                        "Não",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      //    ),
+
+                      elevation: 6,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 5, bottom: 30),
+                    width: MediaQuery.of(context).size.width / 2.5,
+                    height: 60,
+                    child: RaisedButton(
+                      color: Colors.redAccent,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(15)),
+                      child: Text(
+                        "Sim",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      //    ),
+
+                      elevation: 6,
+                      onPressed: () {
+                        deletarItem(tipoDeItemDeletar, index);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          );
+        });
+    return showmodalBottomSheet;
+  }
+
+  deletarItem(String itemParaDeletar, int index) {
+    if (itemParaDeletar == "atributo") {
+      deleteItemAtributo(index);
+    } else {
+      deleteItemMetodo(index);
+    }
   }
 }

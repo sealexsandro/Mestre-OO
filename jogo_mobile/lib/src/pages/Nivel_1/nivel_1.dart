@@ -1,7 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:jogo_mobile/src/controller/controle_nivel_1.dart';
-import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
+import 'package:jogo_mobile/src/model/ClasseTemplate.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/button_widget.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/caixa_dialog.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/containerDeClasses.dart';
@@ -10,13 +11,17 @@ import 'package:jogo_mobile/src/pages/Nivel_1/componentes/textos_da_fase1.dart';
 import 'package:provider/provider.dart';
 
 class Nivel01 extends StatefulWidget {
+  ControleNivel01 controleNivel01;
+
+  Nivel01(this.controleNivel01);
+
   @override
   _Nivel01State createState() => _Nivel01State();
 }
 
 class _Nivel01State extends State<Nivel01> {
   String nomeAleatorioDaClasse;
-  ClasseGenerica _classeGenerica;
+  ClasseTemplate _classeTemplate;
   ControleNivel01 controleNivel01;
   TextosDeComponentesFase1 textosDeComponentesFase1;
   ContainerDeClasse _containerDeClasse;
@@ -28,10 +33,15 @@ class _Nivel01State extends State<Nivel01> {
 
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+
     super.initState();
     this.textosDeComponentesFase1 = new TextosDeComponentesFase1();
-    this.controleNivel01 = Provider.of<ControleNivel01>(context, listen: false);
-    this._classeGenerica = controleNivel01.retornaClasseDaRodada();
+    this.controleNivel01 = widget.controleNivel01;
+    if (this.controleNivel01 != null) {
+      print("Não é nuulo ggggggggggggg");
+    }
+    this._classeTemplate = this.controleNivel01.retornaClasseDaRodada();
   }
 
   @override
@@ -60,7 +70,7 @@ class _Nivel01State extends State<Nivel01> {
                         margin: EdgeInsets.only(
                             top: 10, bottom: 10, left: 16, right: 0),
                         child: Text(
-                          "Problema:  ${numeroProblema().toUpperCase()}",
+                          "Classe  ${numeroProblema().toUpperCase()}",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 17,
@@ -108,7 +118,7 @@ class _Nivel01State extends State<Nivel01> {
                       children: <Widget>[
                         this._container(),
                         // ContainerDeClasse(
-                        //     this._classeGenerica.nomeDaClasse, controleNivel01),
+                        //     this._classeTemplate.nomeDaClasse, controleNivel01),
                       ],
                     ),
                     Column(
@@ -201,12 +211,12 @@ class _Nivel01State extends State<Nivel01> {
 
   _container() {
     return this._containerDeClasse =
-        ContainerDeClasse(this._classeGenerica.nomeDaClasse);
+        ContainerDeClasse(this._classeTemplate.nomeDaClasse);
   }
 
   _nomeDoSistema() {
     return Text(
-      this._classeGenerica.nomeDoProblema,
+      this._classeTemplate.nomeDoProblema,
       textAlign: TextAlign.justify,
       style: TextStyle(
         fontSize: 17,
@@ -229,7 +239,7 @@ class _Nivel01State extends State<Nivel01> {
             new TextSpan(text: "Escolha atributos e métodos para a classe "),
             // "Construa a classe a seguir escolhendo os atributos e métodos que melhor representam as características e comportamentos da classe "),
             new TextSpan(
-              text: this._classeGenerica.nomeDaClasse,
+              text: this._classeTemplate.nomeDaClasse,
               style: new TextStyle(fontWeight: FontWeight.bold),
             ),
             new TextSpan(
@@ -242,22 +252,25 @@ class _Nivel01State extends State<Nivel01> {
   }
 
   escolhaDeAtributos() {
+ //   print("Foi chamado Atributos");
+
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => CaixaDialog(
-        classeGenerica: this._classeGenerica,
+        classeTemplate: this._classeTemplate,
         enumsCaixaDialogNivel01: EnumsCaixaDialogNivel01.caixaAtributos,
       ),
     );
   }
 
   escolhaDeMetodos() {
+  //  print("Foi chamado Metodos");
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => CaixaDialog(
-        classeGenerica: this._classeGenerica,
+        classeTemplate: this._classeTemplate,
         enumsCaixaDialogNivel01: EnumsCaixaDialogNivel01.caixaMetodos,
       ),
     );
@@ -268,9 +281,9 @@ class _Nivel01State extends State<Nivel01> {
   }
 
   _proximaClasse() {
-    debugPrint("É pra repintar a tela!");
-    this._classeGenerica = controleNivel01.retornaClasseDaRodada();
-    if (this._classeGenerica != null) {
+  //  debugPrint("É pra repintar a tela!");
+    this._classeTemplate = controleNivel01.retornaClasseDaRodada();
+    if (this._classeTemplate != null) {
       setState(() {
         this.textosDeComponentesFase1 = new TextosDeComponentesFase1();
         this._containerDeClasse.listaDeAtributos.clear();
@@ -281,6 +294,7 @@ class _Nivel01State extends State<Nivel01> {
 
   String pontosDaRodada() {
     int pontos = Provider.of<ControleNivel01>(context).pontoPorPartida;
+    print("pontos do jogador ${pontos.toString()}");
     this.pontuacaoDaRodada = pontos.toString();
     return this.pontuacaoDaRodada;
   }

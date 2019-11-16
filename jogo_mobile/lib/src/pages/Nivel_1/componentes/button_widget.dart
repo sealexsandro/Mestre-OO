@@ -27,17 +27,17 @@ class ButtonWidget extends StatelessWidget {
             RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
 
         //   padding: EdgeInsets.all(2),
-        child: Center(
+    //    child: Center(
           child: Text(
             this.textoDoButao.toUpperCase(),
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
           ),
-        ),
+    //    ),
 
         elevation: 6,
         onPressed: onPressedFunction,

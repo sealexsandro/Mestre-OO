@@ -1,23 +1,23 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile/src/controller/controle_nivel_1.dart';
-import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
+import 'package:jogo_mobile/src/model/ClasseTemplate.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/mixedLabels.dart';
 import 'package:provider/provider.dart';
 
 class CaixaDialog extends StatefulWidget {
-  ClasseGenerica classeGenerica;
+  ClasseTemplate classeTemplate;
   EnumsCaixaDialogNivel01 enumsCaixaDialogNivel01;
 
   CaixaDialog(
-      {@required this.classeGenerica, @required this.enumsCaixaDialogNivel01});
+      {@required this.classeTemplate, @required this.enumsCaixaDialogNivel01});
 
   @override
   _ShowDialogState createState() => _ShowDialogState();
 }
 
 class _ShowDialogState extends State<CaixaDialog> {
-  ClasseGenerica classeGenerica;
+  ClasseTemplate classeTemplate;
   EnumsCaixaDialogNivel01 enumsCaixaDialogNivel01;
   Color corDoContainer = Colors.blueAccent[400];
 
@@ -32,7 +32,7 @@ class _ShowDialogState extends State<CaixaDialog> {
   @override
   void initState() {
     super.initState();
-    this.classeGenerica = widget.classeGenerica;
+    this.classeTemplate = widget.classeTemplate;
     this.enumsCaixaDialogNivel01 = widget.enumsCaixaDialogNivel01;
     this.controleNivel01 = Provider.of<ControleNivel01>(context, listen: false);
     _iniciarListas();
@@ -58,7 +58,6 @@ class _ShowDialogState extends State<CaixaDialog> {
       child: Container(
         width: MediaQuery.of(context).size.width / 1.15,
         height: MediaQuery.of(context).size.height / 1.6,
-        margin: EdgeInsets.only(left: 5, right: 0.0),
         child: Stack(
           children: <Widget>[
             Container(
@@ -154,9 +153,12 @@ class _ShowDialogState extends State<CaixaDialog> {
 
   inserirButoes(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 1.24,
-      height: MediaQuery.of(context).size.height / 2.8,
-      margin: EdgeInsets.only(left: 7, top: 5, right: 7),
+      width: MediaQuery.of(context).size.width / 1.23,
+      // height: MediaQuery.of(context).size.height / 2.8,
+      margin: EdgeInsets.only(
+        left: 5,
+        top: 5,
+      ),
       padding: EdgeInsets.all(2),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.blue),
@@ -181,9 +183,9 @@ class _ShowDialogState extends State<CaixaDialog> {
 
   _butao(String nomeDoButao, BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 2.7,
+      width: MediaQuery.of(context).size.width / 2.67,
       margin: EdgeInsets.all(3),
-   //   padding: EdgeInsets.all(2),
+      //   padding: EdgeInsets.all(2),
       child: FlatButton(
         color: isButaoJaEscolhido(nomeDoButao) == false
             ? corDoContainer
@@ -194,19 +196,20 @@ class _ShowDialogState extends State<CaixaDialog> {
         child: Text(
           nomeDoButao,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 13,
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
+          textAlign: TextAlign.justify,
         ),
         onPressed: () {
-          enviarButaoEscolhido(nomeDoButao, corDoContainer);
+          enviarButaoEscolhido(nomeDoButao);
         },
       ),
     );
   }
 
-  enviarButaoEscolhido(String conteudoDoButao, Color corDoButao) {
+  enviarButaoEscolhido(String conteudoDoButao) {
     if (this.enumsCaixaDialogNivel01 ==
         EnumsCaixaDialogNivel01.caixaAtributos) {
       enviarAtributos(conteudoDoButao);
@@ -230,11 +233,19 @@ class _ShowDialogState extends State<CaixaDialog> {
 
     if (this.enumsCaixaDialogNivel01 ==
         EnumsCaixaDialogNivel01.caixaAtributos) {
-      this.listaDeButoesColuna1 = this.controleNivel01.listaAtributosColuna01();
-      this.listaDeButoesColuna2 = this.controleNivel01.listaAtributosColuna02();
+      this.listaDeButoesColuna1 = this
+          .controleNivel01
+          .listaConteudoDosBotoes(this.controleNivel01.listAtribColumn01);
+      this.listaDeButoesColuna2 = this
+          .controleNivel01
+          .listaConteudoDosBotoes(this.controleNivel01.listAtribColumn02);
     } else {
-      this.listaDeButoesColuna1 = this.controleNivel01.listaMetodosColuna01();
-      this.listaDeButoesColuna2 = this.controleNivel01.listaMetodosColuna02();
+      this.listaDeButoesColuna1 = this
+          .controleNivel01
+          .listaConteudoDosBotoes(this.controleNivel01.listMetodosColumn01);
+      this.listaDeButoesColuna2 = this
+          .controleNivel01
+          .listaConteudoDosBotoes(this.controleNivel01.listMetodosColumn02);
     }
   }
 

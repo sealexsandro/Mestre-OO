@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:jogo_mobile/src/dao/FirebaseServices.dart';
-import 'package:jogo_mobile/src/model/ApiResponse.dart';
+import 'package:jogo_mobile/src/pages/EscolhaDeProblemasNivel01/EscolhaDeProblemasNivel01.dart';
 import 'package:jogo_mobile/src/pages/utilsPages/alertNotificacao.dart';
+import 'package:jogo_mobile/utils/Response.dart';
+import 'package:jogo_mobile/utils/navegacao.dart';
 
 class ControleLogin {
   final _streamController = StreamController<bool>();
@@ -16,10 +17,11 @@ class ControleLogin {
 
     if (response.ok) {
       //  await Future.delayed(Duration(seconds: 2));
-      Navigator.pushNamed(context, "/EscolhaDeNivel");
+     // Navigator.pushNamed(context, "/EscolhaDeNivel");
+        nextScreen(context, EscolhaDeProblemasNivel01());
     } else {
       alertNotificacao(context, response.msg);
-      debugPrint("Acesso negado");
+    //  debugPrint("Acesso negado");
     }
 
     return response;
@@ -30,7 +32,9 @@ class ControleLogin {
     Response response = await service.loginGoogle();
 
     if (response.ok) {
-      Navigator.pushNamed(context, "/EscolhaDeNivel");
+     // Navigator.pushNamed(context, "/EscolhaDeNivel");
+      nextScreen(context, EscolhaDeProblemasNivel01());
+
     } else {
       alertNotificacao(context, response.msg);
     }

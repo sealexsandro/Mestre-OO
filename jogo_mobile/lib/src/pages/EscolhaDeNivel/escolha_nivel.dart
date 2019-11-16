@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile/src/pages/EscolhaDeProblemasNivel01/EscolhaDeProblemasNivel01.dart';
 import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
 import 'package:jogo_mobile/src/pages/Widgets/DrawerList.dart';
+import 'package:jogo_mobile/utils/navegacao.dart';
 
 class EscolhaDeNivel extends StatelessWidget {
   @override
@@ -98,7 +100,9 @@ class EscolhaDeNivel extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, "/Nivel01");
+                          //   Navigator.pushNamed(context, "/Nivel01");
+                          onPressedNivel01(
+                              context, EscolhaDeProblemasNivel01());
                           // return showDialog(
                           //   context: context,
                           //   builder: (BuildContext context) =>
@@ -200,8 +204,8 @@ class EscolhaDeNivel extends StatelessWidget {
       ],
     );
   }
+
+  onPressedNivel01(BuildContext context, Widget page) {
+    nextScreen(context, page);
+  }
 }
-
-// class _EscolhaDeNivelState extends State<EscolhaDeNivel> {
-
-// }

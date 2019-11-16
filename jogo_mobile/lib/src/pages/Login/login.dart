@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:jogo_mobile/src/controller/controle_Login.dart';
-import 'package:jogo_mobile/src/model/ApiResponse.dart';
 import 'package:jogo_mobile/src/model/usuario.dart';
+import 'package:jogo_mobile/src/pages/EscolhaDeProblemasNivel01/EscolhaDeProblemasNivel01.dart';
 import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appButton.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appTextFormatFild.dart';
 import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
-import 'package:jogo_mobile/src/pages/utilsPages/alertNotificacao.dart';
+import 'package:jogo_mobile/utils/navegacao.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -32,7 +32,8 @@ class _LoginState extends State<Login> {
     Future<Usuario> userFuture = Usuario.get();
     userFuture.then((Usuario user) {
       if (user != null) {
-        Navigator.pushNamed(context, "/EscolhaDeNivel");
+        // Navigator.pushNamed(context, "/EscolhaDeNivel");
+        nextScreen(context, EscolhaDeProblemasNivel01());
       }
     });
   }
@@ -66,32 +67,33 @@ class _LoginState extends State<Login> {
                             Color(0xFF17ead9),
                           ]),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Spacer(),
-                        Align(
-                          child: Icon(
-                            Icons.person,
-                            size: 80,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Spacer(),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 0, left: 32, bottom: 50),
-                            child: Text(
-                              "Mestre OO",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 24),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: Image.asset('assets/images/img3.jpg'),
+                    // child: Column(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: <Widget>[
+                    //     Spacer(),
+                    //     Align(
+                    //       child: Icon(
+                    //         Icons.person,
+                    //         size: 80,
+                    //         color: Colors.white,
+                    //       ),
+                    //     ),
+                    //     Spacer(),
+                    //     Align(
+                    //       alignment: Alignment.bottomLeft,
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.only(
+                    //             top: 0, left: 32, bottom: 50),
+                    //         child: Text(
+                    //           "Mestre OO",
+                    //           style:
+                    //               TextStyle(color: Colors.white, fontSize: 24),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                   ),
                 ),
                 Container(
@@ -147,7 +149,7 @@ class _LoginState extends State<Login> {
                         funcaoDoButao: onPressedFunction,
                         showProgress: _showProgress,
                       ),
-                   //    AppButton("Entre", onPressedFunction),
+                      //    AppButton("Entre", onPressedFunction),
                       Container(
                         margin: EdgeInsets.only(top: 15),
                         width: MediaQuery.of(context).size.width / 1.2,
@@ -243,8 +245,8 @@ class _LoginState extends State<Login> {
     if (!formKey) {
       return;
     }
-    String login = _tLogin.text;
-    String senha = _tSenha.text;
+    // String login = _tLogin.text;
+    // String senha = _tSenha.text;
 
     // debugPrint("Login: ${login}");
     // debugPrint("Senha: ${senha.toString()}");
@@ -253,7 +255,8 @@ class _LoginState extends State<Login> {
       _showProgress = true;
     });
 
-    _controleLogin.login(context, login, senha);
+    // _controleLogin.login(context, login, senha);
+    nextScreen(context, EscolhaDeProblemasNivel01());
 
     setState(() {
       _showProgress = false;

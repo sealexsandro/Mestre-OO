@@ -1,67 +1,61 @@
-import 'dart:math';
-import 'package:flutter/widgets.dart';
-import 'package:jogo_mobile/src/model/ClasseGenerica.dart';
+import 'package:jogo_mobile/src/enums/enumsItensDeClasse.dart';
+import 'package:jogo_mobile/src/model/ClasseTemplate.dart';
 import 'package:jogo_mobile/src/model/atributosDasClasses.dart';
 import 'package:jogo_mobile/src/model/metodosDasClasses.dart';
 
 class ServiceNivel01 {
-  List<EnumsNomesDeClasses> listaNomesDeClasses = [];
-  Random random = Random();
+  Map mapEnumNomesDeClasses; // Mapa que terá os nomes das classes para o tipo de problema escolhido
+  ItensDaClasseGenerica itensDaClasseGenerica;
+  List<String>
+      listaDeMetodosEscolhidos; // Metodos que serão escolhidos pelo jogador
+  List<String>
+      listaDeAtributosEscolhidos; // Atributos que serão escolhidos pelo jogador
+  List<String>
+      listaDeButoesAtributosColuna1; // Atributos da coluna 1 da caixa de Dialog
+  List<String>
+      listaDeButoesAtributosColuna2; // Atributos  da coluna 2 da caixa de Dialog
+  List<String>
+      listaDeButoesMetodosColuna1; // Metodos da coluna 1 da caixa de Dialog
+  List<String>
+      listaDeButoesMetodosColuna2; // Metodos da coluna 2 da caixa de Dialog
+  List<String> listaDeAtributosVerdadeiros; // Lista de Atributos Verdadeiros
+  List<String> listaDeMetodosVerdadeiros; // Lista de Medotos Verdadeiros
+  EnumsNomesDeClasses
+      enumsNomesDeClasses; //Enum com o nome da classe escolhida para a rodada;
+  TipoDeProblema tipoDeProblema;
 
-  // numero do problema que o jogador está respondendo
-  int numeroDoProblema;
-
-  int pontuacaoAtualDoJogador;
-
-  // Metodos que serão escolhidos pelo jogador
-  List<String> listaDeMetodosEscolhidos = [];
-
-  // Atributos que serão escolhidos pelo jogador
-  List<String> listaDeAtributosEscolhidos = [];
-
-  // Atributos da coluna 1 da caixa de Dialog
-  List<String> listaDeButoesAtributosColuna1 = [];
-
-  // Atributos  da coluna 2 da caixa de Dialog
-  List<String> listaDeButoesAtributosColuna2 = [];
-
-  // Metodos da coluna 1 da caixa de Dialog
-  List<String> listaDeButoesMetodosColuna1 = [];
-
-  // Metodos da coluna 2 da caixa de Dialog
-  List<String> listaDeButoesMetodosColuna2 = [];
-
-  // Lista de Atributos Verdadeiros
-  List<String> listaDeAtributosVerdadeiros = [];
-
-  // Lista de Medotos Verdadeiros
-  List<String> listaDeMetodosVerdadeiros = [];
-
-  //Enum com o nome da classe escolhida para a rodada;
-  EnumsNomesDeClasses enumsNomesDeClasses;
-
-  ServiceNivel01._() {
+  ServiceNivel01(TipoDeProblema tipoDeProblema) {
+    this.tipoDeProblema = tipoDeProblema;
     iniciarLista();
   }
+  // ServiceNivel01._();
 
-  static ServiceNivel01 unicaInstanciaServiceNivel01;
+  // static ServiceNivel01 unicaInstanciaServiceNivel01;
 
-  static ServiceNivel01 getUnicaInstanciaServiceNivel01() {
-    if (unicaInstanciaServiceNivel01 == null)
-      unicaInstanciaServiceNivel01 = new ServiceNivel01._();
-    return unicaInstanciaServiceNivel01;
-  }
+  // static ServiceNivel01 getUnicaInstanciaServiceNivel01() {
+  //   if (unicaInstanciaServiceNivel01 == null)
+  //     unicaInstanciaServiceNivel01 = new ServiceNivel01._();
+  //   return unicaInstanciaServiceNivel01;
+  // }
 
   iniciarLista() {
-    listaNomesDeClasses = [];
-    EnumsNomesDeClasses.values.forEach((nomeDaClasse) {
-      listaNomesDeClasses.add(nomeDaClasse);
-    });
+    this.listaDeMetodosEscolhidos = [];
+    this.listaDeAtributosEscolhidos = [];
+    this.listaDeButoesAtributosColuna1 = [];
+    this.listaDeButoesAtributosColuna2 = [];
+    this.listaDeButoesMetodosColuna1 = [];
+    this.listaDeButoesMetodosColuna2 = [];
+    this.listaDeAtributosVerdadeiros = [];
+    this.listaDeMetodosVerdadeiros = [];
+    this.mapEnumNomesDeClasses = new Map();
+    this.itensDaClasseGenerica = ItensDaClasseGenerica();
+    this.mapEnumNomesDeClasses =
+        this.itensDaClasseGenerica.getListaDeNomesDeClasses(tipoDeProblema);
   }
 
   // Adicionar Atributo na lista de atributos escolhidos na rodada do jogo
   addAtributoNaListaDaRodada(String atributo) {
-    debugPrint("Atributo adicionado: ${atributo.toString()}");
+    //  debugPrint("Atributo adicionado: ${atributo.toString()}");
     this.listaDeAtributosEscolhidos.add(atributo);
   }
 
@@ -70,83 +64,58 @@ class ServiceNivel01 {
     this.listaDeMetodosEscolhidos.add(metodo);
   }
 
-  removerAtributoNaListaDaRodada(String atributo) {
-    if (atributo != null) {
+  removerAtributoOuMetodoEscolhido(String tipoDeItem, String item) {
+    if (tipoDeItem == "atributo") {
       if (this.listaDeAtributosEscolhidos.length > 0) {
-        this.listaDeAtributosEscolhidos.removeWhere((item) => item == atributo);
+        this.listaDeAtributosEscolhidos.removeWhere((itemRemocao) => itemRemocao == item);
         return true;
-      } else {
-        return false;
       }
     }
-  }
-
-  removerMetodoNaListaDaRodada(String metodo) {
-    if (metodo != null) {
+    if (tipoDeItem == "metodo") {
       if (this.listaDeMetodosEscolhidos.length > 0) {
-        this.listaDeMetodosEscolhidos.removeWhere((item) => item == metodo);
+        this.listaDeMetodosEscolhidos.removeWhere((itemRemocao) => itemRemocao == item);
         return true;
-      } else {
-        return false;
       }
     }
+    return false;
   }
 
   retornaClasseDaRodada() {
-    //Iniciar toda as listas para necessárias para a classe escolhida
-    this.listaDeMetodosEscolhidos.clear();
-    this.listaDeAtributosEscolhidos.clear();
-    this.listaDeButoesAtributosColuna1.clear();
-    this.listaDeButoesAtributosColuna2.clear();
-    this.listaDeButoesMetodosColuna1.clear();
-    this.listaDeButoesMetodosColuna2.clear();
-    this.listaDeAtributosVerdadeiros.clear();
-    this.listaDeMetodosVerdadeiros.clear();
-    //////////////////////////////////////////////////////////////////////
-    if (this.listaNomesDeClasses.length > 0) {
-      //Pegando o enum nome da classe
-      this.listaNomesDeClasses.shuffle();
-      int randomNumber = random.nextInt(listaNomesDeClasses.length);
-      debugPrint(
-          "Tamnaho  da lista antes de remover 1: ${listaNomesDeClasses.length.toString()}");
+    if (this.listaDeAtributosEscolhidos.length > 0) {
+      limparListas();
+    }
+    if (this.mapEnumNomesDeClasses.length > 0) {
+      var nomeDaClasse = this.mapEnumNomesDeClasses.values.first;
+      EnumsNomesDeClasses enumsNomesDeClasses =
+          this.mapEnumNomesDeClasses.keys.first;
+      this.mapEnumNomesDeClasses.remove(enumsNomesDeClasses);
+      // debugPrint(
+      //     "Tamnaho da lista depois de remover 2: ${mapEnumNomesDeClasses.length.toString()}");
 
-      EnumsNomesDeClasses enumNomeDaClasse = listaNomesDeClasses[randomNumber];
-      this.listaNomesDeClasses.remove(enumNomeDaClasse);
-      debugPrint(
-          "Tamnaho da lista depois de remover 2: ${listaNomesDeClasses.length.toString()}");
-
-      //Pegando o nome da classe abaixo
-      var nomeDaClasse =
-          NomesGenericosParaClasses.getNomesGenericoDeClasse(enumNomeDaClasse);
       //Pegando o nome do Sistema abaixo
       var nomeDoSistema =
-          NomesGenericosParaClasses.getNomesDoSistema(enumNomeDaClasse);
+          this.itensDaClasseGenerica.getNomeDoSistema(this.tipoDeProblema);
 
-      buscarAtributosMetodosDaClasse(enumNomeDaClasse);
+      buscarAtributosMetodosDaClasse(enumsNomesDeClasses);
 
-      //////////////////////////////////////////////////////////////////////////////
-      ClasseGenerica classeGenerica = new ClasseGenerica(
-        enumNomeDaClasse: enumNomeDaClasse,
+      ClasseTemplate classeTemplate = new ClasseTemplate(
         nomeDaClasse: nomeDaClasse,
         nomeDoProblema: nomeDoSistema,
-        // listaDeAtributosVerdadeiros: listaDeAtributosVerdadeiros,
-        // listaDeAtributosVariados: listaDeAtributosMisturados,
-        // listaDeMetodosVerdadeiros: listaDeMetodosVerdadeiros,
-        // listaDeMetodosVariados: listaDeMetodosMisturados,
       );
 
-      return classeGenerica;
+      return classeTemplate;
     } else {
+      print("NULLLLLLLLLLLLLLLLLLO ");
       return null;
     }
   }
 
-  buscarAtributosMetodosDaClasse(EnumsNomesDeClasses enumNomeDaClasse) {
+  buscarAtributosMetodosDaClasse(EnumsNomesDeClasses nomeDaClasse) {
     //Buscando atributos verdadeiros e falsos
     this.listaDeAtributosVerdadeiros =
-        AtributosDeClasseCorretos.getAtributosCorretos(enumNomeDaClasse);
+        AtributosDeClasseCorretos.getAtributosCorretos(nomeDaClasse);
     List<String> listaDeAtributosFalsos =
-        AtributosDeClasseIncorretos.getAtributosIncorretos(enumNomeDaClasse);
+        AtributosDeClasseIncorretos.getAtributosIncorretos(nomeDaClasse);
 
     listaDeAtributosVerdadeiros.shuffle();
     listaDeAtributosFalsos.shuffle();
@@ -156,9 +125,9 @@ class ServiceNivel01 {
     preenchendoListasColunasAtributos(listaDeAtributosMisturados);
     //Buscando métodos verdadeiros e falsos
     this.listaDeMetodosVerdadeiros =
-        MetodosDeClasseCorretos.getMetodosCorretos(enumNomeDaClasse);
+        MetodosDeClasseCorretos.getMetodosCorretos(nomeDaClasse);
     List<String> listaDeMetodosFalsos =
-        MetodosDeClasseIncorretos.getMetodosIncorretos(enumNomeDaClasse);
+        MetodosDeClasseIncorretos.getMetodosIncorretos(nomeDaClasse);
     listaDeMetodosVerdadeiros.shuffle();
     listaDeMetodosFalsos.shuffle();
     List<String> listaDeMetodosMisturados =
@@ -200,11 +169,11 @@ class ServiceNivel01 {
         }
       }
     } else {
-      debugPrint("Valores não Inseridos");
+      print("Valores não Inseridos");
     }
   }
 
-  void preenchendoListasColunasMetodos(List<String> listaDeButoesMisturados) {
+  preenchendoListasColunasMetodos(List<String> listaDeButoesMisturados) {
     listaDeButoesMisturados.shuffle();
     if (listaDeButoesMisturados.length > 0) {
       for (var i = 0; i < listaDeButoesMisturados.length; i++) {
@@ -217,17 +186,19 @@ class ServiceNivel01 {
         }
       }
     } else {
-      debugPrint("Valores não Inseridos");
+      //  debugPrint("Valores não Inseridos");
     }
   }
 
-//Usuario acertou todos os atributos e metdos
-  limparListaDeAtributosMetodos() {
+//Usuario acertou todos os atributos e metodos
+  limparListas() {
     this.listaDeAtributosEscolhidos.clear();
-    this.listaDeMetodosEscolhidos.clear();
     this.listaDeAtributosVerdadeiros.clear();
+    this.listaDeMetodosEscolhidos.clear();
     this.listaDeMetodosVerdadeiros.clear();
-
-    debugPrint("Lista limpadas: ${this.listaDeAtributosEscolhidos.length}");
+    this.listaDeButoesAtributosColuna1.clear();
+    this.listaDeButoesAtributosColuna2.clear();
+    this.listaDeButoesMetodosColuna1.clear();
+    this.listaDeButoesMetodosColuna2.clear();
   }
 }

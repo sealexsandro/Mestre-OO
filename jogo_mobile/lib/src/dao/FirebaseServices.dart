@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:jogo_mobile/src/model/ApiResponse.dart';
 import 'package:jogo_mobile/src/model/usuario.dart';
+import 'package:jogo_mobile/utils/Response.dart';
 
 class FirebaseService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();

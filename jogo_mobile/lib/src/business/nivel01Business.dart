@@ -1,7 +1,17 @@
+import 'package:flutter/widgets.dart';
 import 'package:jogo_mobile/src/enums/enumsBusinessNivel01.dart';
+import 'package:jogo_mobile/src/enums/enumsItensDeClasse.dart';
+import 'package:jogo_mobile/src/model/ClasseTemplate.dart';
 import 'package:jogo_mobile/src/model/servicesFase1.dart';
 
 class Nivel01Business {
+  BuildContext context;
+  ClasseTemplate classeTemplate;
+  TipoDeProblema tipoDeProblema;
+  // numero do problema que o jogador está respondendo
+  int numeroDoProblema;
+  int pontuacaoAtualDoJogador;
+  int scoreTotal;
   ServiceNivel01 _servicesNivel01;
   // Atributos que serão escolhidos pelo jogador
   List<String> listaDeAtributosEscolhidos = [];
@@ -9,8 +19,42 @@ class Nivel01Business {
   // Metodos que serão escolhidos pelo jogador
   List<String> listaDeMetodosEscolhidos = [];
 
-  Nivel01Business() {
-    _servicesNivel01 = ServiceNivel01.getUnicaInstanciaServiceNivel01();
+  int pontucaoDaRodada;
+
+  Nivel01Business();
+
+  startServices(TipoDeProblema tipoDeProblema) {
+    this.pontucaoDaRodada = 0;
+    this.tipoDeProblema = tipoDeProblema;
+    this._servicesNivel01 = new ServiceNivel01(tipoDeProblema);
+  }
+
+  ClasseTemplate retornaClasseDaRodada() {
+    this.classeTemplate = _servicesNivel01.retornaClasseDaRodada();
+    return this.classeTemplate;
+  }
+
+  listaConteudoDosBotoes(String listaRequerida) {
+    if (listaRequerida == "atributosColumn01") {
+      return this._servicesNivel01.listaDeButoesAtributosColuna1;
+    }
+    if (listaRequerida == "atributosColumn02") {
+      return this._servicesNivel01.listaDeButoesAtributosColuna2;
+    }
+    if (listaRequerida == "metodosColumn01") {
+      return this._servicesNivel01.listaDeButoesMetodosColuna1;
+    }
+    if (listaRequerida == "metodosColumn02") {
+      return this._servicesNivel01.listaDeButoesMetodosColuna2;
+    }
+  }
+
+  listaAtributosOuMetodosEscolhidos(String tipoDeLista) {
+    if (tipoDeLista == "atributo") {
+      return this._servicesNivel01.listaDeAtributosEscolhidos;
+    } else {
+      return this._servicesNivel01.listaDeMetodosEscolhidos;
+    }
   }
 
   //Validar se o atributo poderá ser adicionado
@@ -53,13 +97,34 @@ class Nivel01Business {
     }
   }
 
-  incrementarPontos() {
-    int numeroDeAtributos =
-        this._servicesNivel01.listaDeAtributosEscolhidos.length;
-    int numeroDeMetodos = this._servicesNivel01.listaDeMetodosEscolhidos.length;
+  removerAtributoOuMetodoEscolhido(String tipoDeItem, String item) {
+    return this
+        ._servicesNivel01
+        .removerAtributoOuMetodoEscolhido(tipoDeItem, item);
+  }
 
-    int pontuacaoDarodada = (numeroDeAtributos * 5) + (numeroDeMetodos * 7);
-    return pontuacaoDarodada;
+  incrementarPontosDaRodada(String tipoDeIncrementacao) {
+    if (tipoDeIncrementacao == "atributo") {
+      this.pontucaoDaRodada += 5;
+      return this.pontucaoDaRodada;
+    } else {
+      this.pontucaoDaRodada += 7;
+      return this.pontucaoDaRodada;
+    }
+  }
+
+  decrementarPontosDaRodada(String tipoDeDecrementacao) {
+    if (tipoDeDecrementacao == "atributo") {
+      if (this.pontucaoDaRodada >= 5) {
+        this.pontucaoDaRodada = (this.pontucaoDaRodada - 5);
+        return this.pontucaoDaRodada;
+      }
+    } else {
+      if (this.pontucaoDaRodada >= 7) {
+        this.pontucaoDaRodada = (this.pontucaoDaRodada - 7);
+        return this.pontucaoDaRodada;
+      }
+    }
   }
 
   validarClasse() {
