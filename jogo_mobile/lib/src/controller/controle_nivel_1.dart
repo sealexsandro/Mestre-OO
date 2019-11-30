@@ -3,16 +3,14 @@ import 'package:jogo_mobile/src/enums/enumsBusinessNivel01.dart';
 import 'package:jogo_mobile/src/enums/enumsItensDeClasse.dart';
 import 'package:jogo_mobile/src/fachada/fachada.dart';
 import 'package:jogo_mobile/src/model/ClasseTemplate.dart';
+import 'package:jogo_mobile/src/pages/EscolhaDeProblemasNivel01/EscolhaDeProblemasNivel01.dart';
+import 'package:jogo_mobile/src/pages/LicaoConcluida/licaoConcluida.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/alertaValidarClasse.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/nivel_1.dart';
+import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
 import 'package:jogo_mobile/utils/navegacao.dart';
 
 class ControleNivel01 extends ChangeNotifier {
-  final String listAtribColumn01 = "atributosColumn01";
-  final String listAtribColumn02 = "atributosColumn02";
-  final String listMetodosColumn01 = "metodosColumn01";
-  final String listMetodosColumn02 = "metodosColumn02";
-
   List<String> listaDeAtributosEscolhidos = [];
   List<String> listaDeMetodosEscolhidos = [];
   BuildContext context;
@@ -29,7 +27,7 @@ class ControleNivel01 extends ChangeNotifier {
   ControleNivel01();
 
   iniciarTelaNivel01(context, tipoDeProblema) {
-    this.fachada = new Fachada();
+    this.fachada = Fachada.getUnicaInstanciaFachada();
     this.fachada.startServicesNivel01(tipoDeProblema);
     this.context = context;
     this.tipoDeProblema = tipoDeProblema;
@@ -46,7 +44,20 @@ class ControleNivel01 extends ChangeNotifier {
 
   ClasseTemplate retornaClasseDaRodada() {
     this.classeTemplate = fachada.retornaClasseDaRodada();
-    return this.classeTemplate;
+    this.pontoPorPartida = 0;
+    if (this.classeTemplate != null) {
+      return this.classeTemplate;
+    } else {
+      return null;
+    }
+  }
+
+  exibirTelaLicaoConcluida(BuildContext context) {
+    return nextScreen(context, LicaoConcluida());
+  }
+
+  exibirTelaEscolhaDeSistemas() {
+    nextScreen(this.context, EscolhaDeProblemasNivel01());
   }
 
   addAtributoEscolhido(String atributo) {
@@ -82,8 +93,8 @@ class ControleNivel01 extends ChangeNotifier {
     return this.fachada.removerAtributoOuMetodoEscolhido(tipoDeItem, item);
   }
 
-  listaConteudoDosBotoes(String listaRequerida) {
-    return this.fachada.listaConteudoDosBotoes(listaRequerida);
+  listaConteudoDosBotoes(enumListasAuxiliares enumListaAuxiliar) {
+    return this.fachada.listaConteudoDosBotoes(enumListaAuxiliar);
   }
 
   //validar atributos e métodos
@@ -96,14 +107,20 @@ class ControleNivel01 extends ChangeNotifier {
       String msg = enumMsgDeValidacaoDeClasse(enumsValidacaoDeClasse);
       String tituloMsg = "  Parabéns";
       String pontos = this.pontoPorPartida.toString();
-      alertClasseCorreta(context, msg, tituloMsg, pontos, funcao);
+      msg += " " + pontos + " pontos.";
+      //  alertClasseCorreta(context, msg, tituloMsg, pontos, funcao);
+      msgAvisoAcertouTudo(
+          context, NomeIcone.ganhouRodada, tituloMsg, msg, funcao);
+
       this.numeroDoProblema++;
       this.scoreTotal += this.pontoPorPartida;
       notifyListeners();
     } else {
       String msg = enumMsgDeValidacaoDeClasse(enumsValidacaoDeClasse);
       String tituloMsg = "  Ops...";
-      alertClasseIncorreta(context, msg, tituloMsg);
+      //  alertClasseIncorreta(context, msg, tituloMsg);
+      msgAvisoQntMinimaAtribMet(
+          context, NomeIcone.qntMinimaAtribMet, tituloMsg, msg);
     }
   }
 

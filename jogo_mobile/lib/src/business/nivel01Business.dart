@@ -34,18 +34,18 @@ class Nivel01Business {
     return this.classeTemplate;
   }
 
-  listaConteudoDosBotoes(String listaRequerida) {
-    if (listaRequerida == "atributosColumn01") {
-      return this._servicesNivel01.listaDeButoesAtributosColuna1;
-    }
-    if (listaRequerida == "atributosColumn02") {
-      return this._servicesNivel01.listaDeButoesAtributosColuna2;
-    }
-    if (listaRequerida == "metodosColumn01") {
-      return this._servicesNivel01.listaDeButoesMetodosColuna1;
-    }
-    if (listaRequerida == "metodosColumn02") {
-      return this._servicesNivel01.listaDeButoesMetodosColuna2;
+  listaConteudoDosBotoes(enumListasAuxiliares enumListaAuxiliar) {
+    switch (enumListaAuxiliar) {
+      case enumListasAuxiliares.listAtribColumn01:
+        return this._servicesNivel01.listaDeButoesAtributosColuna1;
+      case enumListasAuxiliares.listAtribColumn02:
+        return this._servicesNivel01.listaDeButoesAtributosColuna2;
+      case enumListasAuxiliares.listMetodosColumn01:
+        return this._servicesNivel01.listaDeButoesMetodosColuna1;
+      case enumListasAuxiliares.listMetodosColumn02:
+        return this._servicesNivel01.listaDeButoesMetodosColuna2;
+        break;
+      default: return null;
     }
   }
 

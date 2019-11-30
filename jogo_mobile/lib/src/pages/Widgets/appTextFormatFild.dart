@@ -43,7 +43,7 @@ class AppTextFormatField extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.black26,
-              blurRadius: 4,
+              blurRadius: 5,
             )
           ]),
       child: TextFormField(
@@ -60,10 +60,11 @@ class AppTextFormatField extends StatelessWidget {
         },
         style: TextStyle(
           fontSize: 18,
+          color: Colors.black38,
         ),
         decoration: InputDecoration(
           border: InputBorder.none,
-          icon: NomeIconeComponent.escolhaDeIcone(nomeDoCampo),
+          icon: NomeIcone.escolhaDeIcone(nomeDoCampo),
           hintText: nomeDoCampo,
           hintStyle: TextStyle(
             fontSize: 18,

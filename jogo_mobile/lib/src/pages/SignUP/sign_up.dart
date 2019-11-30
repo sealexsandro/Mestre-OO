@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/src/dao/FirebaseServices.dart';
+import 'package:jogo_mobile/src/controller/controleSingUp.dart';
 import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appButton.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appTextFormatFild.dart';
 import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
-import 'package:jogo_mobile/src/pages/utilsPages/alertNotificacao.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -22,6 +21,9 @@ class _SignUpState extends State<SignUp> {
   final _focusSenha = FocusNode();
   final _focusRepitaSenha = FocusNode();
   bool _showProgress = false;
+  final controleSignUp = new ControleSignUp();
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,7 @@ class _SignUpState extends State<SignUp> {
                     child: Column(
                       children: <Widget>[
                         AppTextFormatField(
-                          nomeDoCampo: NomeIconeComponent.nomeDoUser,
+                          nomeDoCampo: NomeIcone.nomeDoUser,
                           controller: _tNomeUser,
                           larguraDoContainer: 55,
                           validator: _validateNomeUser,
@@ -91,7 +93,7 @@ class _SignUpState extends State<SignUp> {
                           nextFocus: _focusEmail,
                         ),
                         AppTextFormatField(
-                          nomeDoCampo: NomeIconeComponent.email,
+                          nomeDoCampo: NomeIcone.email,
                           controller: _tEmail,
                           larguraDoContainer: 55,
                           validator: _validateEmail,
@@ -99,7 +101,7 @@ class _SignUpState extends State<SignUp> {
                           nextFocus: _focusSenha,
                         ),
                         AppTextFormatField(
-                          nomeDoCampo: NomeIconeComponent.senha,
+                          nomeDoCampo: NomeIcone.senha,
                           controller: _tSenha,
                           larguraDoContainer: 55,
                           validator: _validateSenha,
@@ -107,7 +109,7 @@ class _SignUpState extends State<SignUp> {
                           nextFocus: _focusRepitaSenha,
                         ),
                         AppTextFormatField(
-                          nomeDoCampo: NomeIconeComponent.repitaASenha,
+                          nomeDoCampo: NomeIcone.repitaASenha,
                           controller: _tRepitaSenha,
                           larguraDoContainer: 55,
                           validator: _validateSenhaRepitida,
@@ -186,7 +188,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  _onpressedFunction() async {
+  _onpressedFunction(){
     bool formKey = _formKey.currentState.validate();
     if (!formKey) {
       return;
@@ -205,15 +207,15 @@ class _SignUpState extends State<SignUp> {
       _showProgress = true;
     });
 
-    final service = FirebaseService();
-    final response = await service.cadastrarUser(nome, email, senha);
+    // final service = FirebaseService();
+    // final response = await service.cadastrarUser(nome, email, senha);
 
-    if (response.ok) {
-      Navigator.pushNamed(context, "/EscolhaDeNivel");
-    } else {
-      alertNotificacao(context, response.msg);
-    }
-
+    // if (response.ok) {
+    //   Navigator.pushNamed(context, "/EscolhaDeNivel");
+    // } else {
+    //   alertNotificacao(context, response.msg);
+    // }
+    controleSignUp.salvarUsuario(context, nome, email, senha, senhaRepetida);
     setState(() {
       _showProgress = false;
     });

@@ -1,7 +1,7 @@
 import 'package:jogo_mobile/src/enums/enumsItensDeClasse.dart';
 
 class MetodosDeClasseCorretos {
-   static List<String> listaMetodosTruePessoa = [
+    List<String> listaMetodosTruePessoa = [
     "setNome(): void",
     "setCpf(): float",
     "getNome: String",
@@ -9,28 +9,28 @@ class MetodosDeClasseCorretos {
   ];
 
   /////// Sistema clinica Medica ////////////
-  static List<String> listaTrueMetodosPaciente = [
+   List<String> listaTrueMetodosPaciente = [
     "getNome: void",
     "getEndereco: Endereco",
     "gettipoSangineo: String",
     "getdoadorDeOrgaos: boolean",
   ];
 
-  static List<String> listaTrueMetodosMedico = [
+   List<String> listaTrueMetodosMedico = [
     "getNome: String",
     "getRegistroMedico: String",
     "getEspecializacao: String",
     "getSalario: float"
   ];
 
-  static List<String> listaTrueMetodosAtendente = [
+   List<String> listaTrueMetodosAtendente = [
     "getNome: String",
     "getEndereco: Endereco",
     "getFormacaoTecnica: String",
     "getSalario: float"
   ];
 
-  static List<String> listaTrueMetodosEnfermeiros = [
+   List<String> listaTrueMetodosEnfermeiros = [
     "getNome: String",
     "getCoren: String",
     "getEndereco: Endereco",
@@ -39,7 +39,7 @@ class MetodosDeClasseCorretos {
 
   /////// Sistema Pet Shop ////////////
 
-   static List<String> listaTrueMetodosCachorro = [
+    List<String> listaTrueMetodosCachorro = [
     "late(): void",
     "getPeso(): float",
     "corre(): String",
@@ -47,14 +47,14 @@ class MetodosDeClasseCorretos {
     "cachorro(): void",
   ];
 
-  static List<String> listaTrueMetodosGato = [
+   List<String> listaTrueMetodosGato = [
     "racaDoGato: String",
     "peso: float",
     "corDoPelo: String",
     "vacinado: boolean",
   ];
 
-  static List<String> listaTrueMetodosAve = [
+   List<String> listaTrueMetodosAve = [
     "voar(): void",
     "getEspecie(): String",
     "setEspecie(): void",
@@ -65,21 +65,21 @@ class MetodosDeClasseCorretos {
 
   //Sistema para Locadora de Veículos
 
-  static List<String> listaTrueMetodosClienteLocadora = [
+   List<String> listaTrueMetodosClienteLocadora = [
     "getNome: String",
     "getSexo: String",
     "getCpf: String",
     "getEndereco: Endereco",
   ];
 
-  static List<String> listaTrueMetodosContratoAluguel = [
+   List<String> listaTrueMetodosContratoAluguel = [
     "getIdContrato: int",
     "getNomeDoCliente: String",
     "getDataDoContrato: Date",
     "getEmpresaLocadora: EmpresaLocadora",
   ];
 
-  static List<String> listaTrueMetodosVeiculoAlugado = [
+   List<String> listaTrueMetodosVeiculoAlugado = [
     "getIdVeiculo: int",
     "getFabricante: String",
     "getModelo: String",
@@ -87,7 +87,7 @@ class MetodosDeClasseCorretos {
     "getCorDoVeiculo: String",
   ];
 
-  static List<String> getMetodosCorretos(
+   List<String> getMetodosCorretos(
       EnumsNomesDeClasses enumsNomesDeClasses) {
     switch (enumsNomesDeClasses) {
       ////////////Clinica Medica////////////////////
@@ -122,7 +122,7 @@ class MetodosDeClasseCorretos {
 }
 
 class MetodosDeClasseIncorretos {
-  static List<String> listaMetodosFalsePessoa = [
+   List<String> listaMetodosFalsePessoa = [
     "set()Nome: void",
     "set()Cpf(): float",
     "get()Nome: String",
@@ -130,28 +130,28 @@ class MetodosDeClasseIncorretos {
   ];
 
   /////// Sistema clinica Medica ////////////
-  static List<String> listaFalseMetodosPaciente = [
+   List<String> listaFalseMetodosPaciente = [
     "get()Nome: void",
     "get()Endereco: Endereco",
     "get)()(tipoSangineo: String",
     "get()doadorDeOrgaos: boolean",
   ];
 
-  static List<String> listaFalseMetodosMedico = [
+   List<String> listaFalseMetodosMedico = [
     "getNome(()): String",
     "get()RegistroMedico: String",
     "get()Especializacao: String",
     "get()Salario: float"
   ];
 
-  static List<String> listaFalseMetodosAtendente = [
+   List<String> listaFalseMetodosAtendente = [
     "get()Nome: String",
     "get()Endereco: Endereco",
     "get()FormacaoTecnica: String",
     "get()Salario: float"
   ];
 
-  static List<String> listaFalseMetodosEnfermeiros = [
+   List<String> listaFalseMetodosEnfermeiros = [
     "get()Nome: String",
     "get()Coren: String",
     "get()Endereco: Endereco",
@@ -160,21 +160,21 @@ class MetodosDeClasseIncorretos {
 
   /////// Sistema Pet Shop ////////////
 
-   static List<String> listaFalseMetodosCachorro = [
+    List<String> listaFalseMetodosCachorro = [
     "late() void",
     "getPeso(): ",
     "corre()(): String",
     "setPeso(peso: ): float",
   ];
 
-  static List<String> listaFalseMetodosGato = [
+   List<String> listaFalseMetodosGato = [
     "raca Do Gato: String",
     "get-peso: float",
     "get-corDoPelo: String",
     "set-vacinado: boolean",
   ];
 
-  static List<String> listaFalseMetodosAve = [
+   List<String> listaFalseMetodosAve = [
     "voar()(): void",
     "get/Especie(): String",
     "set()Especie(): void",
@@ -185,28 +185,28 @@ class MetodosDeClasseIncorretos {
 
   //Sistema para Locadora de Veículos
 
-  static List<String> listaFalseMetodosClienteLocadora = [
+   List<String> listaFalseMetodosClienteLocadora = [
     "get()Nome: String",
     "get()Sexo: String",
     "get()Cpf: String",
     "get()Endereco: Endereco",
   ];
 
-  static List<String> listaFalseMetodosContratoAluguel = [
+   List<String> listaFalseMetodosContratoAluguel = [
     "getIdContrato: ",
     "getNomeDoCliente: Stri",
     "getDataDoContrato Date",
     "getEmpresaLocadora - EmpresaLocadora",
   ];
 
-  static List<String> listaFalseMetodosVeiculoAlugado = [
+   List<String> listaFalseMetodosVeiculoAlugado = [
     "get()IdVeiculo: int",
     "get()Fabricante: String",
     "getMode()lo: String",
     "get()TipoDeCombustivel: String",
     "get()CorDoVeiculo: String",
   ];
-  static List<String> getMetodosIncorretos(
+   List<String> getMetodosIncorretos(
       EnumsNomesDeClasses enumsNomesDeClasses) {
     switch (enumsNomesDeClasses) {
          ////////////Clinica Medica////////////////////

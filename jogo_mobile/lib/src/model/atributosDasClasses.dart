@@ -3,78 +3,78 @@ import 'package:jogo_mobile/src/enums/enumsItensDeClasse.dart';
 
 class AtributosDeClasseCorretos {
   // Sistema Para Clinica
-  static List<String> listaTrueAtributosPaciente = [
-    "nome: String",
-    "endereco: Endereco",
-    "tipoSangineo: String",
-    "doadorDeOrgaos: boolean",
+  List<String> listaTrueAtributosPaciente = [
+    "- nome: String",
+    "- endereco: Endereco",
+    "- tipoSangue: String",
+    "- doadorDeOrgaos: boolean",
   ];
 
-  static List<String> listaTrueAtributosMedico = [
-    "nome: String",
-    "registroMedico: String",
-    "especializacao: String",
-    "salario: float"
+  List<String> listaTrueAtributosMedico = [
+    "- nome: String",
+    "- registroMedico: String",
+    "- especializacao: String",
+    "- salario: float"
   ];
 
-  static List<String> listaTrueAtendente = [
-    "nome: String",
-    "endereco: Endereco",
-    "formacaoTecnica: String",
-    "salario: float"
+   List<String> listaTrueAtendente = [
+    "- nome: String",
+    "- endereco: Endereco",
+    "- formacaoTecnica: String",
+    "- salario: float"
   ];
 
-  static List<String> listaTrueAtributosEnfermeiros = [
-    "nome: String",
-    "coren: String",
-    "endereco: Endereco",
-    "salario: float"
+   List<String> listaTrueAtributosEnfermeiros = [
+    "- nome: String",
+    "- coren: String",
+    "- endereco: Endereco",
+    "- salario: float"
   ];
 
   //////////////////////////////////////////////////////
 
   // Sistema Para Pet Shop
 
-  static List<String> listaTrueAtributosCachorro = [
-    "racaDoCao: String",
-    "altura: float",
-    "corDoPelo: String",
-    "vacinado: boolean",
+   List<String> listaTrueAtributosCachorro = [
+    "- racaDoCao: String",
+    "- altura: float",
+    "- corDoPelo: String",
+    "- vacinado: boolean",
   ];
 
-  static List<String> listaTrueAtributosGato = [
-    "racaDoGato: String",
-    "peso: float",
-    "corDoPelo: String",
-    "vacinado: boolean",
+   List<String> listaTrueAtributosGato = [
+    "- racaDoGato: String",
+    "- peso: float",
+    "- corDoPelo: String",
+    "- vacinado: boolean",
   ];
 
-  static List<String> listaTrueAtributosAve = [
-    "especie: String",
-    "ameacadoDeExtincao: boolean",
-    "corDaPlumagem: String",
-    "habitateNatural: String",
+   List<String> listaTrueAtributosAve = [
+    "- especie: String",
+    "- ameacadoDeExtincao: boolean",
+    "- corDaPlumagem: String",
+    "- habitateNatural: String",
   ];
 
   ////////////////////////////////////////////////
 
   //Sistema para Locadora de Veículos
 
-  static List<String> listaTrueAtributosClienteLocadora = [
+   List<String> listaTrueAtributosClienteLocadora = [
     "nome: String",
     "sexo: String",
     "cpf: String",
     "endereco: Endereco",
   ];
 
-  static List<String> listaTrueAtributosContratoAluguel = [
+   List<String> listaTrueAtributosContratoAluguel = [
     "idContrato: int",
     "nomeDoCliente: String",
     "dataDoContrato: Date",
     "empresaLocadora: EmpresaLocadora",
   ];
 
-  static List<String> listaTrueAtributosVeiculoAlugado = [
+   List<String> listaTrueAtributosVeiculoAlugado = [
     "idVeiculo: int",
     "fabricante: String",
     "modelo: String",
@@ -82,7 +82,7 @@ class AtributosDeClasseCorretos {
     "corDoVeiculo: String",
   ];
 
-  static List<String> getAtributosCorretos(
+   List<String> getAtributosCorretos(
       EnumsNomesDeClasses enumsNomesDeClasses) {
     switch (enumsNomesDeClasses) {
       ////////////Clinica Medica////////////////////
@@ -118,50 +118,50 @@ class AtributosDeClasseCorretos {
 
 class AtributosDeClasseIncorretos {
   // Sistema Para Clinica
-  static List<String> listaFalseAtributosPaciente = [
-    "nome: char",
-    "endereco: Rua/Bairro",
-    "tipoSangineo: boolean",
-    "doadorDeOrgaos: Não",
+   List<String> listaFalseAtributosPaciente = [
+    "= nome: String",
+    "- endereco: rua/bairro",
+    "* tipoSangineo: String",
+    "- doadorDeOrgaos: Não",
   ];
 
-  static List<String> listaFalseAtributosMedico = [
-    "nome: int",
+   List<String> listaFalseAtributosMedico = [
+    "/ nome: String",
     ": String",
-    "especializacao: clinicoGeral",
-    "salario: dolar"
+    "+ especializacao:",
+    "- salario: dolar"
   ];
 
-  static List<String> listaFalseAtributosAtendente = [
-    "nome: Patricia",
-    "String: endereco",
-    "formacaoTecnica: Enfermagem",
-    "salario: Libra"
+   List<String> listaFalseAtributosAtendente = [
+    "+ nome: Patricia",
+    "- String: endereco",
+    ": formacaoTecnica:",
+    "# salario: 2000"
   ];
 
-  static List<String> listaFalseAtributosEnfermeiros = [
-    "nome -String",
-    "coren: StringInt",
-    "String: Endereco",
-    "salario foat"
+   List<String> listaFalseAtributosEnfermeiros = [
+    "- nome -String",
+    "- coren: StringInt",
+    "- String: Endereco",
+    "- salario foat"
   ];
 
   //////////////////////////////////////////////////////
   ///// Sistema Para Pet Shop
-  static List<String> listaFalseAtributosCachorro = [
+   List<String> listaFalseAtributosCachorro = [
     "racaDoCao: Pit Bull",
     ": float",
     "Rex: String",
     "idade: boolean",
   ];
-  static List<String> listaFalseAtributosGato = [
+   List<String> listaFalseAtributosGato = [
     "racaDoGato String",
     "peso: boolean",
     "idade: 2 anos",
     "vacinado: sim",
   ];
 
-  static List<String> listaFalseAtributosAve = [
+   List<String> listaFalseAtributosAve = [
     "especie: irracional",
     ": float",
     "CorDaPlumagem:",
@@ -172,21 +172,21 @@ class AtributosDeClasseIncorretos {
 //////////////////////////////////////////////////////////
   //Sistema para Locadora de Veículos
 
-  static List<String> listaFalseAtributosClienteLocadora = [
+   List<String> listaFalseAtributosClienteLocadora = [
     "nome - String",
     "sexo: M ou F",
     "String cpf: ",
     "Endereco Endereco",
   ];
 
-  static List<String> listaFalseAtributosContratoAluguel = [
+   List<String> listaFalseAtributosContratoAluguel = [
     "codigoContrato: int",
     "nomeDoCliente: String",
     "dataDoContrato: Date",
     "empresaLocadora: EmpresaLocadora",
   ];
 
-  static List<String> listaFalseAtributosVeiculoAlugado = [
+   List<String> listaFalseAtributosVeiculoAlugado = [
     "id  Veiculo: int",
     "String: pneu",
     "modelo Strin",
@@ -194,7 +194,7 @@ class AtributosDeClasseIncorretos {
     "corDoVeiculo: Hexadecimal",
   ];
 
-  static List<String> getAtributosIncorretos(
+   List<String> getAtributosIncorretos(
       EnumsNomesDeClasses enumsNomesDeClasses) {
     switch (enumsNomesDeClasses) {
 

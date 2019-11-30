@@ -2,12 +2,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jogo_mobile/src/controller/controle_nivel_1.dart';
+import 'package:jogo_mobile/src/enums/enumsItensDeClasse.dart';
 import 'package:jogo_mobile/src/model/ClasseTemplate.dart';
-import 'package:jogo_mobile/src/pages/Nivel_1/componentes/button_widget.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/caixa_dialog.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/containerDeClasses.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/mixedLabels.dart';
-import 'package:jogo_mobile/src/pages/Nivel_1/componentes/textos_da_fase1.dart';
+import 'package:jogo_mobile/src/pages/Widgets/button_widget.dart';
 import 'package:provider/provider.dart';
 
 class Nivel01 extends StatefulWidget {
@@ -23,7 +23,7 @@ class _Nivel01State extends State<Nivel01> {
   String nomeAleatorioDaClasse;
   ClasseTemplate _classeTemplate;
   ControleNivel01 controleNivel01;
-  TextosDeComponentesFase1 textosDeComponentesFase1;
+  TextosDeComponentesNivel01 textosDeComponentes;
   ContainerDeClasse _containerDeClasse;
   String pontuacaoDaRodada;
   String pontuacaoTotal;
@@ -36,11 +36,8 @@ class _Nivel01State extends State<Nivel01> {
     SystemChrome.setEnabledSystemUIOverlays([]);
 
     super.initState();
-    this.textosDeComponentesFase1 = new TextosDeComponentesFase1();
+    this.textosDeComponentes = new TextosDeComponentesNivel01();
     this.controleNivel01 = widget.controleNivel01;
-    if (this.controleNivel01 != null) {
-      print("Não é nuulo ggggggggggggg");
-    }
     this._classeTemplate = this.controleNivel01.retornaClasseDaRodada();
   }
 
@@ -108,7 +105,7 @@ class _Nivel01State extends State<Nivel01> {
                   child: _escolherTextoProblema(),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -252,8 +249,6 @@ class _Nivel01State extends State<Nivel01> {
   }
 
   escolhaDeAtributos() {
- //   print("Foi chamado Atributos");
-
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -265,7 +260,7 @@ class _Nivel01State extends State<Nivel01> {
   }
 
   escolhaDeMetodos() {
-  //  print("Foi chamado Metodos");
+    //  print("Foi chamado Metodos");
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -281,20 +276,20 @@ class _Nivel01State extends State<Nivel01> {
   }
 
   _proximaClasse() {
-  //  debugPrint("É pra repintar a tela!");
     this._classeTemplate = controleNivel01.retornaClasseDaRodada();
     if (this._classeTemplate != null) {
       setState(() {
-        this.textosDeComponentesFase1 = new TextosDeComponentesFase1();
+        this.textosDeComponentes = new TextosDeComponentesNivel01();
         this._containerDeClasse.listaDeAtributos.clear();
         this._containerDeClasse.listaDeMetodos.clear();
       });
+    } else {
+      this.controleNivel01.exibirTelaLicaoConcluida(context);
     }
   }
 
   String pontosDaRodada() {
     int pontos = Provider.of<ControleNivel01>(context).pontoPorPartida;
-    print("pontos do jogador ${pontos.toString()}");
     this.pontuacaoDaRodada = pontos.toString();
     return this.pontuacaoDaRodada;
   }

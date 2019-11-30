@@ -1,31 +1,39 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:jogo_mobile/src/dao/UsuarioDao.dart';
 import 'package:jogo_mobile/src/model/usuario.dart';
 import 'package:jogo_mobile/utils/Response.dart';
 
 class FirebaseService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  String authError = "";
+  UsuarioDao usuarioDao;
+  FirebaseService() {
+    this.usuarioDao = new UsuarioDao();
+  }
 
-  Future<Response> cadastrarUser(String nome,String email, String senha) async {
+  Future<Response> cadastrarUser(
+      String nome, String email, String senha) async {
     try {
-      final FirebaseUser firebaseUser = (await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: senha,
-    )).user;
+      final FirebaseUser firebaseUser =
+          (await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: senha,
+      ))
+              .user;
 
-    final userUpdateInfo = UserUpdateInfo();
-    userUpdateInfo.displayName = nome;
-    firebaseUser.updateProfile(userUpdateInfo);
+      final userUpdateInfo = UserUpdateInfo();
+      userUpdateInfo.displayName = nome;
+      firebaseUser.updateProfile(userUpdateInfo);
 
       return Response.ok(result: true, msg: "Usuario Criado com Sucesso");
     } catch (error) {
       if (error is PlatformException) {
-        print("Erro codigo firebase $error");
+        //  print("Erro codigo firebase $error");
         return Response.error(msg: "Erro ao Salvar Usuário");
       }
-
       return Response.error(msg: "Não foi Possível salvar o usário");
     }
   }
@@ -47,16 +55,33 @@ class FirebaseService {
         email: fuser.email,
         //   urlFoto: fuser.photoUrl,
       );
-      user.save();
+      // user.save();
+      this.usuarioDao.save(user);
 
       // Resposta genérica
       return Response.ok();
     } catch (error) {
-      print("Firebase error $error");
-      return Response.error(msg: "Não foi possível conectar");
+      switch (error.code) {
+        case 'ERROR_INVALID_EMAIL':
+          authError = 'Verifique seu Login';
+          break;
+        case 'ERROR_USER_NOT_FOUND':
+          authError = 'Verifique seu Login ou Senha';
+          break;
+        case 'ERROR_WRONG_PASSWORD':
+          authError = 'Verifique seu Login ou Senha';
+          break;
+        default:
+          authError = 'Erro de Conexão com a rede!';
+          break;
+      }
+      print("Erro sendo exibido 2 : ${authError.toString()}");
+
+      return Response.error(msg: authError);
     }
   }
 
+/////// LOGIN COM CONTA GOOGlE
   Future loginGoogle() async {
     try {
       // Login com o Google
@@ -64,7 +89,7 @@ class FirebaseService {
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
 
-      print("Google User: ${googleUser.email}");
+      // print("Google User: ${googleUser.email}");
 
       // Credenciais para o Firebase
       final AuthCredential credential = GoogleAuthProvider.getCredential(
@@ -86,13 +111,32 @@ class FirebaseService {
         email: fuser.email,
         urlFoto: fuser.photoUrl,
       );
-      user.save();
+
+      // Dá para usar fachada unificada aqui
+      this.usuarioDao.save(user);
 
       // Resposta genérica
       return Response.ok();
     } catch (error) {
-      print("Firebase error $error");
-      return Response.error(msg: "Não foi possível fazer o login");
+      //return Response.error(msg: "Não foi possível fazer o login");
+      print("Erro sendo exibido: ${error.code.toString()}");
+      switch (error.code) {
+        case 'ERROR_INVALID_EMAIL':
+          authError = 'Verifique seu Login';
+          break;
+        case 'ERROR_USER_NOT_FOUND':
+          authError = 'Verifique seu Login ou Senha';
+          break;
+        case 'ERROR_WRONG_PASSWORD':
+          authError = 'Verifique seu Login ou Senha';
+          break;
+        default:
+          authError = 'Erro de Conexão com a rede!';
+          break;
+      }
+      print("Erro sendo exibido 2 : ${authError.toString()}");
+
+      return Response.error(msg: authError);
     }
   }
 

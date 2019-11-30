@@ -1,5 +1,7 @@
 import 'dart:async';
-import 'package:jogo_mobile/src/dao/FirebaseServices.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:jogo_mobile/src/fachada/fachada.dart';
+import 'package:jogo_mobile/src/model/usuario.dart';
 import 'package:jogo_mobile/src/pages/EscolhaDeProblemasNivel01/EscolhaDeProblemasNivel01.dart';
 import 'package:jogo_mobile/src/pages/utilsPages/alertNotificacao.dart';
 import 'package:jogo_mobile/utils/Response.dart';
@@ -9,32 +11,47 @@ class ControleLogin {
   final _streamController = StreamController<bool>();
   get stream => _streamController.stream;
 
+  Fachada fachada;
+  ControleLogin() {
+    this.fachada = Fachada.getUnicaInstanciaFachada();
+  }
+  pegarUsuarioConectado(BuildContext context) {
+    Future<Usuario> userFuture = fachada.getUsuario();
+    userFuture.then((Usuario user) {
+      if (user != null) {
+        nextScreen(context, EscolhaDeProblemasNivel01());
+      }
+    });
+  }
+
+  buscarUsuarioAtivo(BuildContext context) {
+    Future<Usuario> userFuture = fachada.getUsuario();
+    userFuture.then((Usuario user) {
+      if (user != null) {
+        nextScreen(context, EscolhaDeProblemasNivel01());
+      }
+    });
+  }
+
   // Verificar login do usuario
   Future<Response> login(context, login, senha) async {
     _streamController.add(true);
-    Response response = await FirebaseService().login(login, senha);
+    Response response = await fachada.loginUser(login, senha);
     _streamController.add(false);
 
     if (response.ok) {
       //  await Future.delayed(Duration(seconds: 2));
-     // Navigator.pushNamed(context, "/EscolhaDeNivel");
-        nextScreen(context, EscolhaDeProblemasNivel01());
+      nextScreen(context, EscolhaDeProblemasNivel01());
     } else {
       alertNotificacao(context, response.msg);
-    //  debugPrint("Acesso negado");
     }
-
     return response;
   }
 
-  loginComFirebase(context) async {
-    final service = FirebaseService();
-    Response response = await service.loginGoogle();
-
+  loginComGoogle(context) async {
+    final response = await fachada.loginComGoogle();
     if (response.ok) {
-     // Navigator.pushNamed(context, "/EscolhaDeNivel");
       nextScreen(context, EscolhaDeProblemasNivel01());
-
     } else {
       alertNotificacao(context, response.msg);
     }

@@ -1,9 +1,4 @@
 /////////////////////////////////////////////////////////////////////
-// Enums para escolher qual caixa de dialog será exibida
-enum EnumsCaixaDialogNivel01 {
-  caixaAtributos,
-  caixaMetodos,
-}
 
 //Textos de Telas Contidos Na Fase 1
 class TextosDeComponentesNivel01 {

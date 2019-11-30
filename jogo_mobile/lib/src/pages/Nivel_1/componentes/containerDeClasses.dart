@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jogo_mobile/src/controller/controle_nivel_1.dart';
 import 'package:provider/provider.dart';
 
-@immutable
 class ContainerDeClasse extends StatefulWidget {
   String nomeDaClasse;
   List<String> listaDeAtributos = [];
@@ -23,11 +22,13 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   String nomeDaClasse;
   List<String> listaDeAtributos;
   List<String> listaDeMetodos;
+  bool isExibirTextoQntAtributo;
   var screnSize;
   var alturaContainer;
 
   _ContainerDeClasseState(String nomeDaClasse) {
     this.nomeDaClasse = nomeDaClasse;
+    this.isExibirTextoQntAtributo = false;
   }
 
   @override
@@ -112,12 +113,14 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
   }
 
   listaDinamica() {
-    print("Repintou o container!");
     listaDeAtributos =
         Provider.of<ControleNivel01>(context).listaDeAtributosEscolhidos;
-
+    if (listaDeAtributos.length <= 0) {
+      return exibirTextoQntAtributo();
+    }
     return ListView.builder(
-      itemCount: listaDeAtributos.length > 0 ? listaDeAtributos.length : 0,
+      //  itemCount: listaDeAtributos.length > 0 ? listaDeAtributos.length : 0,
+      itemCount: listaDeAtributos.length,
       itemBuilder: (context, index) {
         return Dismissible(
           background: stackBehindDismiss(),
@@ -241,13 +244,13 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
           );
         },
       );
+    } else {
+      return exibirTextoQntMetodo();
     }
   }
 
-  void deleteItemMetodo(index) {
+  deleteItemMetodo(index) {
     setState(() {
-      //   this.listaDeMetodos.removeAt(index);
-      // debugPrint("Removendo Metodo");
       String metodo = this.listaDeMetodos[index];
       Provider.of<ControleNivel01>(context)
           .removerAtributoOuMetodoEscolhido("metodo", metodo);
@@ -286,7 +289,6 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
                   color: Colors.red,
                   size: 35,
                 ),
-                // trailing: Icon(Icons.delete, color: Colors.red, size: 30),
                 title: Text(
                   texto,
                   style: TextStyle(
@@ -342,8 +344,6 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      //    ),
-
                       elevation: 6,
                       onPressed: () {
                         deletarItem(tipoDeItemDeletar, index);
@@ -365,5 +365,31 @@ class _ContainerDeClasseState extends State<ContainerDeClasse> {
     } else {
       deleteItemMetodo(index);
     }
+  }
+
+  exibirTextoQntAtributo() {
+    return Center(
+      child: Text(
+        "Escolha no Mínimo 03 Atributos",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 16,
+          color: Colors.red,
+        ),
+      ),
+    );
+  }
+
+  exibirTextoQntMetodo() {
+    return Center(
+      child: Text(
+        "Escolha no Mínimo 02 Métodos",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 16,
+          color: Colors.red,
+        ),
+      ),
+    );
   }
 }

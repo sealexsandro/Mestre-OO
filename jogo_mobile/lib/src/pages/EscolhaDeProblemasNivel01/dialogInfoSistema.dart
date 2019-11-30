@@ -138,7 +138,6 @@ class _ShowDialogState extends State<DialogInfoSistema> {
     return Container(
       width: MediaQuery.of(context).size.width / 1.23,
       height: MediaQuery.of(contextAnterior).size.height / 2.5,
-
       margin: EdgeInsets.all(7),
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -157,8 +156,7 @@ class _ShowDialogState extends State<DialogInfoSistema> {
     switch (tipoDeProblema) {
       case TipoDeProblema.sistemaLocadoraDeCarro:
         return this.textoInformativo.textLocadora;
-      // case TipoDeProblema.sistemaLocadoraDeCarro:
-      //   return "Sistema Para Locadora De Veículos";
+
       case TipoDeProblema.sitemaClinicaMedica:
         return this.textoInformativo.textClinicaMedica;
 

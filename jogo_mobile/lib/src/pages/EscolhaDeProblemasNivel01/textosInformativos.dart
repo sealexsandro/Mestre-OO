@@ -37,12 +37,6 @@ class TextoInformativo {
     textAlign: TextAlign.justify,
   );
 
-//   AutoSizeText(
-//   'The text to display',
-//   style: TextStyle(fontSize: 20),
-//   maxLines: 2,
-// )
-
   final AutoSizeText textPetShop = new AutoSizeText(
     "Preciso que você crie classes para um sistema de Pet Shop. Um Pet Shop é um "
     "tipo de loja especializada em vender animais, geralmente filhotes, destinados a serem animais "

@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:jogo_mobile/src/controller/controle_Login.dart';
-import 'package:jogo_mobile/src/model/usuario.dart';
-import 'package:jogo_mobile/src/pages/EscolhaDeProblemasNivel01/EscolhaDeProblemasNivel01.dart';
 import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appButton.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appTextFormatFild.dart';
 import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
-import 'package:jogo_mobile/utils/navegacao.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -28,14 +25,7 @@ class _LoginState extends State<Login> {
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
     super.initState();
-
-    Future<Usuario> userFuture = Usuario.get();
-    userFuture.then((Usuario user) {
-      if (user != null) {
-        // Navigator.pushNamed(context, "/EscolhaDeNivel");
-        nextScreen(context, EscolhaDeProblemasNivel01());
-      }
-    });
+    _controleLogin.pegarUsuarioConectado(context);
   }
 
   @override
@@ -55,46 +45,27 @@ class _LoginState extends State<Login> {
               children: <Widget>[
                 ClipPath(
                   clipper: ClipContainerSuperior(),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 2.7,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xFF6078ea),
-                            Color(0xFF17ead9),
-                          ]),
-                    ),
-                    child: Image.asset('assets/images/img3.jpg'),
-                    // child: Column(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: <Widget>[
-                    //     Spacer(),
-                    //     Align(
-                    //       child: Icon(
-                    //         Icons.person,
-                    //         size: 80,
-                    //         color: Colors.white,
-                    //       ),
-                    //     ),
-                    //     Spacer(),
-                    //     Align(
-                    //       alignment: Alignment.bottomLeft,
-                    //       child: Padding(
-                    //         padding: const EdgeInsets.only(
-                    //             top: 0, left: 32, bottom: 50),
-                    //         child: Text(
-                    //           "Mestre OO",
-                    //           style:
-                    //               TextStyle(color: Colors.white, fontSize: 24),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                  ),
+                      child:
+                        Image.asset('assets/images/img6.png', fit: BoxFit.fill,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height / 3.3,
+                        ),
+                  // child: Container(
+                  //   width: MediaQuery.of(context).size.width,
+                  //   height: MediaQuery.of(context).size.height / 3.5,
+                  //   decoration: BoxDecoration(
+                  //     gradient: LinearGradient(
+                  //         begin: Alignment.topCenter,
+                  //         end: Alignment.bottomCenter,
+                  //         colors: [
+                  //           Color(0xFF6078ea),
+                  //           Color(0xFF17ead9),
+                  //         ]),
+                  //   ),
+                  //   child:
+                  //       Image.asset('assets/images/img4.png', fit: BoxFit.fill,
+                  //       ),
+                  // ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -109,15 +80,53 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                // SizedBox(
+                //   height: 5,
+                // ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(top: 15),
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        height: 60,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(40),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 4,
+                              )
+                            ]),
+                        child: GoogleSignInButton(
+                          borderRadius: 40,
+                          text: "   Usar conta Google",
+                          onPressed: onPressedGoogleLogin,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.only(left: 40),
+                        child: Text(
+                          "Ou use outro e-mail",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black38,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
                       AppTextFormatField(
-                        nomeDoCampo: NomeIconeComponent.nomeDoUser,
+                        nomeDoCampo: NomeIcone.email,
                         controller: _tLogin,
                         validator: _validateLogin,
                         keyboardType: TextInputType.emailAddress,
@@ -125,11 +134,10 @@ class _LoginState extends State<Login> {
                         nextFocus: _focusSenha,
                       ),
                       AppTextFormatField(
-                        nomeDoCampo: NomeIconeComponent.senha,
-                        password: true,
+                        nomeDoCampo: NomeIcone.senha,
                         controller: _tSenha,
                         validator: _validateSenha,
-                        focusNode: _focusSenha,
+                        nextFocus: _focusSenha,
                       ),
                       // Align(
                       //   alignment: Alignment.centerRight,
@@ -145,87 +153,82 @@ class _LoginState extends State<Login> {
                       //   ),
                       // ),
                       AppButton(
-                        textoDoButao: "Entre",
+                        textoDoButao: "Entrar",
                         funcaoDoButao: onPressedFunction,
                         showProgress: _showProgress,
                       ),
                       //    AppButton("Entre", onPressedFunction),
-                      Container(
-                        margin: EdgeInsets.only(top: 15),
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        height: 60,
-                        child: GoogleSignInButton(
-                          borderRadius: 40,
-                          text: "Entrar com conta Google",
-                          onPressed: onPressedGoogleLogin,
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                  gradient: new LinearGradient(
-                                      colors: [
-                                        Colors.black12,
-                                        Colors.black,
-                                      ],
-                                      begin: const FractionalOffset(0.0, 0.0),
-                                      end: const FractionalOffset(1.0, 1.0),
-                                      stops: [0.0, 1.0],
-                                      tileMode: TileMode.clamp),
-                                ),
-                                width: 100.0,
-                                height: 1.0,
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(left: 15.0, right: 15.0),
-                                child: Text(
-                                  "Ou",
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 16.0,
-                                      fontFamily: "WorkSansMedium"),
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  gradient: new LinearGradient(
-                                      colors: [
-                                        Colors.black,
-                                        Colors.black12,
-                                      ],
-                                      begin: const FractionalOffset(0.0, 0.0),
-                                      end: const FractionalOffset(1.0, 1.0),
-                                      stops: [0.0, 1.0],
-                                      tileMode: TileMode.clamp),
-                                ),
-                                width: 100.0,
-                                height: 1.0,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+
+                      // Container(
+                      //   width: MediaQuery.of(context).size.width / 1.2,
+                      //   child: Padding(
+                      //     padding: EdgeInsets.only(top: 20.0),
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.center,
+                      //       children: <Widget>[
+                      //         Container(
+                      //           decoration: BoxDecoration(
+                      //             gradient: new LinearGradient(
+                      //                 colors: [
+                      //                   Colors.black12,
+                      //                   Colors.black,
+                      //                 ],
+                      //                 begin: const FractionalOffset(0.0, 0.0),
+                      //                 end: const FractionalOffset(1.0, 1.0),
+                      //                 stops: [0.0, 1.0],
+                      //                 tileMode: TileMode.clamp),
+                      //           ),
+                      //           width: 100.0,
+                      //           height: 1.0,
+                      //         ),
+                      //         Padding(
+                      //           padding:
+                      //               EdgeInsets.only(left: 15.0, right: 15.0),
+                      //           child: Text(
+                      //             "Ou",
+                      //             style: TextStyle(
+                      //                 color: Colors.grey,
+                      //                 fontSize: 16.0,
+                      //                 fontFamily: "WorkSansMedium"),
+                      //           ),
+                      //         ),
+                      //         Container(
+                      //           decoration: BoxDecoration(
+                      //             gradient: new LinearGradient(
+                      //                 colors: [
+                      //                   Colors.black,
+                      //                   Colors.black12,
+                      //                 ],
+                      //                 begin: const FractionalOffset(0.0, 0.0),
+                      //                 end: const FractionalOffset(1.0, 1.0),
+                      //                 stops: [0.0, 1.0],
+                      //                 tileMode: TileMode.clamp),
+                      //           ),
+                      //           width: 100.0,
+                      //           height: 1.0,
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       Container(
                         child: Padding(
                           padding: EdgeInsets.only(top: 5),
                           child: FlatButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, "/SignUp");
-                              },
-                              child: Text(
-                                "Cadastre-se",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 18.0,
-                                    fontFamily: "WorkSansMedium"),
-                              )),
+                            onPressed: () {
+                              Navigator.pushNamed(context, "/SignUp");
+                            },
+                            child: Text(
+                              "Cadastre-se",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 20,
+                                fontFamily: "WorkSansMedium",
+                                decoration: TextDecoration.underline,
+                              ),
+                              
+                            ),
+                          ),
                         ),
                       )
                     ],
@@ -240,31 +243,23 @@ class _LoginState extends State<Login> {
   }
 
   onPressedFunction() async {
-    //  Navigator.pushNamed(context, "/EscolhaDeNivel");
     bool formKey = _formKey.currentState.validate();
     if (!formKey) {
       return;
     }
-    // String login = _tLogin.text;
-    // String senha = _tSenha.text;
-
-    // debugPrint("Login: ${login}");
-    // debugPrint("Senha: ${senha.toString()}");
-
+    String login = _tLogin.text;
+    String senha = _tSenha.text;
     setState(() {
       _showProgress = true;
     });
-
-    // _controleLogin.login(context, login, senha);
-    nextScreen(context, EscolhaDeProblemasNivel01());
-
+    _controleLogin.login(context, login, senha);
     setState(() {
       _showProgress = false;
     });
   }
 
   onPressedGoogleLogin() {
-    this._controleLogin.loginComFirebase(context);
+    this._controleLogin.loginComGoogle(context);
   }
 
   String _validateLogin(String text) {
@@ -274,7 +269,7 @@ class _LoginState extends State<Login> {
     return null;
   }
 
-  String _validateSenha(String text) {
+ String _validateSenha(String text) {
     if (text.isEmpty) {
       return "Digite sua Senha";
     }

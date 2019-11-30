@@ -34,28 +34,28 @@ class _DrawerListState extends State<DrawerList> {
                 return user != null ? contaDoUsuario(user) : Container();
               },
             ),
-            ListTile(
-              onTap: () {
-                print("Item 1");
-              },
-              title: Text("Configurações"),
-              subtitle: Text(
-                "Mais informações...",
-              ),
-              leading: Icon(Icons.star),
-              trailing: Icon(Icons.arrow_forward),
-            ),
-            ListTile(
-              onTap: () {
-                print("Item 2");
-              },
-              title: Text("Ajuda"),
-              subtitle: Text(
-                "Mais informações...",
-              ),
-              leading: Icon(Icons.star),
-              trailing: Icon(Icons.arrow_forward),
-            ),
+            // ListTile(
+            //   onTap: () {
+            //     print("Item 1");
+            //   },
+            //   title: Text("Configurações"),
+            //   subtitle: Text(
+            //     "Mais informações...",
+            //   ),
+            //   leading: Icon(Icons.star),
+            //   trailing: Icon(Icons.arrow_forward),
+            // ),
+            // ListTile(
+            //   onTap: () {
+            //     print("Item 2");
+            //   },
+            //   title: Text("Ajuda"),
+            //   subtitle: Text(
+            //     "Mais informações...",
+            //   ),
+            //   leading: Icon(Icons.star),
+            //   trailing: Icon(Icons.arrow_forward),
+            // ),
             ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text("Logout"),

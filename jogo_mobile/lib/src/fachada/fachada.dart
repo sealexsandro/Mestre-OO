@@ -1,16 +1,51 @@
 import 'package:jogo_mobile/src/business/nivel01Business.dart';
+import 'package:jogo_mobile/src/dao/FirebaseServices.dart';
+import 'package:jogo_mobile/src/dao/UsuarioDao.dart';
 import 'package:jogo_mobile/src/enums/enumsItensDeClasse.dart';
 import 'package:jogo_mobile/src/model/ClasseTemplate.dart';
 
 class Fachada {
   Nivel01Business nivel01Business;
-
-  Fachada() {
-    this.nivel01Business = Nivel01Business();
+  final service = FirebaseService();
+  UsuarioDao usuarioDao;
+  
+  // Construtor não poderá ser instanciado fora da classe
+  Fachada._() {
+    this.usuarioDao = new UsuarioDao();
+  }
+  static Fachada unicaInstanciaFachada;
+  static Fachada getUnicaInstanciaFachada() {
+    if (unicaInstanciaFachada == null) unicaInstanciaFachada = new Fachada._();
+    return unicaInstanciaFachada;
   }
 
-  startServicesNivel01(
-      TipoDeProblema tipoDeProblema) {
+  loginComGoogle() {
+    
+    final response = service.loginGoogle();
+    return response;
+  }
+
+  loginUser(login, senha) {
+    final response = FirebaseService().login(login, senha);
+    return response;
+  }
+
+  salvarUsuario(nome, email, senha) async {
+    final response = await service.cadastrarUser(nome, email, senha);
+    return response;
+  }
+
+  getUsuario() {
+    return UsuarioDao.get();
+  }
+
+  limparPrefers() {
+    UsuarioDao.clear();
+    service.logout();
+  }
+
+  startServicesNivel01(TipoDeProblema tipoDeProblema) {
+    this.nivel01Business = Nivel01Business();
     return this.nivel01Business.startServices(tipoDeProblema);
   }
 
@@ -19,8 +54,8 @@ class Fachada {
     return this.nivel01Business.retornaClasseDaRodada();
   }
 
-  List<String> listaConteudoDosBotoes(String listaRequerida) {
-    return this.nivel01Business.listaConteudoDosBotoes(listaRequerida);
+  List<String> listaConteudoDosBotoes(enumListasAuxiliares  enumListaAuxiliar) {
+    return this.nivel01Business.listaConteudoDosBotoes(enumListaAuxiliar);
   }
 
   // retorna true ou false

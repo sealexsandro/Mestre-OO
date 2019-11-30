@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile/src/controller/controle_nivel_1.dart';
+import 'package:jogo_mobile/src/enums/enumsItensDeClasse.dart';
 import 'package:jogo_mobile/src/model/ClasseTemplate.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/componentes/mixedLabels.dart';
 import 'package:provider/provider.dart';
@@ -40,16 +41,6 @@ class _ShowDialogState extends State<CaixaDialog> {
 
   @override
   Widget build(BuildContext context) {
-    // return WillPopScope(
-    //   onWillPop: () async => false,
-    //   child: Dialog(
-    //     shape:
-    //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-    //     elevation: 0.0,
-    //     backgroundColor: Colors.transparent,
-    //     child: dialogContent(context),
-    //   ),
-    // );
     return dialogContent(context);
   }
 
@@ -193,14 +184,16 @@ class _ShowDialogState extends State<CaixaDialog> {
         shape:
             RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10)),
         padding: EdgeInsets.all(4),
-        child: Text(
-          nomeDoButao,
-          style: TextStyle(
-            fontSize: 13,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+        child: Center(
+          child: Text(
+            nomeDoButao,
+            style: TextStyle(
+              fontSize: 13,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.justify,
         ),
         onPressed: () {
           enviarButaoEscolhido(nomeDoButao);
@@ -235,17 +228,17 @@ class _ShowDialogState extends State<CaixaDialog> {
         EnumsCaixaDialogNivel01.caixaAtributos) {
       this.listaDeButoesColuna1 = this
           .controleNivel01
-          .listaConteudoDosBotoes(this.controleNivel01.listAtribColumn01);
+          .listaConteudoDosBotoes(enumListasAuxiliares.listAtribColumn01);
       this.listaDeButoesColuna2 = this
           .controleNivel01
-          .listaConteudoDosBotoes(this.controleNivel01.listAtribColumn02);
+          .listaConteudoDosBotoes(enumListasAuxiliares.listAtribColumn02);
     } else {
       this.listaDeButoesColuna1 = this
           .controleNivel01
-          .listaConteudoDosBotoes(this.controleNivel01.listMetodosColumn01);
+          .listaConteudoDosBotoes(enumListasAuxiliares.listMetodosColumn01);
       this.listaDeButoesColuna2 = this
           .controleNivel01
-          .listaConteudoDosBotoes(this.controleNivel01.listMetodosColumn02);
+          .listaConteudoDosBotoes(enumListasAuxiliares.listMetodosColumn02);
     }
   }
 
