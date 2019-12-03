@@ -4,6 +4,7 @@ class Usuario {
   String email;
   String urlFoto;
   String token;
+  String senha;
   List<String> roles;
 
   Usuario(
@@ -12,7 +13,9 @@ class Usuario {
       this.email,
       this.urlFoto,
       this.token,
-      this.roles});
+      this.roles,
+      this.senha
+      });
 
   @override
   String toString() {

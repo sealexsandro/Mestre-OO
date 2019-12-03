@@ -15,8 +15,9 @@ class UsuarioDao {
     String token = json['token'];
     List<String> roles =
         json['roles'] != null ? json['roles'].cast<String>() : null;
+    String senha = json['senha'];
     Usuario user = new Usuario(
-        login: login, nome: nome, email: email, urlFoto: urlFoto, token: token, roles: roles);
+        login: login, nome: nome, email: email, urlFoto: urlFoto, token: token, roles: roles, senha: senha);
     return user;
   }
 
@@ -28,6 +29,7 @@ class UsuarioDao {
     data['urlFoto'] = user.urlFoto;
     data['token'] = user.token;
     data['roles'] = user.roles;
+    data['senha'] = user.senha;
     return data;
   }
 

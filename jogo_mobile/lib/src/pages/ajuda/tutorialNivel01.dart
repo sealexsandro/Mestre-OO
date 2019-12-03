@@ -6,6 +6,8 @@ class TutorialNivel01 extends StatefulWidget {
 }
 
 class _TutorialNivel01State extends State<TutorialNivel01> {
+  bool isBotaoVoltar = false;
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -49,7 +51,7 @@ class _TutorialNivel01State extends State<TutorialNivel01> {
                 Padding(
                   padding: EdgeInsets.only(left: 10, top: 10),
                   child: Text(
-                    "Objetivo deste nível".toUpperCase(),
+                    "Objetivo do Jogo".toUpperCase(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -78,7 +80,7 @@ class _TutorialNivel01State extends State<TutorialNivel01> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, "/Nivel01");
+                          Navigator.pop(context);
                         },
                       ),
                     ),
@@ -102,6 +104,7 @@ class _TutorialNivel01State extends State<TutorialNivel01> {
                         },
                       ),
                     ),
+                    exibirBotaoAnterior(),
                   ],
                 ),
               ],
@@ -147,5 +150,30 @@ class _TutorialNivel01State extends State<TutorialNivel01> {
         ),
       ),
     );
+  }
+
+  exibirBotaoAnterior() {
+    if (isBotaoVoltar) {
+      return Align(
+        alignment: Alignment.bottomLeft,
+        child: RaisedButton(
+          color: Colors.deepOrange,
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(10)),
+          padding: EdgeInsets.all(5),
+          child: Text(
+            "Anterior",
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context, "/Nivel01");
+          },
+        ),
+      );
+    }
   }
 }

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile/src/controller/controleDrawerList.dart';
-import 'package:jogo_mobile/src/model/usuario.dart';
 
 class DrawerList extends StatefulWidget {
   @override
@@ -34,17 +33,18 @@ class _DrawerListState extends State<DrawerList> {
                 return user != null ? contaDoUsuario(user) : Container();
               },
             ),
-            // ListTile(
-            //   onTap: () {
-            //     print("Item 1");
-            //   },
-            //   title: Text("Configurações"),
-            //   subtitle: Text(
-            //     "Mais informações...",
-            //   ),
-            //   leading: Icon(Icons.star),
-            //   trailing: Icon(Icons.arrow_forward),
-            // ),
+            ListTile(
+              onTap: () {
+                print("Item 1");
+                this.controleDrawerList.telaDeConfiguracoes(context);
+              },
+              title: Text("Configurações"),
+              subtitle: Text(
+                "Editar Conta...",
+              ),
+              leading: Icon(Icons.settings),
+              trailing: Icon(Icons.arrow_forward),
+            ),
             // ListTile(
             //   onTap: () {
             //     print("Item 2");
@@ -78,14 +78,14 @@ class _DrawerListState extends State<DrawerList> {
       //     return Text(snapshot.hasData ? snapshot.data : "");
       //   },
       // ),
-       accountName: Text(user.displayName ?? "" ),
+      accountName: Text(user.displayName ?? ""),
       accountEmail: Text(user.email),
       currentAccountPicture: user.photoUrl != null
           ? CircleAvatar(
               backgroundImage: NetworkImage(user.photoUrl),
             )
           : CircleAvatar(
-              child: Image.asset("assets/images/avatar.png"),
+              child: Image.asset("assets/images/yoda2.png"),
             ),
     );
   }

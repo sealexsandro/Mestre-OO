@@ -28,6 +28,12 @@ class FirebaseService {
       userUpdateInfo.displayName = nome;
       firebaseUser.updateProfile(userUpdateInfo);
 
+      final user = Usuario(nome: nome, login: email, email: email, senha: senha
+          //   urlFoto: fuser.photoUrl,
+          );
+      // user.save();
+      this.usuarioDao.save(user);
+
       return Response.ok(result: true, msg: "Usuario Criado com Sucesso");
     } catch (error) {
       if (error is PlatformException) {
@@ -44,17 +50,18 @@ class FirebaseService {
       AuthResult result =
           await _auth.signInWithEmailAndPassword(email: email, password: senha);
       final FirebaseUser fuser = result.user;
-      print("Firebase Nome: ${fuser.displayName}");
-      print("Firebase Email: ${fuser.email}");
-      print("Firebase Foto: ${fuser.photoUrl}");
+      // print("Firebase Nome: ${fuser.displayName}");
+      // print("Firebase Email: ${fuser.email}");
+      // print("Firebase Foto: ${fuser.photoUrl}");
 
       // Cria um usuario do app
       final user = Usuario(
-        nome: fuser.displayName,
-        login: fuser.email,
-        email: fuser.email,
-        //   urlFoto: fuser.photoUrl,
-      );
+          nome: fuser.displayName,
+          login: fuser.email,
+          email: fuser.email,
+          senha: senha
+          //   urlFoto: fuser.photoUrl,
+          );
       // user.save();
       this.usuarioDao.save(user);
 
@@ -75,8 +82,6 @@ class FirebaseService {
           authError = 'Erro de Conexão com a rede!';
           break;
       }
-      print("Erro sendo exibido 2 : ${authError.toString()}");
-
       return Response.error(msg: authError);
     }
   }
@@ -134,10 +139,106 @@ class FirebaseService {
           authError = 'Erro de Conexão com a rede!';
           break;
       }
-      print("Erro sendo exibido 2 : ${authError.toString()}");
-
       return Response.error(msg: authError);
     }
+  }
+
+  Future<Response> changeEmail(
+      String emailAntigo,
+      String emailNovo,
+      String nomeAntigo,
+      String nomeNovo,
+      String senhaAntiga,
+      String senhaNova) async {
+    FirebaseUser user = await _auth.currentUser();
+
+    print("Email: ${emailAntigo.toString()}");
+    print("Senha: ${senhaAntiga.toString()}");
+    print("nome: ${nomeAntigo.toString()}");
+
+    try {
+      _auth
+          .signInWithEmailAndPassword(email: emailAntigo, password: senhaAntiga)
+          .then((value) {
+        user.updateEmail(emailNovo).then((_) {
+          print("Succesfull changed email");
+
+          final userUpdateInfo = UserUpdateInfo();
+          userUpdateInfo.displayName = nomeNovo;
+
+          user.updateProfile(userUpdateInfo);
+
+          // Cria um usuario do app
+          UsuarioDao.clear();
+          final user2 = Usuario(
+            nome: nomeNovo,
+            login: emailNovo,
+            email: emailNovo,
+            urlFoto: user.photoUrl,
+            senha: senhaNova,
+          );
+
+          // Dá para usar fachada unificada aqui
+          this.usuarioDao.save(user2);
+          user.reload();
+        });
+      }).catchError((error) {
+        print("email can't be changed" + error.toString());
+
+        return Response.error(msg: "Erro na Atualização");
+      });
+      return Response.ok();
+    } catch (e) {
+      return Response.error(msg: "Não foi possivel Atualizar");
+    }
+  }
+
+  Future<void> changePassword(
+      String email, String senhaAntiga, String senhaNova) async {
+    FirebaseUser user = await _auth.currentUser();
+
+    try {
+      _auth
+          .signInWithEmailAndPassword(email: email, password: senhaAntiga)
+          .then((value) {
+        user.updatePassword(senhaNova).then((_) {
+          print("Succesfull changed senha");
+
+          // Cria um usuario do app
+          UsuarioDao.clear();
+          final user2 = Usuario(
+            nome: user.displayName,
+            login: email,
+            email: email,
+            urlFoto: user.photoUrl,
+            senha: senhaNova,
+          );
+
+          // Dá para usar fachada unificada aqui
+          this.usuarioDao.save(user2);
+          user.reload();
+        });
+      }).catchError((error) {
+        print("email can't be changed" + error.toString());
+
+        return Response.error(msg: "Erro na Atualização");
+      });
+
+      return Response.ok();
+    } catch (e) {
+      return Response.error(msg: "Não foi possível atualizar");
+    }
+  }
+
+  @override
+  Future<void> deleteUser() async {
+    FirebaseUser user = await _auth.currentUser();
+    user.delete().then((_) {
+      print("Succesfull user deleted");
+    }).catchError((error) {
+      print("user can't be delete" + error.toString());
+    });
+    return null;
   }
 
   Future<void> logout() async {

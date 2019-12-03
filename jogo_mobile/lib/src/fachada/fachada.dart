@@ -8,7 +8,7 @@ class Fachada {
   Nivel01Business nivel01Business;
   final service = FirebaseService();
   UsuarioDao usuarioDao;
-  
+
   // Construtor não poderá ser instanciado fora da classe
   Fachada._() {
     this.usuarioDao = new UsuarioDao();
@@ -20,18 +20,42 @@ class Fachada {
   }
 
   loginComGoogle() {
-    
     final response = service.loginGoogle();
     return response;
   }
+
+  atualizarUser(
+      int tipoAtualizacao,
+      String emailAntigo,
+      String emailNovo,
+      String nomeAntigo,
+      String nomeNovo,
+      String senhaAntiga,
+      String senhaNova) {
+    if (tipoAtualizacao == 1) {
+      final response = this.service.changeEmail(
+          emailAntigo, emailNovo, nomeAntigo, nomeNovo, senhaAntiga, senhaNova);
+      return response;
+    } else {}
+  }
+
+  atualizarSenhaUser(String email, String senhaAntiga, String senhaNova) {
+    final response = this.service.changePassword(email, senhaAntiga, senhaNova);
+    return response;
+  }
+
+  // loginUser(login, senha) {
+  //   final response = FirebaseService().login(login, senha);
+  //   return response;
+  // }
 
   loginUser(login, senha) {
     final response = FirebaseService().login(login, senha);
     return response;
   }
 
-  salvarUsuario(nome, email, senha) async {
-    final response = await service.cadastrarUser(nome, email, senha);
+  salvarUsuario(nome, email, senha) {
+    final response = service.cadastrarUser(nome, email, senha);
     return response;
   }
 
@@ -54,7 +78,7 @@ class Fachada {
     return this.nivel01Business.retornaClasseDaRodada();
   }
 
-  List<String> listaConteudoDosBotoes(enumListasAuxiliares  enumListaAuxiliar) {
+  List<String> listaConteudoDosBotoes(enumListasAuxiliares enumListaAuxiliar) {
     return this.nivel01Business.listaConteudoDosBotoes(enumListaAuxiliar);
   }
 

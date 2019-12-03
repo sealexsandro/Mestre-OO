@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile/src/dao/FirebaseServices.dart';
 import 'package:jogo_mobile/src/fachada/fachada.dart';
+import 'package:jogo_mobile/src/pages/Login/login.dart';
+import 'package:jogo_mobile/src/pages/editarUser/configuracoesDaConta.dart';
+import 'package:jogo_mobile/utils/navegacao.dart';
 
 class ControleDrawerList {
   // Metodo Para logout do usuario
@@ -10,13 +12,12 @@ class ControleDrawerList {
     this.fachada = Fachada.getUnicaInstanciaFachada();
   }
 
-  onclickLogout(context) {
-    // Usuario.clear();
-    //  UsuarioDao.clear();
-    fachada.limparPrefers();
-  //  FirebaseService().logout();
+  telaDeConfiguracoes(BuildContext context) {
+       nextScreen(context, ConfigContaUser());
+  }
 
-    Navigator.pop(context);
-    Navigator.popAndPushNamed(context, "/");
+  onclickLogout(context) {
+    fachada.limparPrefers();
+    pushReplacement(context, Login());
   }
 }

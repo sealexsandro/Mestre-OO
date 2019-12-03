@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:jogo_mobile/src/controller/controle_Login.dart';
+import 'package:jogo_mobile/src/pages/SignUP/sign_up.dart';
 import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appButton.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appTextFormatFild.dart';
 import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
+import 'package:jogo_mobile/utils/navegacao.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -45,11 +47,12 @@ class _LoginState extends State<Login> {
               children: <Widget>[
                 ClipPath(
                   clipper: ClipContainerSuperior(),
-                      child:
-                        Image.asset('assets/images/img6.png', fit: BoxFit.fill,
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height / 3.3,
-                        ),
+                  child: Image.asset(
+                    'assets/images/img6.png',
+                    fit: BoxFit.fill,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 3.3,
+                  ),
                   // child: Container(
                   //   width: MediaQuery.of(context).size.width,
                   //   height: MediaQuery.of(context).size.height / 3.5,
@@ -216,7 +219,8 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.only(top: 5),
                           child: FlatButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, "/SignUp");
+                           //   Navigator.pushNamed(context, SignUp());
+                              nextScreen(context, SignUp());
                             },
                             child: Text(
                               "Cadastre-se",
@@ -226,7 +230,6 @@ class _LoginState extends State<Login> {
                                 fontFamily: "WorkSansMedium",
                                 decoration: TextDecoration.underline,
                               ),
-                              
                             ),
                           ),
                         ),
@@ -269,7 +272,7 @@ class _LoginState extends State<Login> {
     return null;
   }
 
- String _validateSenha(String text) {
+  String _validateSenha(String text) {
     if (text.isEmpty) {
       return "Digite sua Senha";
     }

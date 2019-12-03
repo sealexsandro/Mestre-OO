@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile/src/controller/controleSingUp.dart';
+import 'package:jogo_mobile/src/pages/Login/login.dart';
 import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appButton.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appTextFormatFild.dart';
 import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
+import 'package:jogo_mobile/utils/navegacao.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -165,7 +167,8 @@ class _SignUpState extends State<SignUp> {
                         Container(
                           child: FlatButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, "/");
+                        //      Navigator.pushNamed(context, "/");
+                              pushReplacement(context, Login());
                             },
                             child: Text(
                               "Já sou cadastrado",

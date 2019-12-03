@@ -7,4 +7,10 @@ Future nextScreen(BuildContext context, Widget page) {
       MaterialPageRoute(builder: (BuildContext context) {
     return page;
   }));
+
 }
+
+ pushReplacement(BuildContext context, Widget page) {
+    return Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => page));
+  }

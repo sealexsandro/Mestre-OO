@@ -1,7 +1,10 @@
 import 'package:jogo_mobile/src/enums/enumsItensDeClasse.dart';
 import 'package:jogo_mobile/src/model/ClasseTemplate.dart';
+import 'package:jogo_mobile/src/model/DeliveryFactory.dart';
 import 'package:jogo_mobile/src/model/NomesDeClasses.dart';
+import 'package:jogo_mobile/src/model/atributos.dart';
 import 'package:jogo_mobile/src/model/atributosDasClasses.dart';
+import 'package:jogo_mobile/src/model/metodos.dart';
 import 'package:jogo_mobile/src/model/metodosDasClasses.dart';
 
 class ServiceNivel01 {
@@ -24,10 +27,9 @@ class ServiceNivel01 {
   EnumsNomesDeClasses
       enumsNomesDeClasses; //Enum com o nome da classe escolhida para a rodada;
   TipoDeProblema tipoDeProblema;
-  AtributosDeClasseCorretos atributosDeClasseCorretos;
-  AtributosDeClasseIncorretos atributosDeClasseIncorretos;
-  MetodosDeClasseCorretos metodosDeClasseCorretos;
-  MetodosDeClasseIncorretos metodosDeClasseIncorretos;
+  DeliveryFactory deliveryFactory;
+  var atributosDeClasse;
+  var metodosDeClasse;
 
   ServiceNivel01(TipoDeProblema tipoDeProblema) {
     this.tipoDeProblema = tipoDeProblema;
@@ -46,10 +48,11 @@ class ServiceNivel01 {
     this.nomesDeClasseGenerica = NomesDeClasseGenerica();
     this.mapEnumNomesDeClasses =
         this.nomesDeClasseGenerica.getListaDeNomesDeClasses(tipoDeProblema);
-    this.atributosDeClasseCorretos = new AtributosDeClasseCorretos();
-    this.atributosDeClasseIncorretos = new AtributosDeClasseIncorretos();
-    this.metodosDeClasseCorretos = new MetodosDeClasseCorretos();
-    this.metodosDeClasseIncorretos = new MetodosDeClasseIncorretos();
+    this.deliveryFactory = new Atributos();
+    this.atributosDeClasse = deliveryFactory.createDelivery();
+    this.deliveryFactory = new Metodos();
+    this.metodosDeClasse = deliveryFactory.createDelivery();
+    //  this.atributosDeClasse = new Atributos();
   }
 
   // Adicionar Atributo na lista de atributos escolhidos na rodada do jogo
@@ -111,9 +114,9 @@ class ServiceNivel01 {
   buscarAtributosMetodosDaClasse(EnumsNomesDeClasses nomeDaClasse) {
     //Buscando atributos verdadeiros e falsos
     this.listaDeAtributosVerdadeiros =
-        this.atributosDeClasseCorretos.getAtributosCorretos(nomeDaClasse);
+        this.atributosDeClasse.getItensCorretos(nomeDaClasse);
     List<String> listaDeAtributosFalsos =
-        this.atributosDeClasseIncorretos.getAtributosIncorretos(nomeDaClasse);
+        this.atributosDeClasse.getItensInCorretos(nomeDaClasse);
 
     listaDeAtributosVerdadeiros.shuffle();
     listaDeAtributosFalsos.shuffle();
@@ -123,9 +126,9 @@ class ServiceNivel01 {
     preenchendoListasColunasAtributos(listaDeAtributosMisturados);
     //Buscando métodos verdadeiros e falsos
     this.listaDeMetodosVerdadeiros =
-        this.metodosDeClasseCorretos.getMetodosCorretos(nomeDaClasse);
+        this.metodosDeClasse.getItensCorretos(nomeDaClasse);
     List<String> listaDeMetodosFalsos =
-        this.metodosDeClasseIncorretos.getMetodosIncorretos(nomeDaClasse);
+        this.metodosDeClasse.getItensInCorretos(nomeDaClasse);
     listaDeMetodosVerdadeiros.shuffle();
     listaDeMetodosFalsos.shuffle();
     List<String> listaDeMetodosMisturados =
