@@ -3,9 +3,9 @@ import 'package:jogo_mobile/src/enums/enumsItensDeClasse.dart';
 class NomesDeClasseGenerica {
   Map<EnumsNomesDeClasses, String> lstNomeClassesClinicaMedica = {
     EnumsNomesDeClasses.paciente: "Paciente",
-    EnumsNomesDeClasses.medico: "Medico",
-    EnumsNomesDeClasses.atendente: "Atendente",
-    EnumsNomesDeClasses.enfermeiro: "Enfermeiro",
+    // EnumsNomesDeClasses.medico: "Medico",
+    // EnumsNomesDeClasses.atendente: "Atendente",
+    // EnumsNomesDeClasses.enfermeiro: "Enfermeiro",
   };
 
   Map<EnumsNomesDeClasses, String> lstNomeClassesPetShop = {

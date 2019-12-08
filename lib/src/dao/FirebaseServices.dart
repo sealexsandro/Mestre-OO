@@ -105,9 +105,9 @@ class FirebaseService {
       // Login no Firebase
       AuthResult result = await _auth.signInWithCredential(credential);
       final FirebaseUser fuser = result.user;
-      print("Firebase Nome: " + fuser.displayName);
-      print("Firebase Email: " + fuser.email);
-      print("Firebase Foto: " + fuser.photoUrl);
+      // print("Firebase Nome: " + fuser.displayName);
+      // print("Firebase Email: " + fuser.email);
+      // print("Firebase Foto: " + fuser.photoUrl);
 
       // Cria um usuario do app
       final user = Usuario(
@@ -152,9 +152,9 @@ class FirebaseService {
       String senhaNova) async {
     FirebaseUser user = await _auth.currentUser();
 
-    print("Email: ${emailAntigo.toString()}");
-    print("Senha: ${senhaAntiga.toString()}");
-    print("nome: ${nomeAntigo.toString()}");
+    // print("Email: ${emailAntigo.toString()}");
+    // print("Senha: ${senhaAntiga.toString()}");
+    // print("nome: ${nomeAntigo.toString()}");
 
     try {
       _auth

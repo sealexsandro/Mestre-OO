@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:jogo_mobile/src/controller/controle_nivel_1.dart';
 import 'package:jogo_mobile/src/fachada/fachada.dart';
 import 'package:jogo_mobile/src/model/usuario.dart';
 import 'package:jogo_mobile/src/pages/EscolhaDeProblemasNivel01/EscolhaDeProblemasNivel01.dart';
 import 'package:jogo_mobile/src/pages/utilsPages/alertNotificacao.dart';
 import 'package:jogo_mobile/utils/Response.dart';
 import 'package:jogo_mobile/utils/navegacao.dart';
+import 'package:provider/provider.dart';
 
 class ControleLogin {
   final _streamController = StreamController<bool>();
@@ -41,6 +43,8 @@ class ControleLogin {
 
     if (response.ok) {
       //  await Future.delayed(Duration(seconds: 2));
+      Provider.of<ControleNivel01>(context, listen: false).atualizarScore();
+
       nextScreen(context, EscolhaDeProblemasNivel01());
     } else {
       alertNotificacao(context, response.msg);
@@ -51,6 +55,8 @@ class ControleLogin {
   loginComGoogle(context) async {
     final response = await fachada.loginComGoogle();
     if (response.ok) {
+      Provider.of<ControleNivel01>(context, listen: false).atualizarScore();
+
       nextScreen(context, EscolhaDeProblemasNivel01());
     } else {
       alertNotificacao(context, response.msg);

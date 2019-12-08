@@ -3,6 +3,8 @@ import 'package:jogo_mobile/src/enums/enumsBusinessNivel01.dart';
 import 'package:jogo_mobile/src/enums/enumsItensDeClasse.dart';
 import 'package:jogo_mobile/src/fachada/fachada.dart';
 import 'package:jogo_mobile/src/model/ClasseTemplate.dart';
+import 'package:jogo_mobile/src/model/PontosJogador.dart';
+import 'package:jogo_mobile/src/model/usuario.dart';
 import 'package:jogo_mobile/src/pages/EscolhaDeProblemasNivel01/EscolhaDeProblemasNivel01.dart';
 import 'package:jogo_mobile/src/pages/LicaoConcluida/licaoConcluida.dart';
 import 'package:jogo_mobile/src/pages/Nivel_1/alertaValidarClasse.dart';
@@ -21,13 +23,16 @@ class ControleNivel01 extends ChangeNotifier {
   int numeroDoProblema;
   int pontuacaoAtualDoJogador;
   int pontoPorPartida;
-  int scoreTotal;
+  int scoreTotal = 0;
+  String scoreCompletoDeTodoJogo = "";
   Fachada fachada;
+  Future<Usuario> userFuture;
 
-  ControleNivel01();
+  ControleNivel01() {
+    this.fachada = Fachada.getUnicaInstanciaFachada();
+  }
 
   iniciarTelaNivel01(context, tipoDeProblema) {
-    this.fachada = Fachada.getUnicaInstanciaFachada();
     this.fachada.startServicesNivel01(tipoDeProblema);
     this.context = context;
     this.tipoDeProblema = tipoDeProblema;
@@ -37,8 +42,10 @@ class ControleNivel01 extends ChangeNotifier {
         this.fachada.listaAtributosOuMetodosEscolhidos("metodo");
     this.pontoPorPartida = this.fachada.nivel01Business.pontucaoDaRodada;
     this.numeroDoProblema = 1;
-    this.scoreTotal = 0;
+    //  atualizarScore();
+
     nextScreen(this.context, Nivel01(this));
+
     print("Instanciando controle");
   }
 
@@ -52,7 +59,33 @@ class ControleNivel01 extends ChangeNotifier {
     }
   }
 
+  atualizarScore() {
+    userFuture = fachada.getUsuario();
+
+    userFuture.then((Usuario user) {
+      if (user != null) {
+        Future<PontosJogador> pontosJogFuture = PontosJogador.load(user.email);
+        pontosJogFuture.then((PontosJogador pontosJog) {
+          if (pontosJog != null) {
+            print("Pontos do jogador: ${pontosJog.pontos.toString()}");
+            this.scoreTotal = pontosJog.pontos;
+            notifyListeners();
+          }
+        });
+      }
+    });
+  }
+
   exibirTelaLicaoConcluida(BuildContext context) {
+    userFuture = fachada.getUsuario();
+    userFuture.then((Usuario user) {
+      if (user != null) {
+        this.scoreTotal += 20;
+        PontosJogador pontosJogador =
+            new PontosJogador(pontos: scoreTotal, loginJogador: user.email);
+        PontosJogador.salvar(pontosJogador);
+      }
+    });
     return nextScreen(context, LicaoConcluida());
   }
 
