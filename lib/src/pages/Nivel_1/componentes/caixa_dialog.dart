@@ -47,8 +47,8 @@ class _ShowDialogState extends State<CaixaDialog> {
   Widget dialogContent(BuildContext context) {
     return Center(
       child: Container(
-        width: MediaQuery.of(context).size.width / 1.15,
-        height: MediaQuery.of(context).size.height / 1.6,
+        width: MediaQuery.of(context).size.width / 1.06,
+        height: MediaQuery.of(context).size.height / 1.4,
         child: Stack(
           children: <Widget>[
             Container(
@@ -143,53 +143,56 @@ class _ShowDialogState extends State<CaixaDialog> {
   }
 
   inserirButoes(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 1.23,
-      // height: MediaQuery.of(context).size.height / 2.8,
-      margin: EdgeInsets.only(
-        left: 5,
-        top: 5,
-      ),
-      padding: EdgeInsets.all(2),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.blue),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Column(
-            children: listaDeButoesColuna1.map<Widget>((atributoClass) {
-              return _butao(atributoClass, context);
-            }).toList(),
-          ),
-          Column(
-            children: listaDeButoesColuna2.map<Widget>((atributoClass) {
-              return _butao(atributoClass, context);
-            }).toList(),
-          ),
-        ],
+    return Center(
+      child: Container(
+        width: MediaQuery.of(context).size.width / 1.14,
+        // height: MediaQuery.of(context).size.height / 2.8,
+        // margin: EdgeInsets.only(
+        //   left: 5,
+        //   top: 5,
+        // ),
+        padding: EdgeInsets.all(2),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.blue),
+        ),
+        child: Row(
+          //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Column(
+              children: listaDeButoesColuna1.map<Widget>((atributoClass) {
+                return _butao(atributoClass, context);
+              }).toList(),
+            ),
+            Column(
+              children: listaDeButoesColuna2.map<Widget>((atributoClass) {
+                return _butao(atributoClass, context);
+              }).toList(),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   _butao(String nomeDoButao, BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 2.67,
-      margin: EdgeInsets.all(3),
-      //   padding: EdgeInsets.all(2),
+      width: MediaQuery.of(context).size.width / 2.56,
+      margin: EdgeInsets.all(7),
+      //  padding: EdgeInsets.only(left: 2),
+
       child: FlatButton(
         color: isButaoJaEscolhido(nomeDoButao) == false
-            ? corDoContainer
-            : Colors.grey,
+            ? Colors.grey
+            : corDoContainer,
         shape:
             RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10)),
-        padding: EdgeInsets.all(4),
+        padding: EdgeInsets.only(left: 0, right: 0, bottom: 7, top: 7),
         child: Center(
           child: Text(
             nomeDoButao,
             style: TextStyle(
               fontSize: 13,
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,

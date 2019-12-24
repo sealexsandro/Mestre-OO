@@ -74,7 +74,7 @@ class AtributosDeClasse implements DeliverItems {
   List<String> listaTrueAtributosPaciente = [
     "- nome: String",
     "- endereco: Endereco",
-    "- tipoSangue: String",
+    "- tipoSanguineo: String",
     "- doadorDeOrgaos: boolean",
   ];
 
@@ -108,6 +108,7 @@ class AtributosDeClasse implements DeliverItems {
     "- altura: float",
     "- corDoPelo: String",
     "- vacinado: boolean",
+    "- peso: float",
   ];
 
   List<String> listaTrueAtributosGato = [
@@ -119,8 +120,8 @@ class AtributosDeClasse implements DeliverItems {
 
   List<String> listaTrueAtributosAve = [
     "- especie: String",
-    "- ameacadoDeExtincao: boolean",
-    "- corDaPlumagem: String",
+    "- ameacaDeExtincao: boolean",
+    "- corDasPenas: String",
     "- habitateNatural: String",
   ];
 
@@ -129,78 +130,78 @@ class AtributosDeClasse implements DeliverItems {
   //Sistema para Locadora de Veículos
 
   List<String> listaTrueAtributosClienteLocadora = [
-    "nome: String",
-    "sexo: String",
-    "cpf: String",
-    "endereco: Endereco",
+    "- nome: String",
+    "- sexo: String",
+    "- cpf: String",
+    "- endereco: Endereco",
   ];
 
   List<String> listaTrueAtributosContratoAluguel = [
-    "idContrato: int",
-    "nomeDoCliente: String",
-    "dataDoContrato: Date",
-    "empresaLocadora: EmpresaLocadora",
+    "- idContrato: int",
+    "- nomeDoCliente: String",
+    "- dataDoContrato: Date",
+    "- empresaLocadora: EmpresaLocadora",
   ];
 
   List<String> listaTrueAtributosVeiculoAlugado = [
-    "idVeiculo: int",
-    "fabricante: String",
-    "modelo: String",
-    "tipoDeCombustivel: String",
-    "corDoVeiculo: String",
+    "- idVeiculo: int",
+    "- fabricante: String",
+    "- modelo: String",
+    "- tipoDeCombustivel: String",
+    "- corDoVeiculo: String",
   ];
 
   //////////////////// Incorretos ///////////////////////////////////////
   // Sistema Para Clinica
   List<String> listaFalseAtributosPaciente = [
-    "= nome: String",
-    "- endereco: rua/bairro",
-    "* tipoSangineo: String",
-    "- doadorDeOrgaos: Não",
+    "nome",
+    "- endereco :",
+    "+= tipoSanguineo: String",
+    "-= doaOrgaos: boolean",
   ];
 
   List<String> listaFalseAtributosMedico = [
-    "/ nome: String",
+    "*= nome: String",
     ": String",
     "+ especializacao:",
-    "- salario: dolar"
+    "- salario:"
   ];
 
   List<String> listaFalseAtributosAtendente = [
-    "+ nome: Patricia",
-    "- String: endereco",
+    "+ : nome",
+    "- String: ",
     ": formacaoTecnica:",
-    "# salario: 2000"
+    "# salario  2000"
   ];
 
   List<String> listaFalseAtributosEnfermeiros = [
-    "- nome -String",
-    "- coren: StringInt",
-    "- String: Endereco",
-    "- salario foat"
+    "- nome * String",
+    "@ coren: String",
+    "! String: Endereco",
+    "§ salario float"
   ];
 
   //////////////////////////////////////////////////////
   ///// Sistema Para Pet Shop
   List<String> listaFalseAtributosCachorro = [
-    "racaDoCao: Pit Bull",
+    "racaDoCao:",
     ": float",
-    "Rex: String",
-    "idade: boolean",
+    "+: String",
+    "vacinado",
   ];
   List<String> listaFalseAtributosGato = [
-    "racaDoGato String",
-    "peso: boolean",
+    "racaDoGato += String",
+    "peso: quilo ou grama",
     "idade: 2 anos",
-    "vacinado: sim",
+    "vacinado : ",
   ];
 
   List<String> listaFalseAtributosAve = [
-    "especie: irracional",
-    ": float",
-    "CorDaPlumagem:",
-    ": String",
-    "tamanhoDaAsa: Grande",
+    "especie +: String",
+    "-: float",
+    "- CorDaPlumagem:",
+    "+: String",
+    "- tamanhoDaAsa:",
   ];
 
 //////////////////////////////////////////////////////////
@@ -210,21 +211,21 @@ class AtributosDeClasse implements DeliverItems {
     "nome - String",
     "sexo: M ou F",
     "String cpf: ",
-    "Endereco Endereco",
+    "Endereco * End",
   ];
 
   List<String> listaFalseAtributosContratoAluguel = [
-    "codigoContrato: int",
-    "nomeDoCliente: String",
-    "dataDoContrato: Date",
-    "empresaLocadora: EmpresaLocadora",
+    "@ codigoContrato: int",
+    "-nome = Cliente: String",
+    "-data * Contrato: Date",
+    "- empresaLocadora / empresa",
   ];
 
   List<String> listaFalseAtributosVeiculoAlugado = [
     "id  Veiculo: int",
     "String: pneu",
     "modelo Strin",
-    "tipoDeCombustivel: ÓLEO",
-    "corDoVeiculo: Hexadecimal",
+    "! tipoDeCombustivel: ÓLEO",
+    "-corDoVeiculo ^: Cor ",
   ];
 }

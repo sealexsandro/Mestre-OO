@@ -5,6 +5,7 @@ import 'package:jogo_mobile/src/pages/Widgets/ClipperContainerSuperior.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appButton.dart';
 import 'package:jogo_mobile/src/pages/Widgets/appTextFormatFild.dart';
 import 'package:jogo_mobile/src/pages/Widgets/iconesComponent.dart';
+import 'package:jogo_mobile/src/pages/utilsPages/alertNotificacao.dart';
 import 'package:jogo_mobile/utils/navegacao.dart';
 
 class SignUp extends StatefulWidget {
@@ -25,8 +26,6 @@ class _SignUpState extends State<SignUp> {
   bool _showProgress = false;
   final controleSignUp = new ControleSignUp();
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,44 +39,11 @@ class _SignUpState extends State<SignUp> {
                 children: [
                   ClipPath(
                     clipper: ClipContainerSuperior(),
-                    child: Container(
+                    child: Image.asset(
+                      'assets/images/img6.png',
+                      fit: BoxFit.fill,
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height / 3.3,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Color(0xFF6078ea),
-                              Color(0xFF17ead9),
-                            ]),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Spacer(),
-                          Align(
-                            child: Icon(
-                              Icons.person,
-                              size: 80,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Spacer(),
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 0, left: 32, bottom: 50),
-                              child: Text(
-                                "Nome do Jogo",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 24),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                   Container(
@@ -164,17 +130,19 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Container(
                           child: FlatButton(
                             onPressed: () {
-                        //      Navigator.pushNamed(context, "/");
                               pushReplacement(context, Login());
                             },
                             child: Text(
                               "Já sou cadastrado",
                               style: TextStyle(
                                   color: Colors.grey,
-                                  fontSize: 18.0,
+                                  fontSize: 19,
                                   fontFamily: "WorkSansMedium"),
                             ),
                           ),
@@ -191,7 +159,19 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  _onpressedFunction(){
+  _validarEmail(String value) {
+    String pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regExp = new RegExp(pattern);
+    if (!regExp.hasMatch(value)) {
+      alertNotificacao(context, "Email inválido");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  _onpressedFunction() {
     bool formKey = _formKey.currentState.validate();
     if (!formKey) {
       return;
@@ -206,10 +186,6 @@ class _SignUpState extends State<SignUp> {
     print("senha: ${senha.toString()}");
     print("Senha repitida : ${senhaRepetida.toString()}");
 
-    setState(() {
-      _showProgress = true;
-    });
-
     // final service = FirebaseService();
     // final response = await service.cadastrarUser(nome, email, senha);
 
@@ -218,7 +194,14 @@ class _SignUpState extends State<SignUp> {
     // } else {
     //   alertNotificacao(context, response.msg);
     // }
-    controleSignUp.salvarUsuario(context, nome, email, senha, senhaRepetida);
+    var verificarEmail = _validarEmail(email);
+    if (verificarEmail) {
+      controleSignUp.salvarUsuario(context, nome, email, senha, senhaRepetida);
+
+      setState(() {
+        _showProgress = true;
+      });
+    }
     setState(() {
       _showProgress = false;
     });

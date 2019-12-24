@@ -26,6 +26,10 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+    ]);
     super.initState();
     _controleLogin.pegarUsuarioConectado(context);
   }
@@ -51,7 +55,7 @@ class _LoginState extends State<Login> {
                     'assets/images/img6.png',
                     fit: BoxFit.fill,
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 3.3,
+                    height: MediaQuery.of(context).size.height / 2.7,
                   ),
                   // child: Container(
                   //   width: MediaQuery.of(context).size.width,
@@ -70,6 +74,7 @@ class _LoginState extends State<Login> {
                   //       ),
                   // ),
                 ),
+                
                 Container(
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.only(left: 40),
@@ -83,51 +88,52 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                // SizedBox(
-                //   height: 5,
-                // ),
+                SizedBox(
+                  height: 10,
+                ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(top: 15),
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        height: 60,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(40),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 4,
-                              )
-                            ]),
-                        child: GoogleSignInButton(
-                          borderRadius: 40,
-                          text: "   Usar conta Google",
-                          onPressed: onPressedGoogleLogin,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.only(left: 40),
-                        child: Text(
-                          "Ou use outro e-mail",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black38,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
+                      // conta google
+                      // Container(
+                      //   margin: EdgeInsets.only(top: 15),
+                      //   width: MediaQuery.of(context).size.width / 1.2,
+                      //   height: 60,
+                      //   decoration: BoxDecoration(
+                      //       color: Colors.white,
+                      //       borderRadius: BorderRadius.all(
+                      //         Radius.circular(40),
+                      //       ),
+                      //       boxShadow: [
+                      //         BoxShadow(
+                      //           color: Colors.black26,
+                      //           blurRadius: 4,
+                      //         )
+                      //       ]),
+                      //   child: GoogleSignInButton(
+                      //     borderRadius: 40,
+                      //     text: "   Usar conta Google",
+                      //     onPressed: onPressedGoogleLogin,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Container(
+                      //   width: MediaQuery.of(context).size.width,
+                      //   padding: EdgeInsets.only(left: 40),
+                      //   child: Text(
+                      //     "Ou use outro e-mail",
+                      //     style: TextStyle(
+                      //       fontSize: 18,
+                      //       color: Colors.black38,
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 5,
+                      // ),
                       AppTextFormatField(
                         nomeDoCampo: NomeIcone.email,
                         controller: _tLogin,
@@ -139,6 +145,7 @@ class _LoginState extends State<Login> {
                       AppTextFormatField(
                         nomeDoCampo: NomeIcone.senha,
                         controller: _tSenha,
+                        password: true,
                         validator: _validateSenha,
                         nextFocus: _focusSenha,
                       ),
@@ -219,7 +226,7 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.only(top: 5),
                           child: FlatButton(
                             onPressed: () {
-                           //   Navigator.pushNamed(context, SignUp());
+                              //   Navigator.pushNamed(context, SignUp());
                               nextScreen(context, SignUp());
                             },
                             child: Text(

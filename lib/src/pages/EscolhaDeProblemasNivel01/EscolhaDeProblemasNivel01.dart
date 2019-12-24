@@ -51,7 +51,7 @@ class _EscolhaDeProblemasFase1State extends State<EscolhaDeProblemasNivel01> {
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.only(left: 20, right: 25, top: 30),
                 child: Text(
-                  "Escolha um tipo de Sistema abaixo e, avance construindo classes para o sistema escolhido:",
+                  "Abaixo estão alguns tipos de sistemas para variados tipos de negócios, no entanto para concepção desses sistemas você deve Diagramar as Classes:",
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: "WorkSansMedium",
@@ -82,7 +82,7 @@ class _EscolhaDeProblemasFase1State extends State<EscolhaDeProblemasNivel01> {
                             child: Container(
                               color: Colors.blue,
                               width: MediaQuery.of(context).size.width / 2.8,
-                              height: MediaQuery.of(context).size.height / 5.7,
+                              height: MediaQuery.of(context).size.height / 5.5,
                               padding: EdgeInsets.all(10),
                               child: Center(
                                 child: Text(
@@ -112,7 +112,7 @@ class _EscolhaDeProblemasFase1State extends State<EscolhaDeProblemasNivel01> {
                             child: Container(
                               color: Colors.blue,
                               width: MediaQuery.of(context).size.width / 2.8,
-                              height: MediaQuery.of(context).size.height / 5.7,
+                              height: MediaQuery.of(context).size.height / 5.5,
                               padding: EdgeInsets.all(10),
                               child: Center(
                                 child: Text(
@@ -137,7 +137,7 @@ class _EscolhaDeProblemasFase1State extends State<EscolhaDeProblemasNivel01> {
                             child: Container(
                               color: Colors.blue,
                               width: MediaQuery.of(context).size.width / 2.8,
-                              height: MediaQuery.of(context).size.height / 5.7,
+                              height: MediaQuery.of(context).size.height / 5.5,
                               padding: EdgeInsets.all(10),
                               child: Center(
                                 child: Text(

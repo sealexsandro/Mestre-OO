@@ -20,11 +20,11 @@ enumMsgDeValidacaoDeClasse(EnumsValidacaoDeClasse enumsValidacaoDeClasse) {
     case EnumsValidacaoDeClasse.minimoDeDoisMetodos:
       return "Você deve escolher no mínimo dois métodos";
     case EnumsValidacaoDeClasse.atributoIncorreto:
-      return "Acho que você escolheu algum atributo incorreto";
+      return "Você escolheu algum atributo incorreto, verifique itens como encapsulamento, tipo de retorno ou a escrita";
     case EnumsValidacaoDeClasse.metodoIncorreto:
-      return "Acho que você escolheu algum método incorreto";
+      return "Você escolheu algum método incorreto, verifique itens como encapsulamento, tipo de retorno ou a escrita";
     case EnumsValidacaoDeClasse.atributoEmetodoIncorreto:
-      return "Você escolheu método(s) e atributo(s) incorretos!";
+      return "Você escolheu método(s) e atributo(s) incorretos, verifique itens como encapsulamento, tipo de retorno ou a escrita";
     case EnumsValidacaoDeClasse.atributoEmetodoCorreto:
       return "Você acertou tudo e com isso ganhou ";
     default:

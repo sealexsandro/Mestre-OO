@@ -11,7 +11,7 @@ class ControleSignUp {
     this.fachada = Fachada.getUnicaInstanciaFachada();
   }
 
-  salvarUsuario(BuildContext context, nome, email, senha, senhaRepetida) async{
+  salvarUsuario(BuildContext context, nome, email, senha, senhaRepetida) async {
     if (senha.toString().length < 6) {
       alertNotificacao(context, "A senha deve ter no mínimo 6 dígitos!");
       return;

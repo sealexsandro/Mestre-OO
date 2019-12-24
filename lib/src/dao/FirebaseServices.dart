@@ -38,7 +38,7 @@ class FirebaseService {
     } catch (error) {
       if (error is PlatformException) {
         //  print("Erro codigo firebase $error");
-        return Response.error(msg: "Erro ao Salvar Usuário");
+        return Response.error(msg: "Problema de Conexão");
       }
       return Response.error(msg: "Não foi Possível salvar o usário");
     }

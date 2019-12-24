@@ -240,7 +240,7 @@ class _Nivel01State extends State<Nivel01> {
               style: new TextStyle(fontWeight: FontWeight.bold),
             ),
             new TextSpan(
-              text: "  abaixo: ",
+              text: " abaixo, com encapsulamento, retornos e escritas corretas: ",
             ),
           ],
         ),

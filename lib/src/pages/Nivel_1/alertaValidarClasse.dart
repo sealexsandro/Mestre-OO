@@ -218,15 +218,15 @@ msgAvisoQntMinimaAtribMet(BuildContext context, String icone,
                 children: <Widget>[
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.only(left: 20, top: 10,right: 20),
                       child: new Text(
                         mensagem,
                         style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black54,
+                          fontSize: 22,
+                          color: Colors.black87,
                           fontWeight: FontWeight.bold,
                         ),
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.justify,
                       ),
                     ),
                   ),

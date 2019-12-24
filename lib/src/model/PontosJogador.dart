@@ -109,7 +109,8 @@ class PontosJogador {
     var prefs = await SharedPreferences.getInstance();
     var data = prefs.getString('data');
 
-    if (data.isEmpty) {
+   
+    if (data == null || data.isEmpty) {
       return null;
     }
     Iterable decoded = convert.json.decode(data);

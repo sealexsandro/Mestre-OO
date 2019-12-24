@@ -69,63 +69,61 @@ class MetodosDeClasse implements DeliverItems {
   }
 
   List<String> listaMetodosTruePessoa = [
-    "setNome(): void",
-    "setCpf(): float",
-    "getNome: String",
-    "andar(): void",
+    "+ setNome()",
+    "+ setCpf()",
+    "+ getNome()",
+    "+ andar()",
   ];
 
   /////// Sistema clinica Medica ////////////
   List<String> listaTrueMetodosPaciente = [
-    "getNome: void",
-    "getEndereco: Endereco",
-    "gettipoSangineo: String",
-    "getdoadorDeOrgaos: boolean",
+    "+ getNome(): String",
+    "+ getEndereco(): Endereco",
+    "+ getTipoSangineo(): String",
+    "+ getDoaOrgaos(): boolean",
   ];
 
   List<String> listaTrueMetodosMedico = [
-    "getNome: String",
-    "getRegistroMedico: String",
-    "getEspecializacao: String",
-    "getSalario: float"
+    "+ getNome(): String",
+    "+ getRegistroMedico():String",
+    "+ getEspecializacao():String",
+    "+ getSalario(): float"
   ];
 
   List<String> listaTrueMetodosAtendente = [
-    "getNome: String",
-    "getEndereco: Endereco",
-    "getFormacaoTecnica: String",
-    "getSalario: float"
+    "+ getNome(): String",
+    "+ getEndereco(): Endereco",
+    "+ getFormacaoTecnica(): String",
+    "+ getSalario(): float"
   ];
 
   List<String> listaTrueMetodosEnfermeiros = [
-    "getNome: String",
-    "getCoren: String",
-    "getEndereco: Endereco",
-    "getSalario: float"
+    "+ getNome(): String",
+    "+ getCoren(): String",
+    "+ getEndereco(): Endereco",
+    "+ getSalario(): float"
   ];
 
   /////// Sistema Pet Shop ////////////
 
   List<String> listaTrueMetodosCachorro = [
-    "late(): void",
-    "getPeso(): float",
-    "corre(): String",
-    "setPeso(peso: float): float",
-    "cachorro(): void",
+    "+ getRacaCao(): String",
+    "+ getPeso(): float",
+    "+ getCorPelo(): String",
+    "+ getAltura(): float",
   ];
 
   List<String> listaTrueMetodosGato = [
-    "racaDoGato: String",
-    "peso: float",
-    "corDoPelo: String",
-    "vacinado: boolean",
+    "+ getRacaDoGato(): String",
+    "+ getPeso(): float",
+    "+ getCorDoPelo(): String",
+    "+ getVacinado(): boolean",
   ];
 
   List<String> listaTrueMetodosAve = [
-    "voar(): void",
-    "getEspecie(): String",
-    "setEspecie(): void",
-    "ave(): Ave",
+    "+ getCorPenas(): String",
+    "+ getEspecie(): String",
+    "+ getEmExtincao(): boolean",
   ];
 
   ////////////////////////////////////////////////
@@ -133,85 +131,85 @@ class MetodosDeClasse implements DeliverItems {
   //Sistema para Locadora de Veículos
 
   List<String> listaTrueMetodosClienteLocadora = [
-    "getNome: String",
-    "getSexo: String",
-    "getCpf: String",
-    "getEndereco: Endereco",
+    "+ getNome(): String",
+    "+ getSexo(): String",
+    "+ getCpf(): String",
+    "+ getEndereco(): Endereco",
   ];
 
   List<String> listaTrueMetodosContratoAluguel = [
-    "getIdContrato: int",
-    "getNomeDoCliente: String",
-    "getDataDoContrato: Date",
-    "getEmpresaLocadora: EmpresaLocadora",
+    "+ getIdContrato(): int",
+    "+ getNomeDoCliente(): String",
+    "+ getDataDoContrato(): Date",
+    "+ getEmpresaLocadora(): EmpresaLocadora",
   ];
 
   List<String> listaTrueMetodosVeiculoAlugado = [
-    "getIdVeiculo: int",
-    "getFabricante: String",
-    "getModelo: String",
-    "getTipoDeCombustivel: String",
-    "getCorDoVeiculo: String",
+    "+ getIdVeiculo(): int",
+    "+ getFabricante(): String",
+    "+ getModelo(): String",
+    "+ getTipoDeCombustivel(): String",
+    "+ getCorDoVeiculo(): String",
   ];
 
 /////////////////////////////// Incorretos //////////////////////////////////
   List<String> listaMetodosFalsePessoa = [
-    "set()Nome: void",
-    "set()Cpf(): float",
-    "get()Nome: String",
-    "andar()Set(): void",
+    "getNome() null",
+    "getCpf(): ",
+    "getNome() String",
+    "andarSet() void",
   ];
 
   /////// Sistema clinica Medica ////////////
   List<String> listaFalseMetodosPaciente = [
-    "get()Nome: void",
-    "get()Endereco: Endereco",
-    "get)()(tipoSangineo: String",
-    "get()doadorDeOrgaos: boolean",
+    "* getNome(): String",
+    "+ get()Endereco",
+    "+ get()(tipoSangineo)",
+    "+ get()doaOrgaos",
   ];
 
   List<String> listaFalseMetodosMedico = [
-    "getNome(()): String",
-    "get()RegistroMedico: String",
-    "get()Especializacao: String",
-    "get()Salario: float"
+    "+ getNome():: String",
+    "= getRegistroMedico()",
+    "getEspecializacao()",
+    "+ get^Salario:"
   ];
 
   List<String> listaFalseMetodosAtendente = [
-    "get()Nome: String",
-    "get()Endereco: Endereco",
-    "get()FormacaoTecnica: String",
-    "get()Salario: float"
+    "+ getNome{}: String",
+    "+ getEndereco[]: Endereco",
+    "- getFormacaoTecnica= tecnico",
+    "+ getSalario float"
   ];
 
   List<String> listaFalseMetodosEnfermeiros = [
-    "get()Nome: String",
-    "get()Coren: String",
-    "get()Endereco: Endereco",
-    "get()Salario: float"
+    "getNome",
+    "getCoren",
+    "getEndereco +Endereco",
+    "get()Salario"
   ];
 
   /////// Sistema Pet Shop ////////////
 
   List<String> listaFalseMetodosCachorro = [
-    "late() void",
+    "/ late{}",
     "getPeso(): ",
-    "corre()(): String",
-    "setPeso(peso: ): float",
+    "corre()",
+    ", setPeso(peso): void",
   ];
 
   List<String> listaFalseMetodosGato = [
-    "raca Do Gato: String",
-    "get-peso: float",
-    "get-corDoPelo: String",
-    "set-vacinado: boolean",
+    "raca Do Gato",
+    "get-peso())",
+    "| getcorDoPelo()",
+    "; setvacinado()",
   ];
 
   List<String> listaFalseMetodosAve = [
     "voar()(): void",
-    "get/Especie(): String",
-    "set()Especie(): void",
-    "ave(): ",
+    "getEspecie",
+    "set()Especie",
+    "! ave() ",
   ];
 
   ////////////////////////////////////////////////
@@ -219,24 +217,24 @@ class MetodosDeClasse implements DeliverItems {
   //Sistema para Locadora de Veículos
 
   List<String> listaFalseMetodosClienteLocadora = [
-    "get()Nome: String",
-    "get()Sexo: String",
-    "get()Cpf: String",
-    "get()Endereco: Endereco",
+    "getNome{}: String",
+    "getSexo[]: String",
+    "getCpf:",
+    "getEndereco",
   ];
 
   List<String> listaFalseMetodosContratoAluguel = [
     "getIdContrato: ",
     "getNomeDoCliente: Stri",
-    "getDataDoContrato Date",
-    "getEmpresaLocadora - EmpresaLocadora",
+    "getDataDoContrato !Date",
+    "getEmpresaLocadora {}",
   ];
 
   List<String> listaFalseMetodosVeiculoAlugado = [
-    "get()IdVeiculo: int",
-    "get()Fabricante: String",
-    "getMode()lo: String",
-    "get()TipoDeCombustivel: String",
-    "get()CorDoVeiculo: String",
+    ", getIdVeiculo()",
+    "_? getFabricante()",
+    "@ getModelo()",
+    "getTipoDeCombustivel())",
+    ": getCorDoVeiculo",
   ];
 }
